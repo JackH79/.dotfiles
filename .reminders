@@ -1,0 +1,151 @@
+#PREAMBLE
+SET Esc CHAR(27)
+SET Nrm   Esc + "[0m"
+SET Blk   Esc + "[0;30m"
+SET Red   Esc + "[0;31m"
+SET Gre   Esc + "[0;32m"
+SET Ylw   Esc + "[0;33m"
+SET Blu   Esc + "[0;34m"
+SET Mag   Esc + "[0;35m"
+SET Cyn   Esc + "[0;36m"
+SET Wht   Esc + "[0;37m"
+SET Gry   Esc + "[1;30m"
+SET BrRed Esc + "[1;31m"
+SET BrGre Esc + "[1;32m"
+SET BrYlw Esc + "[1;33m"
+SET BrBlu Esc + "[1;34m"
+SET BrMag Esc + "[1;35m"
+SET BrCyn Esc + "[1;36m"
+SET BrWht Esc + "[1;37m"
+BANNER [Mag]---***@@@  %w, %d%s %m  @@@***---[Nrm]
+
+#PUBLIC HOLIDAYS
+ FSET _back(days) TODAY()-days
+ SET Week_1 1
+ SET Week_2 8
+ SET Week_3 15
+ SET Week_4 22
+  #NEW YEAR
+   OMIT 01 Jan SPECIAL COLOR 75 0 0 New Year's Day
+  #AUSTRALIA DAY
+   REM Mon Tue Wed Thu Fri 26 Jan SCANFROM [_back(7)] SATISFY 1
+   OMIT [trigdate()] SPECIAL COLOR 75 0 0 Australia Day
+  #EASTER
+   SET easter EASTERDATE(YEAR(TODAY()))
+   OMIT [TRIGGER(easter-2)] SPECIAL COLOR 75 0 0 Good Friday
+   REM [TRIGGER(easter-1)] SPECIAL COLOR 75 0 0 Easter Saturday
+   REM [TRIGGER(easter)] SPECIAL COLOR 75 0 0 Easter Sunday
+   OMIT [TRIGGER(easter+1)] SPECIAL COLOR 75 0 0 Easter Monday
+  #ANZAC DAY
+   REM  Mon Tue Wed Thu Fri 25 Apr SCANFROM [_back(7)] SATISFY 1
+   OMIT [trigdate()] SPECIAL COLOR 75 0 0 ANZAC Day
+  #LABOUR DAY
+   REM  Mon May [Week_1] SCANFROM [_back(7)] SATISFY 1
+   OMIT [trigdate()] SPECIAL COLOR 75 0 0 Labour Day
+  #QUEEN'S BIRTHDAY
+   REM  Mon Jun [Week_2] SCANFROM [_back(7)] SATISFY 1
+   OMIT [trigdate()] SPECIAL COLOR 75 0 0 Queen's Birthday
+  #CHRISTMAS DAY
+   OMIT 25 Dec SPECIAL COLOR 75 0 0 Christmas Day
+  #BOXING DAY
+   REM Mon Tue Wed Thu Fri Dec 26 SCANFROM [_back(7)] SATISFY 1
+   OMIT [trigdate()] SPECIAL COLOR 75 0 0 Boxing Day
+
+#REMINDERS
+
+#UNIVERSITY
+ PUSH
+  #UNI HOLIDAYS
+   OMIT 2010-04-19 SPECIAL COLOR 75 75 0 [Ylw]%"Lecture recess%"[Nrm]
+   OMIT 2010-04-20 SPECIAL COLOR 75 75 0 [Ylw]%"Lecture recess%"[Nrm]
+   OMIT 2010-04-21 SPECIAL COLOR 75 75 0 [Ylw]%"Lecture recess%"[Nrm]
+   OMIT 2010-04-22 SPECIAL COLOR 75 75 0 [Ylw]%"Lecture recess%"[Nrm]
+   OMIT 2010-04-23 SPECIAL COLOR 75 75 0 [Ylw]%"Lecture recess%"[Nrm]
+   OMIT 2010-05-31 SPECIAL COLOR 75 75 0 [Ylw]%"Study vacation%"[Nrm]
+   OMIT 2010-06-01 SPECIAL COLOR 75 75 0 [Ylw]%"Study vacation%"[Nrm]
+   OMIT 2010-06-02 SPECIAL COLOR 75 75 0 [Ylw]%"Study vacation%"[Nrm]
+   OMIT 2010-06-03 SPECIAL COLOR 75 75 0 [Ylw]%"Study vacation%"[Nrm]
+   OMIT 2010-06-04 SPECIAL COLOR 75 75 0 [Ylw]%"Study vacation%"[Nrm]
+  #GENERAL
+   REM 2010-05-28 SPECIAL COLOR 75 0 0 [Red]Uni - last day lectures[Nrm]
+  #MONDAY
+   REM 2010-02-22 *7 AT 09:00 DURATION 0:50 UNTIL 2010-05-24 SKIP SPECIAL COLOR 0 175 0 [BrGre]%"BM1000 Lecture DA026-001%" %2[Nrm]
+
+   REM 2010-02-22 *7 AT 10:00 DURATION 2:50 UNTIL 2010-03-29 SKIP SPECIAL COLOR 0 0 175 [BrBlu]%"MB3050 Practical DB023-034 -036%" %2[Nrm]
+   REM 2010-04-12 *7 AT 10:00 DURATION 2:50 UNTIL 2010-05-24 SKIP SPECIAL COLOR 0 0 175 [BrBlu]%"MB3050 Practical DA003-201%" %2[Nrm]
+   REM 2010-02-22 *7 AT 15:00 DURATION 0:50 UNTIL 2010-05-10 SKIP SPECIAL COLOR 0 0 175 [BrBlu]%"MB3050 Lecture DB023-001%" %2[Nrm]
+
+  #TUESDAY
+   REM 2010-02-23 *7 AT 09:00 DURATION 0:50 UNTIL 2010-05-25 SKIP SPECIAL COLOR 0 175 0 [BrGre]%"BM1000 Lecture DA026-001%" %2[Nrm]
+   REM 2010-02-23 *7 AT 14:00 DURATION 0:50 UNTIL 2010-05-25 SKIP SPECIAL COLOR 175 75 0 [BrYlw]%"MB3210 Lecture DB023-001%" %2[Nrm]
+   REM 2010-02-23 *7 AT 15:00 DURATION 0:50 UNTIL 2010-05-11 SKIP SPECIAL COLOR 0 0 175 [BrBlu]%"MB3050 Lecture DB023-001%" %2[Nrm]
+
+  #WEDNESDAY
+   REM 2010-02-24 *7 AT 09:00 DURATION 0:50 UNTIL 2010-05-26 SKIP SPECIAL COLOR 0 175 0 [BrGre]%"BM1000 Lecture DA026-001%" %2[Nrm]
+   REM 2010-03-03 *7 AT 10:00 DURATION 2:50 UNTIL 2010-03-31 SKIP SPECIAL COLOR 175 75 0 [BrYlw]%"MB3210 Practical DB028-030 -031 -032%" %2[Nrm]
+   REM 2010-04-07 *7 AT 10:00 DURATION 2:50 UNTIL 2010-05-19 SKIP SPECIAL COLOR 175 75 0 [BrYlw]%"MB3210 Practical DA003-201 -204%" %2[Nrm]
+   REM 2010-03-10 *7 AT 13:00 DURATION 1:50 UNTIL 2010-03-31 SKIP SPECIAL COLOR 0 175 0 [BrGre]%"BM1000 Practical DB089-004%" %2[Nrm]
+   REM 2010-05-05 *7 AT 13:00 DURATION 1:50 UNTIL 2010-05-26 SKIP SPECIAL COLOR 0 175 0 [BrGre]%"BM1000 Practical DB089-004%" %2[Nrm]
+
+#THURSDAY
+   REM 2010-02-25 *7 AT 09:00 DURATION 0:50 UNTIL 2010-05-27 SKIP SPECIAL COLOR 175 75 0 [BrYlw]%"MB3210 Lecture DB023-001%" %2[Nrm]
+   REM 2010-02-25 *7 AT 16:00 DURATION 0:50 UNTIL 2010-05-06 SKIP SPECIAL COLOR 0 0 175 [BrBlu]%"MB3050 Lecture DB023-004%" %2[Nrm]
+   REM 2010-05-27 AT 16:00 DURATION 1:50 SPECIAL COLOR 0 0 175 [BrBlu]MB3050 Revision lecture DB023-004 %2[Nrm]
+
+#FRIDAY
+   REM 2010-02-26 *7 AT 12:00 DURATION 0:50 UNTIL 2010-05-28 SKIP SPECIAL COLOR 0 175 0 [BrGre]%"BM1000 Tutorial DB025-001%" %2[Nrm]
+
+  #MB3050
+   REM 2010-05-24 +14 SPECIAL COLOR 255 0 0 [BrRed] %"MB3050 Kirby report due %b%" %c[Nrm]
+
+  #MB3210
+   REM  2010-05-21 +14 SPECIAL COLOR 255 0 0 [BrRed]%"MB3210 Independent ProjectReport due %b%" %c[Nrm]
+   REM  2010-05-07 +14 SPECIAL COLOR 255 0 0 [BrRed]%"MB3210 Lab 8 report due %b%" %c[Nrm]
+   REM  2010-05-14 +14 SPECIAL COLOR 255 0 0 [BrRed]%"MB3210 Lab 9 report due %b%" %c[Nrm]
+
+  #EXAMS
+   REM 2010-06-08 +14 AT 08:15 DURATION 2:00 SPECIAL COLOR 175 75 0 [BrYlw]%"MB3210 - 21-011 %b%" %c[Nrm]
+   REM 2010-06-10 +14 AT 13:15 DURATION 3:00 SPECIAL COLOR 0 175 0 [BrGre]%"BM1000 - 3-002 %b%" %c[Nrm]
+   REM 2010-06-15 +14 AT 08:15 DURATION 2:00 SPECIAL COLOR 0 0 175 [BrBlu]%"MB3050 - 253-003  %b%" %c[Nrm]
+
+POP
+
+#RENT
+# REM 2010-01-28 +3 *21 MSG [Red]Rent due %c[Nrm]
+REM 2009-05-21 +3 *21 SPECIAL COLOR 125 0 0 [Red]%"Rent due%" %c[Nrm]
+
+#BIRTHDAY
+ FSET _yr_num(yr) ORD(YEAR(trigdate()) - yr)
+ REM 28 Jan +6 SPECIAL COLOR 125 0 0 [Red]%"Natasha's [_yr_num(1983)] birthday%" is %b[Nrm]
+ REM 27 Mar +6 SPECIAL COLOR 125 0 0 [Red]%"Darryl's [_yr_num(1979)] birthday%" is %b[Nrm]
+ REM 17 Apr +6 SPECIAL COLOR 125 0 0 [Red]%"Joe's [_yr_num(1986)] birthday%" is %b[Nrm]
+ REM 25 Apr +6 SPECIAL COLOR 125 0 0 [Red]%"Hubert's [_yr_num(1930)] birthday%" is %b[Nrm]
+ REM 25 Jun +6 SPECIAL COLOR 125 0 0 [Red]%"Anna's [_yr_num(1963)] birthday%" is %b[Nrm]
+ REM 28 Jul +6 SPECIAL COLOR 125 0 0 [Red]%"Stefan's [_yr_num(1984)] birthday%" is %b[Nrm]
+ REM 28 Jul +6 SPECIAL COLOR 125 0 0 [Red]%"Reiner's [_yr_num(1978)] birthday%" is %b[Nrm]
+ REM 04 Aug +6 SPECIAL COLOR 125 0 0 [Red]%"John's [_yr_num(1975)] birthday%" is %b[Nrm]
+ REM 25 Sep +6 SPECIAL COLOR 125 0 0 [Red]%"Lucy's [_yr_num(1978)] birthday%" is %b[Nrm]
+ REM 19 Nov +6 SPECIAL COLOR 125 0 0 [Red]%"Aurelie's birthday%" is %b[Nrm]
+ REM 22 Nov +6 SPECIAL COLOR 125 0 0 [Red]%"Mama's [_yr_num(1947)] birthday%" is %b[Nrm]
+ REM 05 Dec +6 SPECIAL COLOR 125 0 0 [Red]%"Brian's [_yr_num(1973)] birthday%" is %b[Nrm]
+ REM 13 Dec +6 SPECIAL COLOR 125 0 0 [Red]%"Anni's [_yr_num(1985)] birthday%" is %b[Nrm]
+ REM 23 Dec +6 SPECIAL COLOR 125 0 0 [Red]%"Roxi's [_yr_num(1984)] birthday%" is %b[Nrm]
+ REM 24 Dec +6 SPECIAL COLOR 125 0 0 [Red]%"Karin's [_yr_num(1973)] birthday%" is %b[Nrm]
+ REM 25 May +6 SPECIAL COLOR 125 0 0 [Red]%"Samantha's [_yr_num(1982)] birthday%" is %b[Nrm]
+ REM 26 May +6 SPECIAL COLOR 125 0 0 [Red]%"Sol's [_yr_num(1970)] birthday%" is %b[Nrm]
+
+#MISCELLANEOUS
+# SET $LatDeg -19
+# SET $LatMin 15
+# SET $LatSec 23
+# SET $LongDeg -146
+# SET $LongMin 49
+# SET $LongSec 6
+# MSG [Blu]%"%"Sunrise: [sunrise()], Sunset: [sunset()]%[Nrm]
+# MSG [Blu]%"%"Next full moon: [moondate(2)]%[Nrm]
+# REM [moondate(0)] SPECIAL MOON 0 3
+# REM [moondate(1)] SPECIAL MOON 1 3
+# REM [moondate(2)] SPECIAL MOON 2 3
+# REM [moondate(3)] SPECIAL MOON 3 3
+# REM Sat SPECIAL SHADE 225
+# REM Sun SPECIAL SHADE 200

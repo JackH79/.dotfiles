@@ -1,0 +1,33 @@
+[general]
+accounts = gmail,gmailhol
+ui = Curses.Blinkenlights
+
+[Account gmail]
+localrepository = gmailLocal
+remoterepository = gmailRemote
+maxconnections = 3
+
+[Account gmailhol]
+localrepository = gmailholLocal
+remoterepository = gmailholRemote
+maxconnections = 3
+
+[Repository gmailLocal]
+type = Maildir
+localfolders = ~/.mail/
+
+[Repository gmailholLocal]
+type = Maildir
+localfolders = ~/.mail/holborn79
+
+[Repository gmailRemote]
+type = Gmail
+remoteuser = 
+remotepass = 
+nametrans = lambda folder: re.sub('.*Spam$', 'spam', re.sub('.*Drafts$', 'drafts', re.sub('.*Sent Mail$', 'sent', re.sub('.*Starred$', 'flagged', re.sub('.*Trash$', 'trash', re.sub('.*All Mail$', 'archive', folder))))))
+
+[Repository gmailholRemote]
+type = Gmail
+remoteuser = holborn79
+remotepass = 
+nametrans = lambda folder: re.sub('.*Spam$', 'spam', re.sub('.*Drafts$', 'drafts', re.sub('.*Sent Mail$', 'sent', re.sub('.*Starred$', 'flagged', re.sub('.*Trash$', 'trash', re.sub('.*All Mail$', 'archive', folder))))))

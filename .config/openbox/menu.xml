@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openbox_menu>
+	<menu id="root-menu" label="OpenBox">
+		<item label="Thunar">
+			<action name="Execute">
+				<execute>
+					thunar
+				</execute>
+			</action>
+		</item>
+		<item label="Ranger">
+			<action name="Execute">
+				<execute>
+					sakura -e ranger
+				</execute>
+			</action>
+		</item>
+		<separator/>
+		<item label="Sakura">
+			<action name="Execute">
+				<execute>
+					sakura
+				</execute>
+			</action>
+		</item>
+		<separator/>
+		<menu id="5" label="Network">
+			<item label="Shiretoko">
+				<action name="Execute">
+					<execute>
+						firefox
+					</execute>
+				</action>
+			</item>
+			<item label="wicd">
+				<action name="Execute">
+					<execute>
+						sakura -e wicd-curses
+					</execute>
+				</action>
+			</item>
+			<separator/>
+			<item label="rTorrent">
+				<action name="Execute">
+					<execute>
+						sakura -e rtorrent
+					</execute>
+				</action>
+			</item>
+		</menu>
+		<menu id="3" label="Office">
+			<item label="texmaker">
+				<action name="Execute">
+					<execute>
+						texmaker
+					</execute>
+				</action>
+			</item>
+			<separator/>
+			<item label="Writer">
+				<action name="Execute">
+					<execute>
+						env GTK2_RC_FILES=/usr/share/themes/Clearlooks/gtk-2.0/gtkrc soffice -writer
+					</execute>
+				</action>
+			</item>
+			<item label="Calc">
+				<action name="Execute">
+					<execute>
+						env GTK2_RC_FILES=/usr/share/themes/Clearlooks/gtk-2.0/gtkrc soffice -calc
+					</execute>
+				</action>
+			</item>
+			<item label="Impress">
+				<action name="Execute">
+					<execute>
+						env GTK2_RC_FILES=/usr/share/themes/Clearlooks/gtk-2.0/gtkrc soffice -impress
+					</execute>
+				</action>
+			</item>
+			<separator/>
+			<item label="Calculator">
+				<action name="Execute">
+					<execute>
+						speedcrunch
+					</execute>
+				</action>
+			</item>
+			<item label="R">
+				<action name="Execute">
+					<execute>
+						sakura -e R
+					</execute>
+				</action>
+			</item>
+		</menu>
+		<menu id="2" label="Editors">
+			<item label="Vim">
+				<action name="Execute">
+					<execute>
+						sakura -e vim
+					</execute>
+				</action>
+			</item>
+			<item label="Medit">
+				<action name="Execute">
+					<execute>
+						medit
+					</execute>
+				</action>
+			</item>
+		</menu>
+		<menu id="6" label="Graphics">
+			<item label="Gimp">
+				<action name="Execute">
+					<execute>
+						gimp
+					</execute>
+				</action>
+			</item>
+			<separator/>
+			<item label="Geeqie">
+				<action name="Execute">
+					<execute>
+						geeqie
+					</execute>
+				</action>
+			</item>
+		</menu>
+		<menu id="7" label="Media">
+			<item label="VLC">
+				<action name="Execute">
+					<execute>
+						vlc
+					</execute>
+				</action>
+			</item>
+			<item label="Ncmpcpp">
+				<action name="Execute">
+					<execute>
+						sakura -e ncmpcpp
+					</execute>
+				</action>
+			</item>
+			<separator/>
+			<menu id="7-9640" label="Tools">
+				<item label="Audacity">
+					<action name="Execute">
+						<execute>
+							audacity
+						</execute>
+					</action>
+				</item>
+				<item label="Gnomad 2">
+					<action name="Execute">
+						<execute>
+							gnomad2
+						</execute>
+					</action>
+				</item>
+			</menu>
+		</menu>
+		<separator/>
+		<menu id="38" label="Utilities">
+			<item label="VirtualBox">
+				<action name="Execute">
+					<execute>
+						VirtualBox
+					</execute>
+				</action>
+			</item>
+			<item label="xfburn">
+				<action name="Execute">
+					<execute>
+						xfburn
+					</execute>
+				</action>
+			</item>
+			<item label="True Crypt">
+				<action name="Execute">
+					<execute>
+						truecrypt
+					</execute>
+				</action>
+			</item>
+		</menu>
+		<menu id="37" label="System">
+			<menu id="37-324630" label="Screen">
+				<item label="LCD off">
+					<action name="Execute">
+						<execute>
+							xrandr --output LVDS --off
+						</execute>
+					</action>
+				</item>
+				<item label="LCD on">
+					<action name="Execute">
+						<execute>
+							xrandr --output LVDS --auto
+						</execute>
+					</action>
+				</item>
+			</menu>
+			<item label="htop">
+				<action name="Execute">
+					<execute>
+						sakura -e htop
+					</execute>
+				</action>
+			</item>
+			<separator/>
+			<item label="Kill">
+				<action name="Execute">
+					<execute>
+						xkill
+					</execute>
+				</action>
+			</item>
+		</menu>
+		<separator/>
+		<menu id="40" label="OpenBox">
+			<menu id="client-list-menu"/>
+			<item label="OBconf">
+				<action name="Execute">
+					<execute>
+						obconf
+					</execute>
+				</action>
+			</item>
+			<item label="OBmenu">
+				<action name="Execute">
+					<execute>
+						obmenu
+					</execute>
+				</action>
+			</item>
+			<item label="GTK">
+				<action name="Execute">
+					<execute>
+						lxappearance
+					</execute>
+				</action>
+			</item>
+			<item label="Reconfigure">
+				<action name="Reconfigure"/>
+			</item>
+		</menu>
+		<separator/>
+		<menu id="root-menu-03551" label="Exit">
+			<item label="exit">
+				<action name="Exit"/>
+			</item>
+			<separator/>
+			<item label="reboot">
+				<action name="Execute">
+					<execute>
+						sudo shutdown -r now
+					</execute>
+				</action>
+			</item>
+			<item label="shutdown">
+				<action name="Execute">
+					<execute>
+						sudo shutdown -h now
+					</execute>
+				</action>
+			</item>
+		</menu>
+	</menu>
+</openbox_menu>
