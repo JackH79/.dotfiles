@@ -34,7 +34,7 @@ shifty.config.tags = {
 	["4-off"]   = { position = 4, layout = awful.layout.suit.tile.bottom              },
 	["5-pdf"]   = { position = 5, layout = awful.layout.suit.tile.bottom              },
 	["6-gra"]   = { position = 6, layout = awful.layout.suit.floating                 },
-	["7-video"] = { position = 7, layout = awful.layout.suit.floating                 },
+	["7-video"] = { position = 7, layout = awful.layout.suit.max                      },
 	["8-music"] = { position = 8, layout = awful.layout.suit.tile.bottom              },
 	["9-irssi"] = { position = 9, layout = awful.layout.suit.max                      },
 	["torrent"] = { layout = awful.layout.suit.max                                    },
