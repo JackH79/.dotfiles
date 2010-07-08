@@ -53,11 +53,10 @@ shifty.config.apps = {
 	{ match = { "irssi"                          }, tag = "9-irssi", },
 	{ match = { "rtorrent"                       }, tag = "torrent", },
 	{ match = { "Mirage"                         }, tag = "mirage",  },
-	{ match = { "wicd-curses", "wvdial"          }, tag = "dial",    },
+	{ match = { "wicd%-curses", "wvdial"         }, tag = "dial",    },
 	-- gimp
---	{ match = { "^gimp-toolbox$",                }, geometry = {0,15,175,770}, slave = true     },
---	{ match = { "^gimp-dock$",                   }, geometry = {1105,15,175,770}, slave = true  },
---	{ match = { "^gimp%-image%-window$"          }, nopopup = true, geometry = {175,15,930,770} },
+	{ match = { "^gimp%-toolbox$",               }, geometry = {0,15,175,770}, slave = true, border_width = 0     },
+	{ match = { "^gimp%-dock$",                  }, geometry = {1105,15,175,770}, slave = true, border_width = 0  },
 	-- client manipulation
 	{ match = { "" },
 		honorsizehints = false,
