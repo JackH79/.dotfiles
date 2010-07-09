@@ -6,8 +6,10 @@ require("vicious")
 require("rodentbane")
 require("shifty")
 
+-- THEME
 beautiful.init("/home/jack/.config/awesome/themes/jack2/theme.lua")
 
+-- DEFAULTS
 terminal = "urxvt"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
@@ -15,48 +17,48 @@ editor_cmd = terminal .. " -e " .. editor
 modkey = "Mod4"
 
 -- TAGS + TAG MATCHING
---layouts
+-- layouts
 layouts = {
-	awful.layout.suit.tile,          -- 1
-	awful.layout.suit.tile.left,     -- 2
-	awful.layout.suit.tile.bottom,   -- 3
-	awful.layout.suit.tile.top,      -- 4
-	awful.layout.suit.max,           -- 5
-	awful.layout.suit.magnifier,     -- 6
-	awful.layout.suit.floating,      -- 7
-	awful.layout.suit.spiral.dwindle -- 8
+	awful.layout.suit.fair,
+	awful.layout.suit.fair.horizontal,
+	awful.layout.suit.tile,
+	awful.layout.suit.tile.left,
+	awful.layout.suit.tile.bottom,
+	awful.layout.suit.tile.top,
+	awful.layout.suit.max,
+	awful.layout.suit.floating,
 }
 -- shifty: predefined tags
 shifty.config.tags = {
-	["1-def"]   = { init = true, position = 1, layout = awful.layout.suit.tile.bottom },
-	["2-net"]   = { position = 2, layout = awful.layout.suit.max                      },
-	["3-mail"]  = { position = 3, layout = awful.layout.suit.max                      },
-	["4-off"]   = { position = 4, layout = awful.layout.suit.tile.bottom              },
-	["5-pdf"]   = { position = 5, layout = awful.layout.suit.tile.bottom              },
-	["6-gra"]   = { position = 6, layout = awful.layout.suit.floating                 },
-	["7-video"] = { position = 7, layout = awful.layout.suit.max                      },
-	["8-music"] = { position = 8, layout = awful.layout.suit.tile.bottom              },
-	["9-irssi"] = { position = 9, layout = awful.layout.suit.max                      },
-	["torrent"] = { layout = awful.layout.suit.max                                    },
-	["mirage"]  = { layout = awful.layout.suit.max                                    },
-	["dial"]    = { layout = awful.layout.suit.max                                    },
+	["1-def"]   = { init = true, position = 1, layout = awful.layout.suit.fair.horizontal },
+	["2-web"]   = { position = 2, layout = awful.layout.suit.max                          },
+	["3-mail"]  = { position = 3, layout = awful.layout.suit.max                          },
+	["4-off"]   = { position = 4, layout = awful.layout.suit.tile.bottom                  },
+	["5-pdf"]   = { position = 5, layout = awful.layout.suit.tile.bottom                  },
+	["6-gra"]   = { position = 6, layout = awful.layout.suit.floating                     },
+	["7-video"] = { position = 7, layout = awful.layout.suit.max                          },
+	["8-music"] = { position = 8, layout = awful.layout.suit.tile.bottom                  },
+	["9-irssi"] = { position = 9, layout = awful.layout.suit.max                          },
+	["torrent"] = { layout = awful.layout.suit.max                                        },
+	["mirage"]  = { layout = awful.layout.suit.max                                        },
+	["dial"]    = { layout = awful.layout.suit.max                                        },
 }
 -- shifty: tags matching
 shifty.config.apps = {
-	{ match = { "Namoroka"                       }, tag = "2-net",   },
+	{ match = { "Namoroka", "jumanji"            }, tag = "2-web",   },
 	{ match = { "mutt", "Lanikai"                }, tag = "3-mail",  },
 	{ match = { "OpenOffice.org 3.2", "Texmaker" }, tag = "4-off",   },
 	{ match = { "Zathura", "Epdfview"            }, tag = "5-pdf",   },
 	{ match = { "Gimp", "Geeqie"                 }, tag = "6-gra",   },
+	{ match = { "^gimp%-toolbox$",               }, geometry = {0,15,175,770}, slave = true, border_width = 0     },
+	{ match = { "^gimp%-dock$",                  }, geometry = {1105,15,175,770}, slave = true, border_width = 0  },
 	{ match = { "MPlayer", "Vlc", "Audacity"     }, tag = "7-video", },
+	{ match = { "MPlayer"                        }, float = true     },
 	{ match = { "ncmpcpp"                        }, tag = "8-music", },
 	{ match = { "irssi"                          }, tag = "9-irssi", },
 	{ match = { "rtorrent"                       }, tag = "torrent", },
 	{ match = { "Mirage"                         }, tag = "mirage",  },
 	{ match = { "wicd%-curses", "wvdial"         }, tag = "dial",    },
-	-- gimp
-	{ match = { "^gimp%-toolbox$",               }, geometry = {0,15,175,770}, slave = true, border_width = 0     },
-	{ match = { "^gimp%-dock$",                  }, geometry = {1105,15,175,770}, slave = true, border_width = 0  },
 	-- client manipulation
 	{ match = { "" },
 		honorsizehints = false,
@@ -194,24 +196,71 @@ clockwidget = awful.widget.textclock({ align = "right" }, "<span color='#d79b1e'
 	end
 	clockwidget:buttons(awful.util.table.join(awful.button({}, 1, cal_remt)))
 
---WIDGETS BOTTOM RIGHT
+-- WIDGETS BOTTOM RIGHT
 -- CPU widget
 cputwidget = widget({ type = "textbox" })
-	vicious.register(cputwidget, vicious.widgets.cpu, "<span color='#60801f'>cpu </span><span color='#9acd32'>$1% </span>")
+	vicious.register(cputwidget, vicious.widgets.cpu, -- "<span color='#60801f'>cpu </span><span color='#9acd32'>$1% </span>")
+	function (widget, args)
+		if  args[1] == 50 then
+			return "<span color='#be6e00'>cpu </span><span color='#d79b1e'>" .. args[1] .. "% </span>"
+		elseif args[1] >= 50 then
+			return "<span color='#b23535'>cpu </span><span color='#ff4b4b'>" .. args[1] .. "% </span>"
+		else
+			return "<span color='#60801f'>cpu </span><span color='#9acd32'>" .. args[1] .. "% </span>"
+		end
+	end )
+
 cputwidget:buttons(awful.util.table.join(awful.button({}, 1, function () awful.util.spawn ( terminal .. " -e htop --sort-key PERCENT_CPU") end ) ) )
 -- CPU temp widget
 tempwidget = widget({ type = "textbox" })
-	vicious.register(tempwidget, vicious.widgets.thermal, "<span color='#60801f'>temp </span><span color='#9acd32'>$1°C </span>", 19, "thermal_zone0")
+	vicious.register(tempwidget, vicious.widgets.thermal,
+	function (widget, args)
+		if  args[1] >= 65 and args[1] < 75 then
+			return "<span color='#be6e00'>temp </span><span color='#d79b1e'>" .. args[1] .. "°C </span>"
+		elseif args[1] >= 75 and args[1] < 80 then
+			return "<span color='#b23535'>temp </span><span color='#ff4b4b'>" .. args[1] .. "°C </span>"
+		elseif args[1] > 80 then
+			naughty.notify({ title = "Temperature Warning", text = "Running hot! "..args[1].."°C!\nTake it easy.", timeout = 10, position = "top_right", fg = beautiful.fg_urgent, bg = beautiful.bg_urgent })
+			return "<span color='#b23535'>temp </span><span color='#ff4b4b'>" .. args[1] .. "°C </span>" 
+		else
+			return "<span color='#60801f'>temp </span><span color='#9acd32'>" .. args[1] .. "°C </span>"
+		end
+	end, 19, "thermal_zone0"	)
 -- Ram widget
 memwidget = widget({ type = "textbox" })
 	vicious.enable_caching(vicious.widgets.mem)
 	vicious.register(memwidget, vicious.widgets.mem, "<span color='#60801f'>ram </span><span color='#9acd32'>$1% ($2 MiB) </span>", 10)
 -- Filesystem widgets
 fsrwidget = widget({ type = "textbox" })
-	vicious.register(fsrwidget, vicious.widgets.fs, "<span color='#60801f'>/ </span><span color='#9acd32'>${/ used_p}% (${/ avail_gb} GiB free) </span>", 1200)
+	vicious.register(fsrwidget, vicious.widgets.fs,
+	function (widget, args)
+		if  args["{/ used_p}"] >= 90 and args["{/ used_p}"] < 98 then
+			return "<span color='#be6e00'>/ </span><span color='#d79b1e'>" .. args["{/ used_p}"] .. "% (" .. args["{/ avail_gb}"] .. " GiB free) </span>"
+		elseif args["{/ used_p}"] >= 98 and args["{/ used_p}"] < 100 then
+			return "<span color='#b23535'>/ </span><span color='#ff4b4b'>" .. args["{/ used_p}"] .. "% (" .. args["{/ avail_gb}"] .. " GiB free) </span>"
+		elseif args["{/ used_p}"] == 100 then
+			naughty.notify({ title = "Hard drive Warning", text = "No space left on root!\nMake some room.", timeout = 10, position = "top_right", fg = beautiful.fg_urgent, bg = beautiful.bg_urgent })
+			return "<span color='#b23535'>/ </span><span color='#ff4b4b'>" .. args["{/ used_p}"] .. "% (" .. args["{/ avail_gb}"] .. " GiB free) </span>" 
+		else
+			return "<span color='#60801f'>/ </span><span color='#9acd32'>" .. args["{/ used_p}"] .. "% (" .. args["{/ avail_gb}"] .. " GiB free) </span>"
+		end
+	end, 1200)
 
 fshwidget = widget({ type = "textbox" })
-	vicious.register(fshwidget, vicious.widgets.fs, "<span color='#60801f'>/home </span><span color='#9acd32'>${/home used_p}% (${/home avail_gb} GiB free) </span>", 1200)
+	vicious.register(fshwidget, vicious.widgets.fs, -- "<span color='#60801f'>/home </span><span color='#9acd32'>${/home used_p}% (${/home avail_gb} GiB free) </span>", 1200)
+	function (widget, args)
+		if  args["{/home used_p}"] >= 90 and args["{/home used_p}"] < 98 then
+			return "<span color='#be6e00'>/home </span><span color='#d79b1e'>" .. args["{/home used_p}"] .. "% (" .. args["{/home avail_gb}"] .. " GiB free) </span>"
+		elseif args["{/home used_p}"] >= 98 and args["{/home used_p}"] < 100 then
+			return "<span color='#b23535'>/home </span><span color='#ff4b4b'>" .. args["{/home used_p}"] .. "% (" .. args["{/home avail_gb}"] .. " GiB free) </span>"
+		elseif args["{/home used_p}"] == 100 then
+			naughty.notify({ title = "Hard drive Warning", text = "No space left on /home!\nMake some room.", timeout = 10, position = "top_right", fg = beautiful.fg_urgent, bg = beautiful.bg_urgent })
+			return "<span color='#b23535'>/home </span><span color='#ff4b4b'>" .. args["{/home used_p}"] .. "% (" .. args["{/home avail_gb}"] .. " GiB free) </span>" 
+		else
+			return "<span color='#60801f'>/home </span><span color='#9acd32'>" .. args["{/home used_p}"] .. "% (" .. args["{/home avail_gb}"] .. " GiB free) </span>"
+		end
+	end, 1200)
+
 -- Net widgets
 -- eth
 neteupwidget = widget({ type = "textbox" })
@@ -253,13 +302,34 @@ wifiwidget = widget({ type = "textbox" })
 			netwupwidget.visible = true
 			return "<span color='#60801f'>wlan </span><span color='#9acd32'>" .. string.format("%s [%i%%]", args["{ssid}"], args["{link}"]/70*100) .. " </span>"
 		end
-	end, refresh_delay, "wlan0")
+	end, refresh_delay, "wlan0" )
 -- Battery widget
 batwidget = widget({ type = "textbox" })
-	vicious.register(batwidget, vicious.widgets.bat, "<span color='#60801f'>bat </span><span color='#9acd32'>$2% </span>", 12, "BAT1")
+	vicious.register(batwidget, vicious.widgets.bat,
+	function (widget, args)
+		if  args[2] >= 75 and args[2] < 95 then
+			return "<span color='#60801f'>bat </span><span color='#9acd32'>" .. args[2] .. "% </span>"
+		elseif args[2] >= 50 and args[2] < 75 then
+			return "<span color='#be6e00'>bat </span><span color='#d79b1e'>" .. args[2] .. "% </span>"
+		elseif args[2] >= 20 and args[2] < 50 then
+			return "<span color='#b23535'>bat </span><span color='#ff4b4b'>" .. args[2] .. "% </span>"
+		elseif args[2] < 20 then
+			naughty.notify({ title = "Battery Warning", text = "Battery low! "..args[2].."% left!\nBetter get some power, or ... ", timeout = 10, position = "top_right", fg = beautiful.fg_urgent, bg = beautiful.bg_urgent })
+			return "<span color='#b23535'>bat </span><span color='#ff4b4b'>" .. args[2] .. "% </span>" 
+		else
+			return "<span color='#60801f'>bat </span><span color='#9acd32'>" .. args[2] .. "% </span>"
+		end
+	end, 23, "BAT1"	)
 -- Volume widget
 volwidget = widget({ type = "textbox" })
-	vicious.register(volwidget, vicious.widgets.volume, "<span color='#60801f'>vol </span><span color='#9acd32'>$1%</span>", 2, "Master")
+	vicious.register(volwidget, vicious.widgets.volume,
+		function (widget, args)
+			if args[1] == 0 then
+				return "<span color='#60801f'>vol </span><span color='#ff4b4b'>mute</span>" 
+			else
+				return "<span color='#60801f'>vol </span><span color='#9acd32'>" .. args[1] .. "% </span>"
+			end
+		end, 2, "Master" )
 	volwidget:buttons(
 		awful.util.table.join(
 			awful.button({ }, 1, function () awful.util.spawn("amixer -q sset Master toggle")   end),
@@ -407,7 +477,7 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey,           }, "p",                    function () awful.util.spawn("dmenu_run -b -fn 'terminus' -nb '#1a1918' -nf '#9acd32' -sb '#4c4b49' -sf '#9acd32'") end),
 	awful.key({ modkey,           }, "Tab",                  function () awful.util.spawn(terminal) end),
 	awful.key({ modkey, "Shift"   }, "Tab",                  function () awful.util.spawn(terminal .. " -e su") end),
-	--miscellaneous
+	-- miscellaneous
 	awful.key({                   }, "Print",                function () awful.util.spawn("scrot -b") end),
 	awful.key({                   }, "XF86Calculator",       function () awful.util.spawn("speedcrunch") end),
 	awful.key({ modkey, "Shift"   }, "x",                    function () awful.util.spawn("xkill") end),
@@ -428,7 +498,7 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey,           }, "i",                    function () awful.util.spawn(terminal .. " -e irssi") end),
 	awful.key({ modkey,           }, "d",                    function () awful.util.spawn(terminal .. " -e wicd-curses") end),
 	awful.key({ modkey, "Shift"   }, "d",                    function () awful.util.spawn(terminal .. " -e sudo wvdial optus") end),
-	--file managers
+	-- file managers
 	awful.key({ modkey,           }, "r",                    function () awful.util.spawn(terminal .. " -e ranger") end),
 	awful.key({ modkey,           }, "t",                    function () awful.util.spawn("thunar") end),
 
@@ -457,7 +527,6 @@ globalkeys = awful.util.table.join(
 	end)
 )
 
--- Key bindings
 -- Clients
 clientkeys = awful.util.table.join(
 	awful.key({ modkey,           }, "o",                    function (c) c.fullscreen = not c.fullscreen  end),
