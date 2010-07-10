@@ -1,11 +1,15 @@
 URxvt*termName:    rxvt
 URxvt*scrollBar:   false
 URxvt*urlLauncher: firefox
-URxvt*font:        xft:terminus:pixelsize=18
+!URxvt*font: xft:terminus:pixelsize=14
+URxvt*font:           -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
+URxvt*boldFont:       -*-terminus-bold-*-*-*-12-*-*-*-*-*-*-*
+URxvt*italicFont:     -*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*
+URxvt*boldItalicFont: -*-terminus-bold-r-*-*-12-*-*-*-*-*-*-*
 URxvt*transparent: true
 URxvt*shading: 100
 *background:  #1a1918
-*foreground:  #a4a4a4
+*foreground:  #807b76
 
 !Theme Seven
 !Black

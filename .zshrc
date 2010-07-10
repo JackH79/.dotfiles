@@ -33,12 +33,16 @@ alias C^d='exit'
 alias grep='grep --color=auto'
 alias ping='ping -c 5'
 alias dvd='mplayer -channels 6 -af hrtf dvd://'
+alias mplayer='mplayer -vo gl2'
+alias pacman='clyde'
 #auto open files
 alias -s {mpg,mpeg,avi,ogm,wmv,m4v,mp4,mov}='mplayer'
 alias -s {mp3,ogg,wav,flac}='mplayer'
 alias -s {html,php,com,net,org,gov,be}='firefox'
 alias -s txt='vim'
 alias -s pdf='zathura'
+alias paccorrupt='sudo find /var/cache/pacman/pkg -name '\''*.part.*'\'''
+alias pactesting='/usr/bin/pacman -Q $(/usr/bin/pacman -Sql {community-,}testing) 2>/dev/null'
 
 #KEYS
 bindkey "\e[8~" end-of-line
