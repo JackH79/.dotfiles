@@ -197,10 +197,19 @@ clockwidget = awful.widget.textclock({ align = "right" }, "<span color='#d79b1e'
 	end
 	clockwidget:buttons(awful.util.table.join(awful.button({}, 1, cal_remt)))
 
+-- Weather widget TODO
+--weatherwidget = widget({ type = "textbox" })
+--	vicious.register(weatherwidget, vicious.widgets.weather,
+--	function (widget, args)
+--		if args["{tempc}"] == "N/A" then
+--			return ""
+--		else
+--			return YBTL
+
 -- WIDGETS BOTTOM RIGHT
 -- CPU widget
 cputwidget = widget({ type = "textbox" })
-	vicious.register(cputwidget, vicious.widgets.cpu, -- "<span color='#60801f'>cpu </span><span color='#9acd32'>$1% </span>")
+	vicious.register(cputwidget, vicious.widgets.cpu,
 	function (widget, args)
 		if  args[1] == 50 then
 			return "<span color='#be6e00'>cpu </span><span color='#d79b1e'>" .. args[1] .. "% </span>"
@@ -210,8 +219,8 @@ cputwidget = widget({ type = "textbox" })
 			return "<span color='#60801f'>cpu </span><span color='#9acd32'>" .. args[1] .. "% </span>"
 		end
 	end )
+cputwidget:buttons(awful.util.table.join(awful.button({}, 1, function () awful.util.spawn ( terminal .. " -e htop --sort-key PERCENT_CPU") end ) ) )
 
---cputwidget:buttons(awful.util.table.join(awful.button({}, 1, function () awful.util.spawn ( terminal .. " -e htop --sort-key PERCENT_CPU") end ) ) )
 -- CPU temp widget
 tempwidget = widget({ type = "textbox" })
 	vicious.register(tempwidget, vicious.widgets.thermal,
@@ -250,7 +259,7 @@ fsrwidget = widget({ type = "textbox" })
 	end, 1200)
 
 fshwidget = widget({ type = "textbox" })
-	vicious.register(fshwidget, vicious.widgets.fs, -- "<span color='#60801f'>/home </span><span color='#9acd32'>${/home used_p}% (${/home avail_gb} GiB free) </span>", 1200)
+	vicious.register(fshwidget, vicious.widgets.fs,
 	function (widget, args)
 		if  args["{/home used_p}"] >= 90 and args["{/home used_p}"] < 98 then
 			return "<span color='#be6e00'>/home </span><span color='#d79b1e'>" .. args["{/home used_p}"] .. "% (" .. args["{/home avail_gb}"] .. " GiB free) </span>"
