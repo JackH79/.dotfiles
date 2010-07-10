@@ -328,9 +328,11 @@ batwidget = widget({ type = "textbox" })
 			return "<span color='#be6e00'>bat </span><span color='#d79b1e'>" .. args[2] .. "% </span>"
 		elseif args[2] >= 20 and args[2] < 50 then
 			return "<span color='#b23535'>bat </span><span color='#ff4b4b'>" .. args[2] .. "% </span>"
-		elseif args[2] < 20 then
+		elseif args[2] < 20 and args[1] == "-" then
 			naughty.notify({ title = "Battery Warning", text = "Battery low! "..args[2].."% left!\nBetter get some power, or ... ", timeout = 10, position = "top_right", fg = beautiful.fg_urgent, bg = beautiful.bg_urgent })
-			return "<span color='#b23535'>bat </span><span color='#ff4b4b'>" .. args[2] .. "% </span>" 
+			return "<span color='#b23535'>bat </span><span color='#ff4b4b'>" .. args[2] .. "% </span>"
+		elseif args[2] < 20 then 
+			return "<span color='#b23535'>bat </span><span color='#ff4b4b'>" .. args[2] .. "% </span>"
 		else
 			return "<span color='#60801f'>bat </span><span color='#9acd32'>" .. args[2] .. "% </span>"
 		end
