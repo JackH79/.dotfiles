@@ -166,6 +166,7 @@ calwidget = awful.widget.textclock({ align = "right" }, "<span color='#be6e00'> 
 		naughty.notify { text = cal_getc(), timeout = 10, hover_timeout = 1 }
 	end
 	calwidget:buttons(awful.util.table.join(awful.button({}, 1, cal_remc)))
+
 -- Clock widget
 clockwidget = awful.widget.textclock({ align = "right" }, "<span color='#d79b1e'>%l:%M%P</span>", 59)
 	function cal_gett()
@@ -210,7 +211,7 @@ cputwidget = widget({ type = "textbox" })
 		end
 	end )
 
-cputwidget:buttons(awful.util.table.join(awful.button({}, 1, function () awful.util.spawn ( terminal .. " -e htop --sort-key PERCENT_CPU") end ) ) )
+--cputwidget:buttons(awful.util.table.join(awful.button({}, 1, function () awful.util.spawn ( terminal .. " -e htop --sort-key PERCENT_CPU") end ) ) )
 -- CPU temp widget
 tempwidget = widget({ type = "textbox" })
 	vicious.register(tempwidget, vicious.widgets.thermal,
@@ -226,10 +227,12 @@ tempwidget = widget({ type = "textbox" })
 			return "<span color='#60801f'>temp </span><span color='#9acd32'>" .. args[1] .. "°C </span>"
 		end
 	end, 19, "thermal_zone0"	)
+
 -- Ram widget
 memwidget = widget({ type = "textbox" })
-	vicious.enable_caching(vicious.widgets.mem)
-	vicious.register(memwidget, vicious.widgets.mem, "<span color='#60801f'>ram </span><span color='#9acd32'>$1% ($2 MiB) </span>", 10)
+	vicious.cache(vicious.widgets.mem)
+	vicious.register(memwidget, vicious.widgets.mem, "<span color='#60801f'>ram </span><span color='#9acd32'>$1% ($2 MiB) </span>", 13)
+
 -- Filesystem widgets
 fsrwidget = widget({ type = "textbox" })
 	vicious.register(fsrwidget, vicious.widgets.fs,
@@ -264,7 +267,7 @@ fshwidget = widget({ type = "textbox" })
 -- Net widgets
 -- eth
 neteupwidget = widget({ type = "textbox" })
-	vicious.enable_caching(vicious.widgets.net)
+	vicious.cache(vicious.widgets.net)
 	vicious.register(neteupwidget, vicious.widgets.net, "<span color='#60801f'>up </span><span color='#9acd32'>${eth0 up_kb} </span>")
 
 netedownwidget = widget({ type = "textbox" })
@@ -283,6 +286,7 @@ netwidget = widget({ type = "textbox" })
 			return "<span color='#60801f'>eth0 </span><span color='#9acd32'>" .. args["{ip}"] .. " </span>"
 		end
 	end, refresh_delay, "eth0")
+
 -- wlan
 netwupwidget = widget({ type = "textbox" })
 	vicious.register(netwupwidget, vicious.widgets.net, "<span color='#60801f'>up </span><span color='#9acd32'>${wlan0 up_kb} </span>")
@@ -303,6 +307,7 @@ wifiwidget = widget({ type = "textbox" })
 			return "<span color='#60801f'>wlan </span><span color='#9acd32'>" .. string.format("%s [%i%%]", args["{ssid}"], args["{link}"]/70*100) .. " </span>"
 		end
 	end, refresh_delay, "wlan0" )
+
 -- Battery widget
 batwidget = widget({ type = "textbox" })
 	vicious.register(batwidget, vicious.widgets.bat,
@@ -320,11 +325,12 @@ batwidget = widget({ type = "textbox" })
 			return "<span color='#60801f'>bat </span><span color='#9acd32'>" .. args[2] .. "% </span>"
 		end
 	end, 23, "BAT1"	)
+
 -- Volume widget
 volwidget = widget({ type = "textbox" })
 	vicious.register(volwidget, vicious.widgets.volume,
 		function (widget, args)
-			if args[1] == 0 then
+			if args[1] == 0 or args[2] == "♩" then
 				return "<span color='#60801f'>vol </span><span color='#ff4b4b'>mute</span>" 
 			else
 				return "<span color='#60801f'>vol </span><span color='#9acd32'>" .. args[1] .. "% </span>"
@@ -337,15 +343,18 @@ volwidget = widget({ type = "textbox" })
 			awful.button({ }, 5, function () awful.util.spawn("amixer -q sset Master 2dB-", false) end)
 		)
 	)
+
 -- WIDGETS BOTTOM LEFT
 -- MPD widget
-mpdwidget = widget({ type = "textbox" })
-	vicious.register(mpdwidget, vicious.widgets.mpd,
+mpdwidget = widget({ type = 'textbox' })
+vicious.register(mpdwidget, vicious.widgets.mpd,
 	function (widget, args)
-		if args[1] == 'Stopped' then
+		if args["{state}"] == "Stop" then
 			return ""
-		else
-			return "<span color='#60801f'>mpd </span><span color='#9acd32'>" .. args[1] .. "</span>"
+		elseif args["{state}"] == "Play" then
+			return "<span color='#60801f'>mpd </span><span color='#9acd32'>" .. args["{Artist}"] .. " - " .. args["{Album}"] .. " - " .. args["{Title}"] .. "</span>"
+		elseif args["{state}"] == "Pause" then
+			return "<span color='#60801f'>mpd </span><span color='#d79b1e'>paused</span>"
 		end
 	end)
 	mpdwidget:buttons(
