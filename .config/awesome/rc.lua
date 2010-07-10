@@ -54,7 +54,7 @@ shifty.config.apps = {
 	{ match = { "^gimp%-toolbox$"                }, geometry = {0,15,175,770}, slave = true, border_width = 0    },
 	{ match = { "^gimp%-dock$"                   }, geometry = {1105,15,175,770}, slave = true, border_width = 0 },
 	{ match = { "MPlayer", "Vlc", "Audacity"     }, tag = "7-video", },
-	{ match = { "MPlayer"                        }, float = true     },
+	{ match = { "MPlayer"                        }, geometry = {0,15,nil,nil}, float = true },
 	{ match = { "ncmpcpp"                        }, tag = "8-music", },
 	{ match = { "irssi"                          }, tag = "9-irssi", },
 	{ match = { "rtorrent"                       }, tag = "torrent", },
