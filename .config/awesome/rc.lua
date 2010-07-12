@@ -13,7 +13,6 @@ beautiful.init("/home/jack/.config/awesome/themes/jack2/theme.lua")
 terminal = "urxvt"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
-
 modkey = "Mod4"
 
 -- TAGS + TAG MATCHING
@@ -28,38 +27,40 @@ layouts = {
 	awful.layout.suit.max,
 	awful.layout.suit.floating,
 }
+
 -- shifty: predefined tags
 shifty.config.tags = {
-	["1-def"]   = { init = true, position = 1, layout = awful.layout.suit.fair.horizontal },
-	["2-web"]   = { position = 2, layout = awful.layout.suit.max                          },
-	["3-mail"]  = { position = 3, layout = awful.layout.suit.max                          },
-	["4-off"]   = { position = 4, layout = awful.layout.suit.tile.bottom                  },
-	["5-pdf"]   = { position = 5, layout = awful.layout.suit.tile.bottom                  },
-	["6-gra"]   = { position = 6, layout = awful.layout.suit.floating                     },
-	["7-video"] = { position = 7, layout = awful.layout.suit.max                          },
-	["8-music"] = { position = 8, layout = awful.layout.suit.tile.bottom                  },
-	["9-irssi"] = { position = 9, layout = awful.layout.suit.max                          },
-	["torrent"] = { layout = awful.layout.suit.max                                        },
-	["mirage"]  = { layout = awful.layout.suit.max                                        },
-	["dial"]    = { layout = awful.layout.suit.max                                        },
+	["1-term"]   = { init = true, position = 1, layout = awful.layout.suit.fair.horizontal },
+	["2-web"]    = { position = 2, layout = awful.layout.suit.max                          },
+	["3-mail"]   = { position = 3, layout = awful.layout.suit.max                          },
+	["4-office"] = { position = 4, layout = awful.layout.suit.tile.bottom                  },
+	["5-pdf"]    = { position = 5, layout = awful.layout.suit.tile.bottom                  },
+	["6-gimp"]   = { position = 6, layout = awful.layout.suit.floating, spawn = "gimp"     },
+	["7-video"]  = { position = 7, layout = awful.layout.suit.max                          },
+	["8-music"]  = { position = 8, layout = awful.layout.suit.tile.bottom                  },
+	["9-irc"]    = { position = 9, layout = awful.layout.suit.max                          },
+	["torrent"]  = { layout = awful.layout.suit.max                                        },
+	["picture"]  = { layout = awful.layout.suit.max                                        },
+	["dial"]     = { layout = awful.layout.suit.max                                        },
 }
--- shifty: tags matching
+
+-- shifty: tags matching and client rules
 shifty.config.apps = {
-	{ match = { "Namoroka", "jumanji"            }, tag = "2-web",   },
-	{ match = { "mutt", "Lanikai"                }, tag = "3-mail",  },
-	{ match = { "OpenOffice.org 3.2", "Texmaker" }, tag = "4-off",   },
-	{ match = { "Zathura", "Epdfview"            }, tag = "5-pdf",   },
-	{ match = { "Gimp", "Geeqie"                 }, tag = "6-gra",   },
+	{ match = { "Namoroka", "jumanji"            }, tag = "2-web",                                               },
+	{ match = { "mutt", "Lanikai"                }, tag = "3-mail",                                              },
+	{ match = { "OpenOffice.org 3.2", "Texmaker" }, tag = "4-office",                                            },
+	{ match = { "Zathura", "Epdfview"            }, tag = "5-pdf",                                               },
+	{ match = { "Gimp"                           }, tag = "6-gimp",                                              },
 	{ match = { "gimp%-image%-window"            }, geometry = {175,15,930,770}, border_width = 0                },
 	{ match = { "^gimp%-toolbox$"                }, geometry = {0,15,175,770}, slave = true, border_width = 0    },
 	{ match = { "^gimp%-dock$"                   }, geometry = {1105,15,175,770}, slave = true, border_width = 0 },
-	{ match = { "MPlayer", "Vlc", "Audacity"     }, tag = "7-video", },
-	{ match = { "MPlayer"                        }, geometry = {0,15,nil,nil}, float = true },
-	{ match = { "ncmpcpp"                        }, tag = "8-music", },
-	{ match = { "irssi"                          }, tag = "9-irssi", },
-	{ match = { "rtorrent"                       }, tag = "torrent", },
-	{ match = { "Mirage"                         }, tag = "mirage",  },
-	{ match = { "wicd%-curses", "wvdial"         }, tag = "dial",    },
+	{ match = { "MPlayer", "Vlc", "Audacity"     }, tag = "7-video",                                             },
+	{ match = { "MPlayer"                        }, geometry = {0,15,nil,nil}, float = true                      },
+	{ match = { "ncmpcpp"                        }, tag = "8-music",                                             },
+	{ match = { "irssi"                          }, tag = "9-irc",                                               },
+	{ match = { "rtorrent"                       }, tag = "torrent",                                             },
+	{ match = { "Mirage", "Geeqie"               }, tag = "picture",                                             },
+	{ match = { "wicd%-curses", "wvdial"         }, tag = "dial",                                                },
 	-- client manipulation
 	{ match = { "" },
 		honorsizehints = false,
@@ -69,14 +70,15 @@ shifty.config.apps = {
 		awful.button({ modkey }, 3, awful.mouse.client.resize))
 	},
 }
+
 -- shifty: defaults
 shifty.config.defaults = {
-layout = awful.layout.suit.max,
+	layout = awful.layout.suit.max,
 }
 shifty.config.layouts = layouts
 shifty.init()
 
--- MENUE
+-- MENU
 networkmenu = {
 	{ "namoroka",    "firefox" },
 	{ "mutt",        terminal .. " -e mutt" },
@@ -155,6 +157,7 @@ mainmenu = awful.menu({
 -- Spacer widget
 spacerwidget = widget({ type = "imagebox" })
 	spacerwidget.image = image("/home/jack/.config/awesome/themes/jack2/spacer.png")
+
 -- Calendar widget
 calwidget = awful.widget.textclock({ align = "right" }, "<span color='#be6e00'> %a, %d %b </span>", 61)
 	function cal_getc()
@@ -175,22 +178,23 @@ clockwidget = awful.widget.textclock({ align = "right" }, "<span color='#d79b1e'
 		local rem = fp:read("*a")
 		fp:close()
 			rem = string.gsub(rem, "\027%[0m", "</span>")
-			rem = string.gsub(rem, "\027%[0;30m", "<span color='#1a1a1a'>")
-			rem = string.gsub(rem, "\027%[0;31m", "<span color='#b23535'>")
-			rem = string.gsub(rem, "\027%[0;32m", "<span color='#60801f'>")
-			rem = string.gsub(rem, "\027%[0;33m", "<span color='#be6e00'>")
-			rem = string.gsub(rem, "\027%[0;34m", "<span color='#1f6080'>")
-			rem = string.gsub(rem, "\027%[0;35m", "<span color='#8f46b2'>")
-			rem = string.gsub(rem, "\027%[0;36m", "<span color='#73afb4'>")
-			rem = string.gsub(rem, "\027%[0;37m", "<span color='#b2b2b2'>")
-			rem = string.gsub(rem, "\027%[1;30m", "<span color='#4c4c4c'>")
-			rem = string.gsub(rem, "\027%[1;31m", "<span color='#ff4b4b'>")
-			rem = string.gsub(rem, "\027%[1;32m", "<span color='#9acd32'>")
-			rem = string.gsub(rem, "\027%[1;33m", "<span color='#d79b1e'>")
-			rem = string.gsub(rem, "\027%[1;34m", "<span color='#329bcd'>")
-			rem = string.gsub(rem, "\027%[1;35m", "<span color='#cd64ff'>")
-			rem = string.gsub(rem, "\027%[1;36m", "<span color='#9acdff'>")
-			rem = string.gsub(rem, "\027%[1;37m", "<span color='#ffffff'>")
+			rem = string.gsub(rem, "\027%[0;30m", "<span color='#1a1a1a'>") --black
+			rem = string.gsub(rem, "\027%[0;31m", "<span color='#b23535'>") --red
+			rem = string.gsub(rem, "\027%[0;32m", "<span color='#60801f'>") --green
+			rem = string.gsub(rem, "\027%[0;33m", "<span color='#be6e00'>") --yellow
+			rem = string.gsub(rem, "\027%[0;34m", "<span color='#1f6080'>") --blue
+			rem = string.gsub(rem, "\027%[0;35m", "<span color='#8f46b2'>") --magenta
+			rem = string.gsub(rem, "\027%[0;36m", "<span color='#73afb4'>") --cyan
+			rem = string.gsub(rem, "\027%[0;37m", "<span color='#b2b2b2'>") --white
+			rem = string.gsub(rem, "\027%[1;30m", "<span color='#4c4c4c'>") --br-black
+			rem = string.gsub(rem, "\027%[1;31m", "<span color='#ff4b4b'>") --br-red
+			rem = string.gsub(rem, "\027%[1;32m", "<span color='#9acd32'>") --br-green
+			rem = string.gsub(rem, "\027%[1;33m", "<span color='#d79b1e'>") --br-yellow
+			rem = string.gsub(rem, "\027%[1;34m", "<span color='#329bcd'>") --br-blue
+			rem = string.gsub(rem, "\027%[1;35m", "<span color='#cd64ff'>") --br-magenta
+			rem = string.gsub(rem, "\027%[1;36m", "<span color='#9acdff'>") --br-cyan
+			rem = string.gsub(rem, "\027%[1;37m", "<span color='#ffffff'>") --br-white
+
 		return rem
 	end
 	function cal_remt()
@@ -198,14 +202,16 @@ clockwidget = awful.widget.textclock({ align = "right" }, "<span color='#d79b1e'
 	end
 	clockwidget:buttons(awful.util.table.join(awful.button({}, 1, cal_remt)))
 
--- Weather widget TODO
---weatherwidget = widget({ type = "textbox" })
---	vicious.register(weatherwidget, vicious.widgets.weather,
---	function (widget, args)
---		if args["{tempc}"] == "N/A" then
---			return ""
---		else
---			return YBTL
+-- Weather widget
+weatherwidget = widget({ type = "textbox" })
+	vicious.register(weatherwidget, vicious.widgets.weather,
+	function (widget, args)
+		if args["{tempc}"] == "N/A" then
+			return ""
+		else
+			return "<span color='#1f6080'>weather </span><span color='#329bcd'>" .. string.lower(args["{sky}"]) .. " at " .. args["{tempc}"] .. "°C</span>"
+		end
+	end, 600, "YBTL" )
 
 -- WIDGETS BOTTOM RIGHT
 -- CPU widget
@@ -231,12 +237,12 @@ tempwidget = widget({ type = "textbox" })
 		elseif args[1] >= 75 and args[1] < 80 then
 			return "<span color='#b23535'>temp </span><span color='#ff4b4b'>" .. args[1] .. "°C </span>"
 		elseif args[1] > 80 then
-			naughty.notify({ title = "Temperature Warning", text = "Running hot! "..args[1].."°C!\nTake it easy.", timeout = 10, position = "top_right", fg = beautiful.fg_urgent, bg = beautiful.bg_urgent })
+			naughty.notify({ title = "Temperature Warning", text = "Running hot! " .. args[1] .. "°C!\nTake it easy.", timeout = 10, position = "top_right", fg = beautiful.fg_urgent, bg = beautiful.bg_urgent })
 			return "<span color='#b23535'>temp </span><span color='#ff4b4b'>" .. args[1] .. "°C </span>" 
 		else
 			return "<span color='#60801f'>temp </span><span color='#9acd32'>" .. args[1] .. "°C </span>"
 		end
-	end, 19, "thermal_zone0"	)
+	end, 19, "thermal_zone0" )
 
 -- Ram widget
 memwidget = widget({ type = "textbox" })
@@ -244,35 +250,36 @@ memwidget = widget({ type = "textbox" })
 	vicious.register(memwidget, vicious.widgets.mem, "<span color='#60801f'>ram </span><span color='#9acd32'>$1% ($2 MiB) </span>", 13)
 
 -- Filesystem widgets
+-- root
 fsrwidget = widget({ type = "textbox" })
 	vicious.register(fsrwidget, vicious.widgets.fs,
 	function (widget, args)
-		if  args["{/ used_p}"] >= 90 and args["{/ used_p}"] < 98 then
+		if  args["{/ used_p}"] >= 93 and args["{/ used_p}"] < 97 then
 			return "<span color='#be6e00'>/ </span><span color='#d79b1e'>" .. args["{/ used_p}"] .. "% (" .. args["{/ avail_gb}"] .. " GiB free) </span>"
-		elseif args["{/ used_p}"] >= 98 and args["{/ used_p}"] < 100 then
+		elseif args["{/ used_p}"] >= 97 and args["{/ used_p}"] < 99 then
 			return "<span color='#b23535'>/ </span><span color='#ff4b4b'>" .. args["{/ used_p}"] .. "% (" .. args["{/ avail_gb}"] .. " GiB free) </span>"
-		elseif args["{/ used_p}"] == 100 then
+		elseif args["{/ used_p}"] >= 99 and args["{/ used_p}"] <= 100 then
 			naughty.notify({ title = "Hard drive Warning", text = "No space left on root!\nMake some room.", timeout = 10, position = "top_right", fg = beautiful.fg_urgent, bg = beautiful.bg_urgent })
 			return "<span color='#b23535'>/ </span><span color='#ff4b4b'>" .. args["{/ used_p}"] .. "% (" .. args["{/ avail_gb}"] .. " GiB free) </span>" 
 		else
 			return "<span color='#60801f'>/ </span><span color='#9acd32'>" .. args["{/ used_p}"] .. "% (" .. args["{/ avail_gb}"] .. " GiB free) </span>"
 		end
-	end, 1200)
-
+	end, 620)
+-- /home
 fshwidget = widget({ type = "textbox" })
 	vicious.register(fshwidget, vicious.widgets.fs,
 	function (widget, args)
-		if  args["{/home used_p}"] >= 90 and args["{/home used_p}"] < 98 then
+		if  args["{/home used_p}"] >= 93 and args["{/home used_p}"] < 97 then
 			return "<span color='#be6e00'>/home </span><span color='#d79b1e'>" .. args["{/home used_p}"] .. "% (" .. args["{/home avail_gb}"] .. " GiB free) </span>"
-		elseif args["{/home used_p}"] >= 98 and args["{/home used_p}"] < 100 then
+		elseif args["{/home used_p}"] >= 97 and args["{/home used_p}"] < 99 then
 			return "<span color='#b23535'>/home </span><span color='#ff4b4b'>" .. args["{/home used_p}"] .. "% (" .. args["{/home avail_gb}"] .. " GiB free) </span>"
-		elseif args["{/home used_p}"] == 100 then
+		elseif args["{/home used_p}"] >= 99 and args["{/home used_p}"] <= 100 then
 			naughty.notify({ title = "Hard drive Warning", text = "No space left on /home!\nMake some room.", timeout = 10, position = "top_right", fg = beautiful.fg_urgent, bg = beautiful.bg_urgent })
 			return "<span color='#b23535'>/home </span><span color='#ff4b4b'>" .. args["{/home used_p}"] .. "% (" .. args["{/home avail_gb}"] .. " GiB free) </span>" 
 		else
 			return "<span color='#60801f'>/home </span><span color='#9acd32'>" .. args["{/home used_p}"] .. "% (" .. args["{/home avail_gb}"] .. " GiB free) </span>"
 		end
-	end, 1200)
+	end, 620)
 
 -- Net widgets
 -- eth
@@ -351,24 +358,25 @@ volwidget = widget({ type = "textbox" })
 	volwidget:buttons(
 		awful.util.table.join(
 			awful.button({ }, 1, function () awful.util.spawn("amixer -q sset Master toggle")   end),
-			awful.button({ }, 4, function () awful.util.spawn("amixer -q sset Master 2dB+", false) end),
-			awful.button({ }, 5, function () awful.util.spawn("amixer -q sset Master 2dB-", false) end)
+			awful.button({ }, 3, function () awful.util.spawn( terminal .. " -e alsamixer")   end),
+			awful.button({ }, 4, function () awful.util.spawn("amixer -q sset Master 2dB+") end),
+			awful.button({ }, 5, function () awful.util.spawn("amixer -q sset Master 2dB-") end)
 		)
 	)
 
 -- WIDGETS BOTTOM LEFT
 -- MPD widget
 mpdwidget = widget({ type = 'textbox' })
-vicious.register(mpdwidget, vicious.widgets.mpd,
-	function (widget, args)
-		if args["{state}"] == "Stop" then
-			return ""
-		elseif args["{state}"] == "Play" then
-			return "<span color='#60801f'>mpd </span><span color='#9acd32'>" .. args["{Artist}"] .. " - " .. args["{Album}"] .. " - " .. args["{Title}"] .. "</span>"
-		elseif args["{state}"] == "Pause" then
-			return "<span color='#60801f'>mpd </span><span color='#d79b1e'>paused</span>"
-		end
-	end)
+	vicious.register(mpdwidget, vicious.widgets.mpd,
+		function (widget, args)
+			if args["{state}"] == "Stop" then
+				return ""
+			elseif args["{state}"] == "Play" then
+				return "<span color='#60801f'>mpd </span><span color='#9acd32'>" .. args["{Artist}"] .. " - " .. args["{Album}"] .. " - " .. args["{Title}"] .. "</span>"
+			elseif args["{state}"] == "Pause" then
+				return "<span color='#60801f'>mpd </span><span color='#d79b1e'>▌▌ paused</span>"
+			end
+		end)
 	mpdwidget:buttons(
 		awful.util.table.join(
 			awful.button({}, 1, function () awful.util.spawn("mpc toggle", false) end),
@@ -441,6 +449,7 @@ for s = 1, screen.count() do
 		layout = awful.widget.layout.horizontal.leftright },
 		clockwidget,
 		calwidget,
+		weatherwidget,
 		s == 1 and mysystray or nil,
 		mytasklist[s],
 		layout = awful.widget.layout.horizontal.rightleft }
@@ -601,12 +610,11 @@ shifty.config.clientkeys = clientkeys
 
 -- SIGNALS
 client.add_signal("manage", function (c, startup)
-
 	if not startup then
-	if not c.size_hints.user_position and not c.size_hints.program_position then
-		awful.placement.no_overlap(c)
-		awful.placement.no_offscreen(c)
-	end
+		if not c.size_hints.user_position and not c.size_hints.program_position then
+			awful.placement.no_overlap(c)
+			awful.placement.no_offscreen(c)
+		end
 	end
 end)
 
