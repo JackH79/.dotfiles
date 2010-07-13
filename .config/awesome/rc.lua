@@ -5,6 +5,7 @@ require("naughty")
 require("vicious")
 require("rodentbane")
 require("shifty")
+require("calendar")
 
 -- THEME
 beautiful.init("/home/jack/.config/awesome/themes/jack2/theme.lua")
@@ -160,16 +161,7 @@ spacerwidget = widget({ type = "imagebox" })
 
 -- Calendar widget
 calwidget = awful.widget.textclock({ align = "right" }, "<span color='#be6e00'> %a, %d %b </span>", 61)
-	function cal_getc()
-		local fp = io.popen("remind -c -m -w40,2,0 /dev/null")
-		local reminders = fp:read("*a")
-		fp:close()
-		return "<span color='#9acd32'>\n" .. reminders .. "</span>\n"
-	end
-	function cal_remc()
-		naughty.notify { text = cal_getc(), timeout = 10, hover_timeout = 1 }
-	end
-	calwidget:buttons(awful.util.table.join(awful.button({}, 1, cal_remc)))
+	calendar2.addCalendarToWidget(calwidget, "<span color='#9bcd32'>%s</span>")
 
 -- Clock widget
 clockwidget = awful.widget.textclock({ align = "right" }, "<span color='#d79b1e'>%l:%M%P</span>", 59)
@@ -197,10 +189,10 @@ clockwidget = awful.widget.textclock({ align = "right" }, "<span color='#d79b1e'
 
 		return rem
 	end
-	function cal_remt()
-		naughty.notify { text = cal_gett(), timeout = 10, hover_timeout = 1 }
-	end
-	clockwidget:buttons(awful.util.table.join(awful.button({}, 1, cal_remt)))
+	clockwidget:add_signal('mouse::enter', function ()
+		cal_remt = { naughty.notify({ text = cal_gett(), timeout = 0 }) }
+	end)
+	clockwidget:add_signal('mouse::leave', function () naughty.destroy(cal_remt[1]) end)
 
 -- Weather widget
 weatherwidget = widget({ type = "textbox" })
@@ -211,7 +203,7 @@ weatherwidget = widget({ type = "textbox" })
 		else
 			return "<span color='#1f6080'>weather </span><span color='#329bcd'>" .. string.lower(args["{sky}"]) .. " at " .. args["{tempc}"] .. "°C</span>"
 		end
-	end, 600, "YBTL" )
+	end, 1200, "YBTL" )
 
 -- WIDGETS BOTTOM RIGHT
 -- CPU widget
@@ -374,12 +366,14 @@ mpdwidget = widget({ type = 'textbox' })
 			elseif args["{state}"] == "Play" then
 				return "<span color='#60801f'>mpd </span><span color='#9acd32'>" .. args["{Artist}"] .. " - " .. args["{Album}"] .. " - " .. args["{Title}"] .. "</span>"
 			elseif args["{state}"] == "Pause" then
-				return "<span color='#60801f'>mpd </span><span color='#d79b1e'>▌▌ paused</span>"
+				return "<span color='#60801f'>mpd </span><span color='#d79b1e'>paused</span>"
 			end
 		end)
 	mpdwidget:buttons(
 		awful.util.table.join(
 			awful.button({}, 1, function () awful.util.spawn("mpc toggle", false) end),
+			awful.button({}, 2, function () awful.util.spawn( terminal .. " -e ncmpcpp")   end),
+--			awful.button({}, 3, function () naughty.notify{ title = "Now Playing:", text = "Battery low! left!\nBetter get some power, or ... ", timeout = 10, position = "top_right", fg = beautiful.fg_urgent, bg = beautiful.bg_urgent } end),
 			awful.button({}, 4, function () awful.util.spawn("mpc prev", false) end),
 			awful.button({}, 5, function () awful.util.spawn("mpc next", false) end)
 		)
@@ -450,6 +444,7 @@ for s = 1, screen.count() do
 		clockwidget,
 		calwidget,
 		weatherwidget,
+		spacerwidget,
 		s == 1 and mysystray or nil,
 		mytasklist[s],
 		layout = awful.widget.layout.horizontal.rightleft }
