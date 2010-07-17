@@ -5,7 +5,7 @@ require("naughty")
 require("vicious")
 require("rodentbane")
 require("shifty")
-require("calendar")
+require("calendar2")
 
 -- THEME
 beautiful.init("/home/jack/.config/awesome/themes/jack2/theme.lua")
@@ -14,6 +14,7 @@ beautiful.init("/home/jack/.config/awesome/themes/jack2/theme.lua")
 terminal = "urxvt"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
+browser = "firefox"
 modkey = "Mod4"
 
 -- TAGS + TAG MATCHING
@@ -160,11 +161,13 @@ spacerwidget = widget({ type = "imagebox" })
 	spacerwidget.image = image("/home/jack/.config/awesome/themes/jack2/spacer.png")
 
 -- Calendar widget
-calwidget = awful.widget.textclock({ align = "right" }, "<span color='#be6e00'> %a, %d %b </span>", 61)
-	calendar2.addCalendarToWidget(calwidget, "<span color='#9bcd32'>%s</span>")
+calwidget = widget({ type = "textbox" })
+	vicious.register(calwidget, vicious.widgets.date, "<span color='#be6e00'> %a, %d %b </span>")
+	calendar2.addCalendarToWidget(calwidget, "<span color='#9acd32'>%s</span>")
 
 -- Clock widget
-clockwidget = awful.widget.textclock({ align = "right" }, "<span color='#d79b1e'>%l:%M%P</span>", 59)
+clockwidget = widget({ type = "textbox" })
+	vicious.register(clockwidget, vicious.widgets.date, "<span color='#d79b1e'>%l:%M%P</span>")
 	function cal_gett()
 		local fp = io.popen("remind /home/jack/.reminders")
 		local rem = fp:read("*a")
@@ -186,13 +189,48 @@ clockwidget = awful.widget.textclock({ align = "right" }, "<span color='#d79b1e'
 			rem = string.gsub(rem, "\027%[1;35m", "<span color='#cd64ff'>") --br-magenta
 			rem = string.gsub(rem, "\027%[1;36m", "<span color='#9acdff'>") --br-cyan
 			rem = string.gsub(rem, "\027%[1;37m", "<span color='#ffffff'>") --br-white
-
-		return rem
+			return rem
 	end
-	clockwidget:add_signal('mouse::enter', function ()
-		cal_remt = { naughty.notify({ text = cal_gett(), timeout = 0 }) }
-	end)
+	clockwidget:add_signal('mouse::enter', function () cal_remt = { naughty.notify({ text = cal_gett(), timeout = 0, hover_timeout = 0.5 }) } end)
 	clockwidget:add_signal('mouse::leave', function () naughty.destroy(cal_remt[1]) end)
+	local function time_cet()
+		local time = os.time()
+		time2 = time - (8*3600)
+		local new_time = os.date("%a, %I:%M%P", time2)
+		return new_time
+	end
+	local function time_utc()
+		local time = os.time()
+		time2 = time - (9*3600)
+		local new_time = os.date("%a, %I:%M%P", time2)
+		return new_time
+	end
+	local function time_nzst()
+		local time = os.time()
+		time2 = time + (2*3600)
+		local new_time = os.date("%a, %I:%M%P", time2)
+		return new_time
+	end
+	local function time_ckt()
+		local time = os.time()
+		time2 = time - (20*3600)
+		local new_time = os.date("%a, %I:%M%P", time2)
+		return new_time
+	end
+	local function time_pst()
+		local time = os.time()
+		time2 = time - (17*3600)
+		local new_time = os.date("%a, %I:%M%P", time2)
+		return new_time
+	end
+	local function time_est()
+		local time = os.time()
+		time2 = time - (14*3600)
+		local new_time = os.date("%a, %I:%M%P", time2)
+		return new_time
+	end
+
+	clockwidget:buttons(awful.util.table.join(awful.button({}, 3, function () naughty.notify({ text = "<span color='#be6e00'>London    : </span><span color='#d79b1e'>" .. time_utc() .. "</span>\n<span color='#be6e00'>Düsseldorf: </span><span color='#d79b1e'>" .. time_cet() .. "</span>\n\n<span color='#be6e00'>Tauranga  : </span><span color='#d79b1e'>" .. time_nzst() .. "</span>\n<span color='#be6e00'>Rarotonga : </span><span color='#d79b1e'>" .. time_ckt() .. "</span>\n\n<span color='#be6e00'>Vancouver : </span><span color='#d79b1e'>" .. time_pst() .. "</span>\n<span color='#be6e00'>Woods Hole: </span><span color='#d79b1e'>" .. time_est() .. "</span>", timeout = 20, hover_timeout = 0.5 }) end)))
 
 -- Weather widget
 weatherwidget = widget({ type = "textbox" })
@@ -201,9 +239,12 @@ weatherwidget = widget({ type = "textbox" })
 		if args["{tempc}"] == "N/A" then
 			return ""
 		else
-			return "<span color='#1f6080'>weather </span><span color='#329bcd'>" .. string.lower(args["{sky}"]) .. " at " .. args["{tempc}"] .. "°C</span>"
+			weatherwidget:add_signal('mouse::enter', function () weather_n = { naughty.notify({ title = "<span color='#1f6080'>Current conditions for:\n" .. args["{city}"] .. ":</span>", text = "<span color='#329bcd'>Wind    : " .. args["{windkmh}"] .. " km/h " .. args["{wind}"] .. "\nHumidity: " .. args["{humid}"] .. " %\nPressure: " .. args["{press}"] .. " hPa</span>", timeout = 0, hover_timeout = 0.5 }) } end)
+			weatherwidget:add_signal('mouse::leave', function () naughty.destroy(weather_n[1]) end)
+			return "<span color='#1f6080'>weather </span><span color='#329bcd'>" .. string.lower(args["{sky}"]) .. ", " .. args["{tempc}"] .. "°C</span>"
 		end
 	end, 1200, "YBTL" )
+weatherwidget:buttons(awful.util.table.join(awful.button({}, 3, function () awful.util.spawn ( browser .. " http://www.weatherzone.com.au/qld/lower-burdekin/townsville") end)))
 
 -- WIDGETS BOTTOM RIGHT
 -- CPU widget
