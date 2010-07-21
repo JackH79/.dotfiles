@@ -193,6 +193,7 @@ clockwidget = widget({ type = "textbox" })
 	end
 	clockwidget:add_signal('mouse::enter', function () cal_remt = { naughty.notify({ text = cal_gett(), timeout = 0, hover_timeout = 0.5 }) } end)
 	clockwidget:add_signal('mouse::leave', function () naughty.destroy(cal_remt[1]) end)
+
 	local function time_cet()
 		local time = os.time()
 		time2 = time - (8*3600)
@@ -230,7 +231,7 @@ clockwidget = widget({ type = "textbox" })
 		return new_time
 	end
 
-	clockwidget:buttons(awful.util.table.join(awful.button({}, 3, function () naughty.notify({ text = "<span color='#be6e00'>London    : </span><span color='#d79b1e'>" .. time_utc() .. "</span>\n<span color='#be6e00'>Düsseldorf: </span><span color='#d79b1e'>" .. time_cet() .. "</span>\n\n<span color='#be6e00'>Tauranga  : </span><span color='#d79b1e'>" .. time_nzst() .. "</span>\n<span color='#be6e00'>Rarotonga : </span><span color='#d79b1e'>" .. time_ckt() .. "</span>\n\n<span color='#be6e00'>Vancouver : </span><span color='#d79b1e'>" .. time_pst() .. "</span>\n<span color='#be6e00'>Woods Hole: </span><span color='#d79b1e'>" .. time_est() .. "</span>", timeout = 20, hover_timeout = 0.5 }) end)))
+--	clockwidget:buttons(awful.util.table.join(awful.button({}, 3, function () naughty.notify({ text = "<span color='#be6e00'>London    : </span><span color='#d79b1e'>" .. time_utc() .. "</span>\n<span color='#be6e00'>Düsseldorf: </span><span color='#d79b1e'>" .. time_cet() .. "</span>\n\n<span color='#be6e00'>Tauranga  : </span><span color='#d79b1e'>" .. time_nzst() .. "</span>\n<span color='#be6e00'>Rarotonga : </span><span color='#d79b1e'>" .. time_ckt() .. "</span>\n\n<span color='#be6e00'>Vancouver : </span><span color='#d79b1e'>" .. time_pst() .. "</span>\n<span color='#be6e00'>Woods Hole: </span><span color='#d79b1e'>" .. time_est() .. "</span>", timeout = 20, hover_timeout = 0.5 }) end)))
 
 -- Weather widget
 weatherwidget = widget({ type = "textbox" })
@@ -241,7 +242,7 @@ weatherwidget = widget({ type = "textbox" })
 		else
 			weatherwidget:add_signal('mouse::enter', function () weather_n = { naughty.notify({ title = "<span color='#1f6080'>Current conditions for:\n" .. args["{city}"] .. ":</span>", text = "<span color='#329bcd'>Wind    : " .. args["{windkmh}"] .. " km/h " .. args["{wind}"] .. "\nHumidity: " .. args["{humid}"] .. " %\nPressure: " .. args["{press}"] .. " hPa</span>", timeout = 0, hover_timeout = 0.5 }) } end)
 			weatherwidget:add_signal('mouse::leave', function () naughty.destroy(weather_n[1]) end)
-			return "<span color='#1f6080'>weather </span><span color='#329bcd'>" .. string.lower(args["{sky}"]) .. ", " .. args["{tempc}"] .. "°C</span>"
+			return "<span color='#1f6080'> weather </span><span color='#329bcd'>" .. string.lower(args["{sky}"]) .. ", " .. args["{tempc}"] .. "°C</span>"
 		end
 	end, 1200, "YBTL" )
 weatherwidget:buttons(awful.util.table.join(awful.button({}, 3, function () awful.util.spawn ( browser .. " http://www.weatherzone.com.au/qld/lower-burdekin/townsville") end)))
@@ -369,7 +370,7 @@ batwidget = widget({ type = "textbox" })
 		elseif args[2] >= 20 and args[2] < 50 then
 			return "<span color='#b23535'>bat </span><span color='#ff4b4b'>" .. args[2] .. "% </span>"
 		elseif args[2] < 20 and args[1] == "-" then
-			naughty.notify({ title = "Battery Warning", text = "Battery low! "..args[2].."% left!\nBetter get some power, or ... ", timeout = 10, position = "top_right", fg = beautiful.fg_urgent, bg = beautiful.bg_urgent })
+			naughty.notify({ title = "Battery Warning", text = "Battery low! "..args[2].."% left!\nBetter get some power.", timeout = 10, position = "top_right", fg = beautiful.fg_urgent, bg = beautiful.bg_urgent })
 			return "<span color='#b23535'>bat </span><span color='#ff4b4b'>" .. args[2] .. "% </span>"
 		elseif args[2] < 20 then 
 			return "<span color='#b23535'>bat </span><span color='#ff4b4b'>" .. args[2] .. "% </span>"
@@ -414,7 +415,6 @@ mpdwidget = widget({ type = 'textbox' })
 		awful.util.table.join(
 			awful.button({}, 1, function () awful.util.spawn("mpc toggle", false) end),
 			awful.button({}, 2, function () awful.util.spawn( terminal .. " -e ncmpcpp")   end),
---			awful.button({}, 3, function () naughty.notify{ title = "Now Playing:", text = "Battery low! left!\nBetter get some power, or ... ", timeout = 10, position = "top_right", fg = beautiful.fg_urgent, bg = beautiful.bg_urgent } end),
 			awful.button({}, 4, function () awful.util.spawn("mpc prev", false) end),
 			awful.button({}, 5, function () awful.util.spawn("mpc next", false) end)
 		)
@@ -480,8 +480,7 @@ for s = 1, screen.count() do
 	mywibox[s] = awful.wibox({ position = "top", height = "14", screen = s })
 	mywibox[s].widgets = { {
 		mytaglist[s], spacerwidget,
-		mypromptbox[s],
-		layout = awful.widget.layout.horizontal.leftright },
+		mypromptbox[s], layout = awful.widget.layout.horizontal.leftright },
 		clockwidget,
 		calwidget,
 		weatherwidget,
@@ -492,7 +491,7 @@ for s = 1, screen.count() do
 	-- bottom box
 	infobox[s] = awful.wibox({ position = "bottom", height = "14", screen = s })
 	infobox[s].widgets = { {
-		mpdwidget, ["layout"] = awful.widget.layout.horizontal.leftright },
+		mpdwidget, layout = awful.widget.layout.horizontal.leftright },
 		volwidget,
 		batwidget,
 		neteupwidget, netedownwidget, netwidget,
@@ -548,7 +547,9 @@ globalkeys = awful.util.table.join(
 	awful.key({                   }, "XF86Calculator",       function () awful.util.spawn("speedcrunch") end),
 	awful.key({ modkey, "Shift"   }, "x",                    function () awful.util.spawn("xkill") end),
 	awful.key({ modkey, "Shift"   }, "l",                    function () awful.util.spawn(terminal .. " -e xscreensaver-command --lock") end),
-	awful.key({ modkey, "Control", "Shift" }, "r",           rodentbane.start),
+	awful.key({ modkey, "Control", "Shift" }, "r",           rodentbane.start),         
+	awful.key({ modkey            }, "F8",                   function () awful.util.spawn("truecrypt") end),
+	awful.key({ modkey, "Control" }, "t",                    function () naughty.notify({ text = "<span color='#be6e00'>London    : </span><span color='#d79b1e'>" .. time_utc() .. "</span>\n<span color='#be6e00'>Düsseldorf: </span><span color='#d79b1e'>" .. time_cet() .. "</span>\n\n<span color='#be6e00'>Tauranga  : </span><span color='#d79b1e'>" .. time_nzst() .. "</span>\n<span color='#be6e00'>Rarotonga : </span><span color='#d79b1e'>" .. time_ckt() .. "</span>\n\n<span color='#be6e00'>Vancouver : </span><span color='#d79b1e'>" .. time_pst() .. "</span>\n<span color='#be6e00'>Woods Hole: </span><span color='#d79b1e'>" .. time_est() .. "</span>", timeout = 20, hover_timeout = 0.5 }) end),
 	-- volume + mpd
 	awful.key({                   }, "XF86AudioLowerVolume", function () awful.util.spawn("amixer -q sset Master 2dB-") end),
 	awful.key({                   }, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer -q sset Master 2dB+") end),
@@ -558,12 +559,18 @@ globalkeys = awful.util.table.join(
 	awful.key({                   }, "XF86AudioPrev",        function () awful.util.spawn("mpc prev") end),
 	awful.key({                   }, "XF86AudioMute",        function () awful.util.spawn("amixer -q sset Master toggle") end),
 	awful.key({ modkey,           }, "m",                    function () awful.util.spawn(terminal .. " -e ncmpcpp") end),
+	-- office
+	awful.key({ modkey,           }, "F1",                   function () awful.util.spawn("texmaker") end),
+	awful.key({ modkey,           }, "F2",                   function () awful.util.spawn("soffice -writer") end),
+	awful.key({ modkey,           }, "F3",                   function () awful.util.spawn("soffice -calc") end),
+	awful.key({ modkey,           }, "F4",                   function () awful.util.spawn("soffice -impress") end),
 	-- web
 	awful.key({                   }, "XF86HomePage",         function () awful.util.spawn("firefox") end),
 	awful.key({                   }, "XF86Mail",             function () awful.util.spawn(terminal .. " -e mutt") end),
 	awful.key({ modkey,           }, "i",                    function () awful.util.spawn(terminal .. " -e irssi") end),
 	awful.key({ modkey,           }, "d",                    function () awful.util.spawn(terminal .. " -e wicd-curses") end),
 	awful.key({ modkey, "Shift"   }, "d",                    function () awful.util.spawn(terminal .. " -e sudo wvdial optus") end),
+	awful.key({ modkey,           }, "F12",                  function () awful.util.spawn(terminal .. " -e rtorrent") end),
 	-- file managers
 	awful.key({ modkey,           }, "r",                    function () awful.util.spawn(terminal .. " -e ranger") end),
 	awful.key({ modkey,           }, "t",                    function () awful.util.spawn("thunar") end),
