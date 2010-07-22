@@ -1,0 +1,25 @@
+!GREENISH
+!black
+*color0 : #131b15
+*color8 : #253029
+!red
+*color1 : #704a26
+*color9 : #b88348
+!green
+*color2 : #2b8621
+*color10: #53ca41
+!yellow
+*color3 : #738816
+*color11: #afc934
+!blue
+*color4 : #1b534f
+*color12: #348f8e
+!magenta
+*color5 : #8d5b93
+*color13: #c7a9cc
+!cyan
+*color6 : #50d69f
+*color14: #98f1d4
+!white
+*color7 : #a4c0a6
+*color15: #dde8de

@@ -1,6 +1,8 @@
+!URXVT
 URxvt*termName:    rxvt
 URxvt*scrollBar:   false
 URxvt*urlLauncher: firefox
+URxvt*buffered: true
 !URxvt*font: xft:terminus:pixelsize=14
 URxvt*font:           -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
 URxvt*boldFont:       -*-terminus-bold-*-*-*-12-*-*-*-*-*-*-*
@@ -8,270 +10,30 @@ URxvt*italicFont:     -*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*
 URxvt*boldItalicFont: -*-terminus-bold-r-*-*-12-*-*-*-*-*-*-*
 URxvt*transparent: true
 URxvt*shading: 100
+
+!XTERM
+xterm*toolBar: false
+xterm*scrollBar: fasle
+xterm*background: #1a1918
+xterm*foreground: #a4a4a4
+xterm*font: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
+
+!COLOURS
 *background:  #1a1918
 *foreground:  #807b76
+!#include "/home/jack/.config/Xcolours/allblue"
+!#include "/home/jack/.config/Xcolours/allgreen"
+#include "/home/jack/.config/Xcolours/bright"
+!#include "/home/jack/.config/Xcolours/bright2"
+!#include "/home/jack/.config/Xcolours/yelloworange"
+!#include "/home/jack/.config/Xcolours/greenish"
+!#include "/home/jack/.config/Xcolours/brightest"
+!#include "/home/jack/.config/Xcolours/boring"
+!#include "/home/jack/.config/Xcolours/pale"
+!#include "/home/jack/.config/Xcolours/pale2"
+!#include "/home/jack/.config/Xcolours/darkish"
+!#include "/home/jack/.config/Xcolours/brightorange"
+!#include "/home/jack/.config/Xcolours/boring2"
 
-!Theme Seven
-!Black
-!*color0:    #262524
-!*color8:    #595755
-!Red
-!*color1:    #bf4646
-!*color9:    #f48a8a
-!Green
-!*color2:    #67b25f
-!*color10:   #a5d79f
-!Yellow
-!*color3:    #cfc44e
-!*color11:   #e1da84
-!Blue
-!*color4:    #516083
-!*color12:   #a2bbff
-!Magenta
-!*color5:    #ca6eff
-!*color13:   #e2b0ff
-!Cyan
-!*color6:    #92b2f8
-!*color14:   #bacdf8
-!White
-!*color7:    #d5d5d5
-!*color15:   #ffffff
-
-!*background: #171717
-!*foreground: #ffffff
-! Black
-!*color0: #292929
-!*color8: #3d3d3d
-! Red
-!*color1: #DE6951
-!*color9: #c56a47
-! Green
-!*color2: #bcda55
-!*color10: #9dbf60
-! Yellow
-!*color3: #E2A564
-!*color11: #EC8A25
-! Blue
-!*color4: #2187F6
-!*color12: #5495DC
-! Magenta
-!*color5: #875C8D
-!*color13: #E41F66
-! Cyan
-!*color6: #4390B1
-!*color14: #276CC2
-! White
-!*color7: #D2D2D2
-!*color15: #ffffff
-
-!*background: #000000
-!*foreground: #807855
-!black
-!*color0: #262729
-!*color8: #555544
-!red
-!*color1: #ce5c00
-!*color9: #f57900
-!green
-!*color2: #668800
-!*color10: #88aa22
-!brown/yellow
-!*color3: #B88B10
-!*color11: #FFC135
-!blue
-!*color4: #5485a4
-!*color12: #85A8C0
-!magenta
-!*color5: #85608b
-!*color13: #ad7fa8
-!cyan
-!*color6: #807855
-!*color14: #99916A
-!white
-!*color7: #767779
-!*color15: #b6b8b9
-
-!BRIGHT
-!*background: #000000
-!*foreground: #FFFFFF
-!black
-*color0 : #1a1a1a
-*color8 : #4c4c4c
-!red
-*color1 : #b23535
-*color9 : #ff4b4b
-!green
-*color2 : #60801f
-*color10: #9acd32
-!yellow
-*color3 : #be6e00
-*color11: #d79b1e
-!blue
-*color4 : #1f6080
-*color12: #329bcd
-!magenta
-*color5 : #8f46b2
-*color13: #cd64ff
-!cyan
-*color6 : #73afb4
-*color14: #9bcdff
-!white
-*color7 : #b2b2b2
-*color15: #FFFFFF
-
-!*foreground:     #DDDDDD
-!*background:     #121212
-!black
-!*color0:         #353535
-!*color8:         #666666
-!red
-!*color1:         #AE4747
-!*color9:         #EE6363
-!green
-!*color2:         #556B2F
-!*color10:        #9ACD32
-!brown/yellow
-!*color3:         #DAA520
-!*color11:        #FFC125
-!blue
-!*color4:         #6F99B4
-!*color12:        #7C96B0
-!magenta
-!*color5:         #8B7B8B
-!*color13:        #D8BFD8
-!cyan
-!*color6:         #A7A15E
-!*color14:        #F0E68C
-!white
-!*color7:         #DDDDDD
-!*color15:        #FFFFFF
-
-!Theme Two
-!*background: rgb:00/00/00
-!*foreground: rgb:7f/7f/7f
-!*color0:     rgb:00/00/00
-!*color1:     rgb:9e/18/28
-!*color2:     rgb:ae/ce/92
-!*color3:     rgb:96/8a/38
-!*color4:     rgb:41/41/71
-!*color5:     rgb:96/3c/59
-!*color6:     rgb:41/81/79
-!*color7:     rgb:be/be/be
-!*color8:     rgb:66/66/66
-!*color9:     rgb:cf/61/71
-!*color10:    rgb:c5/f7/79
-!*color11:    rgb:ff/f7/96
-!*color12:    rgb:41/86/be
-!*color13:    rgb:cf/9e/be
-!*color14:    rgb:71/be/be
-!*color15:    rgb:ff/ff/ff
-
-!*foreground:     rgb:dd/dd/dd
-!*background:     rgb:22/22/22
-!black
-!*color0:         rgb:19/19/19
-!*color8:         rgb:25/25/25
-!red
-!*color1:         rgb:80/32/32
-!*color9:         rgb:98/2b/2b
-!green
-!*color2:         rgb:5b/76/2f
-!*color10:        rgb:89/b8/3f
-!brown/yellow
-!*color3:         rgb:aa/99/43
-!*color11:        rgb:ef/ef/60
-!blue
-!*color4:         rgb:32/4c/80
-!*color12:        rgb:2b/4f/98
-!magenta
-!*color5:         rgb:70/6c/9a
-!*color13:        rgb:82/6a/b1
-!cyan
-!*color6:         rgb:92/b1/9e
-!*color14:        rgb:a1/cd/cd
-!white
-!*color7:         rgb:ff/ff/ff
-!*color15:        rgb:dd/dd/dd
-
-!*foreground:#a0a0a0
-!*background:#1b1d1e
-!black
-!*color0:    #1b1d1e
-!*color8:    #505354
-!red
-!*color1:    #f92672
-!*color9:    #ff5995
-!green
-!*color2:    #82b414
-!*color10:   #b6e354
-!yellow
-!*color3:    #fd971f
-!*color11:   #feed6c
-!blue
-!*color4:    #56c2d6
-!*color12:   #8cedff
-!magenta
-!*color5:    #8c54fe
-!*color13:   #9e6ffe
-!cyan
-!*color6:    #465457
-!*color14:   #899ca1
-!white
-!*color7:    #ccccc6
-!*color15:   #f8f8f2
-
-!*background:    #000000
-!*foreground:    #FFFFFF
-!black
-!*color0 :            #222222
-!*color8 :            #454545
-!red
-!*color1 :            #B22222
-!*color9 :            #FA8072
-!green
-!*color2 :            #556B2F
-!*color10:            #9ACD32
-!yellow
-!*color3 :            #B8860B
-!*color11:            #DAA520
-!blue
-!*color4 :            #4682B4
-!*color12:            #6495ED
-!magenta
-!*color5 :            #9932CC
-!*color13:            #DA70D6
-!cyan
-!*color6 :            #87CEEB
-!*color14:            #B0E0E6
-!white
-!*color7 :            #C0C0C0
-!*color15:            #FFFFFF
-
-!! == xscreensaver == !!
-!! -- font settings -- !
-!xscreensaver.Dialog.headingFont:xft:terminus:medium:pixelsize=12
-!xscreensaver.Dialog.bodyFont:xft::terminus:medium:pixelsize=12
-!xscreensaver.Dialog.labelFont:xft:terminus:medium:pixelsize=12
-!xscreensaver.Dialog.unameFont:xft:terminus:medium:pixelsize=12
-!xscreensaver.Dialog.buttonFont:xft:terminus:medium:pixelsize=12
-!xscreensaver.Dialog.dateFont:xft:terminus:medium:pixelsize=12
-!xscreensaver.passwd.passwdFont::xft:terminus:medium:pixelsize=12
-!! -- general dialog box -- !
-xscreensaver.Dialog.foreground:         #a4a4a4
-xscreensaver.Dialog.background:         #262524
-xscreensaver.Dialog.topShadowColor:     #333230
-xscreensaver.Dialog.bottomShadowColor:  #1a1918
-xscreensaver.Dialog.Button.foreground:  #a4a4a4
-xscreensaver.Dialog.Button.background:  #262524
-!! -- username/password input box and date text colour -- !
-xscreensaver.Dialog.text.foreground:    #a4a4a4
-xscreensaver.Dialog.text.background:    #262524
-xscreensaver.Dialog.internalBorderWidth:24
-xscreensaver.Dialog.borderWidth:        20
-xscreensaver.Dialog.shadowThickness:    1
-!! -- timeout bar -- !
-xscreensaver.passwd.thermometer.foreground:  #a4a4a4
-xscreensaver.passwd.thermometer.background:  #262524
-xscreensaver.passwd.thermometer.width:       3
-!! -- datestamp format -- !
-xscreensaver.dateFormat: %a, %d %b | %I:%M%P
+!XSCREENSAVER
+#include "/home/jack/.config/Xcolours/xscreendark"

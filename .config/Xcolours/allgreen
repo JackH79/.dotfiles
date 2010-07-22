@@ -1,0 +1,26 @@
+!ALLGREEN
+!black
+*color0 : #0c0f07
+*color8 : #252f17
+!red
+*color1 : #4d4821
+*color9 : #836f3f
+!green
+*color2 : #293a14
+*color10: #537329
+!yellow
+*color3 : #434416
+*color11: #565e20
+!blue
+*color4 : #21351d
+*color12: #3f6539
+!magenta
+*color5 : #4d5333
+*color13: #7a7162
+!cyan
+*color6 : #597b45
+*color14: #62a871
+!white
+*color7 : #728850
+*color15: #c2d2ae
+

@@ -1,0 +1,25 @@
+!Seven
+!Black
+*color0:    #262524
+*color8:    #595755
+!Red
+*color1:    #bf4646
+*color9:    #f48a8a
+!Green
+*color2:    #67b25f
+*color10:   #a5d79f
+!Yellow
+*color3:    #cfc44e
+*color11:   #e1da84
+!Blue
+*color4:    #516083
+*color12:   #a2bbff
+!Magenta
+*color5:    #ca6eff
+*color13:   #e2b0ff
+!Cyan
+*color6:    #92b2f8
+*color14:   #bacdf8
+!White
+*color7:    #d5d5d5
+*color15:   #ffffff
