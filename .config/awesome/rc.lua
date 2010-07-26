@@ -10,6 +10,25 @@ require("calendar2")
 -- THEME
 beautiful.init("/home/jack/.config/awesome/themes/jack2/theme.lua")
 
+-- COLOURS
+coldef  = "</span>"
+colblk  = "<span color='#1a1a1a'>"
+colred  = "<span color='#b23535'>"
+colgre  = "<span color='#60801f'>"
+colyel  = "<span color='#be6e00'>"
+colblu  = "<span color='#1f6080'>"
+colmag  = "<span color='#8f46b2'>"
+colcya  = "<span color='#73afb4'>"
+colwhi  = "<span color='#b2b2b2'>"
+colbblk = "<span color='#4c4c4c'>"
+colbred = "<span color='#ff4b4b'>"
+colbgre = "<span color='#9bcd32'>"
+colbyel = "<span color='#d79b1e'>"
+colbblu = "<span color='#329bcd'>"
+colbmag = "<span color='#cd64ff'>"
+colbcya = "<span color='#9acdff'>"
+colbwhi = "<span color='#ffffff'>"
+
 -- DEFAULTS
 terminal = "urxvt"
 editor = os.getenv("EDITOR") or "vim"
@@ -48,21 +67,21 @@ shifty.config.tags = {
 
 -- shifty: tags matching and client rules
 shifty.config.apps = {
-	{ match = { "Namoroka", "jumanji"            }, tag = "2-web",                                               },
-	{ match = { "mutt", "Lanikai"                }, tag = "3-mail",                                              },
-	{ match = { "OpenOffice.org 3.2", "Texmaker" }, tag = "4-office",                                            },
-	{ match = { "Zathura", "Epdfview"            }, tag = "5-pdf",                                               },
-	{ match = { "Gimp"                           }, tag = "6-gimp",                                              },
-	{ match = { "gimp%-image%-window"            }, geometry = {175,15,930,770}, border_width = 0                },
-	{ match = { "^gimp%-toolbox$"                }, geometry = {0,15,175,770}, slave = true, border_width = 0    },
-	{ match = { "^gimp%-dock$"                   }, geometry = {1105,15,175,770}, slave = true, border_width = 0 },
-	{ match = { "MPlayer", "Vlc", "Audacity"     }, tag = "7-video",                                             },
-	{ match = { "MPlayer"                        }, geometry = {0,15,nil,nil}, float = true                      },
-	{ match = { "ncmpcpp"                        }, tag = "8-music",                                             },
-	{ match = { "irssi"                          }, tag = "9-irc",                                               },
-	{ match = { "rtorrent"                       }, tag = "torrent",                                             },
-	{ match = { "Mirage", "Geeqie"               }, tag = "picture",                                             },
-	{ match = { "wicd%-curses", "wvdial"         }, tag = "dial",                                                },
+	{ match = { "Namoroka", "jumanji"        }, tag = "2-web",                                               },
+	{ match = { "mutt", "Lanikai"            }, tag = "3-mail",                                              },
+	{ match = { "OpenOffice.org 3.2"         }, tag = "4-office",                                            },
+	{ match = { "Zathura", "Epdfview"        }, tag = "5-pdf",                                               },
+	{ match = { "Gimp"                       }, tag = "6-gimp",                                              },
+	{ match = { "gimp%-image%-window"        }, geometry = {175,15,930,770}, border_width = 0                },
+	{ match = { "^gimp%-toolbox$"            }, geometry = {0,15,175,770}, slave = true, border_width = 0    },
+	{ match = { "^gimp%-dock$"               }, geometry = {1105,15,175,770}, slave = true, border_width = 0 },
+	{ match = { "MPlayer", "Vlc", "Audacity" }, tag = "7-video",                                             },
+	{ match = { "MPlayer"                    }, geometry = {0,15,nil,nil}, float = true                      },
+	{ match = { "ncmpcpp"                    }, tag = "8-music",                                             },
+	{ match = { "irssi"                      }, tag = "9-irc",                                               },
+	{ match = { "rtorrent"                   }, tag = "torrent",                                             },
+	{ match = { "Mirage", "Geeqie"           }, tag = "picture",                                             },
+	{ match = { "wicd%-curses", "wvdial"     }, tag = "dial",                                                },
 	-- client manipulation
 	{ match = { "" },
 		honorsizehints = false,
@@ -91,7 +110,6 @@ networkmenu = {
 }
 
 officemenu = {
-	{ "texmaker",    "texmaker" },
 	{ "writer",      "soffice -writer" },
 	{ "calc",        "soffice -calc" },
 	{ "impress",     "soffice -impress" },
@@ -121,16 +139,16 @@ utilitiesmenu = {
 	{ "truecrypt",   "truecrypt" }
 }
 
-systemmenu = {
-	{ "monitor",     monitormenu },
-	{ "htop",        terminal .. " -e htop" },
-	{ "kill",        "xkill" }
-}
-
 monitormenu = {
 	{ "scroff",      "xrandr --output LVDS --off" },
 	{ "scron",       "xrandr --output LVDS --auto" },
 	{ "scrmax",      "xrandr --output VGA-0 --preferred" }
+}
+
+systemmenu = {
+	{ "monitor",     monitormenu },
+	{ "htop",        terminal .. " -e htop" },
+	{ "kill",        "xkill" }
 }
 
 awesomemenu = {
@@ -162,12 +180,12 @@ spacerwidget = widget({ type = "imagebox" })
 
 -- Calendar widget
 calwidget = widget({ type = "textbox" })
-	vicious.register(calwidget, vicious.widgets.date, "<span color='#be6e00'> %a, %d %b </span>")
-	calendar2.addCalendarToWidget(calwidget, "<span color='#9acd32'>%s</span>")
+	vicious.register(calwidget, vicious.widgets.date, "" .. colyel .. " %a, %d %b " .. coldef .. "")
+	calendar2.addCalendarToWidget(calwidget, "" .. colbyel .. "%s" .. coldef .. "")
 
 -- Clock widget
 clockwidget = widget({ type = "textbox" })
-	vicious.register(clockwidget, vicious.widgets.date, "<span color='#d79b1e'>%l:%M%P</span>")
+	vicious.register(clockwidget, vicious.widgets.date, "" .. colbyel .. "%l:%M%P" .. coldef .. "")
 	function cal_gett()
 		local fp = io.popen("remind /home/jack/.reminders")
 		local rem = fp:read("*a")
@@ -231,18 +249,19 @@ clockwidget = widget({ type = "textbox" })
 		return new_time
 	end
 
---	clockwidget:buttons(awful.util.table.join(awful.button({}, 3, function () naughty.notify({ text = "<span color='#be6e00'>London    : </span><span color='#d79b1e'>" .. time_utc() .. "</span>\n<span color='#be6e00'>Düsseldorf: </span><span color='#d79b1e'>" .. time_cet() .. "</span>\n\n<span color='#be6e00'>Tauranga  : </span><span color='#d79b1e'>" .. time_nzst() .. "</span>\n<span color='#be6e00'>Rarotonga : </span><span color='#d79b1e'>" .. time_ckt() .. "</span>\n\n<span color='#be6e00'>Vancouver : </span><span color='#d79b1e'>" .. time_pst() .. "</span>\n<span color='#be6e00'>Woods Hole: </span><span color='#d79b1e'>" .. time_est() .. "</span>", timeout = 20, hover_timeout = 0.5 }) end)))
-
 -- Weather widget
 weatherwidget = widget({ type = "textbox" })
+	vicious.cache(vicious.widgets.weather)
 	vicious.register(weatherwidget, vicious.widgets.weather,
 	function (widget, args)
 		if args["{tempc}"] == "N/A" then
 			return ""
 		else
-			weatherwidget:add_signal('mouse::enter', function () weather_n = { naughty.notify({ title = "<span color='#1f6080'>Current conditions for:\n" .. args["{city}"] .. ":</span>", text = "<span color='#329bcd'>Wind    : " .. args["{windkmh}"] .. " km/h " .. args["{wind}"] .. "\nHumidity: " .. args["{humid}"] .. " %\nPressure: " .. args["{press}"] .. " hPa</span>", timeout = 0, hover_timeout = 0.5 }) } end)
+			local wea_extt = "" .. colblu .. "Current conditions for:\n" .. args["{city}"] .. ":" .. coldef .. ""
+			local wea_ext  = "" .. colbblu .. "Wind    : " .. args["{windkmh}"] .. " km/h " .. args["{wind}"] .. "\nHumidity: " .. args["{humid}"] .. " %\nPressure: " .. args["{press}"] .. " hPa" .. coldef .. ""
+			weatherwidget:add_signal('mouse::enter', function () weather_n = { naughty.notify({ title = wea_extt, text = wea_ext, timeout = 0, hover_timeout = 0.5 }) } end)
 			weatherwidget:add_signal('mouse::leave', function () naughty.destroy(weather_n[1]) end)
-			return "<span color='#1f6080'> weather </span><span color='#329bcd'>" .. string.lower(args["{sky}"]) .. ", " .. args["{tempc}"] .. "°C</span>"
+			return "" .. colblu .. " weather " .. coldef .. colbblu .. string.lower(args["{sky}"]) .. ", " .. args["{tempc}"] .. "°C" .. coldef .. ""
 		end
 	end, 1200, "YBTL" )
 weatherwidget:buttons(awful.util.table.join(awful.button({}, 3, function () awful.util.spawn ( browser .. " http://www.weatherzone.com.au/qld/lower-burdekin/townsville") end)))
@@ -253,11 +272,11 @@ cputwidget = widget({ type = "textbox" })
 	vicious.register(cputwidget, vicious.widgets.cpu,
 	function (widget, args)
 		if  args[1] == 50 then
-			return "<span color='#be6e00'>cpu </span><span color='#d79b1e'>" .. args[1] .. "% </span>"
+			return "" .. colyel .. "cpu " .. coldef .. colbyel .. args[1] .. "% " .. coldef .. ""
 		elseif args[1] >= 50 then
-			return "<span color='#b23535'>cpu </span><span color='#ff4b4b'>" .. args[1] .. "% </span>"
+			return "" .. colred .. "cpu " .. coldef .. colbred .. args[1] .. "% " .. coldef .. ""
 		else
-			return "<span color='#60801f'>cpu </span><span color='#9acd32'>" .. args[1] .. "% </span>"
+			return "" .. colgre .. "cpu " .. coldef .. colbgre .. args[1] .. "% " .. coldef .. ""
 		end
 	end )
 cputwidget:buttons(awful.util.table.join(awful.button({}, 1, function () awful.util.spawn ( terminal .. " -e htop --sort-key PERCENT_CPU") end ) ) )
@@ -267,21 +286,21 @@ tempwidget = widget({ type = "textbox" })
 	vicious.register(tempwidget, vicious.widgets.thermal,
 	function (widget, args)
 		if  args[1] >= 65 and args[1] < 75 then
-			return "<span color='#be6e00'>temp </span><span color='#d79b1e'>" .. args[1] .. "°C </span>"
+			return "" .. colyel .. "temp " .. coldef .. colbyel .. args[1] .. "°C " .. coldef .. ""
 		elseif args[1] >= 75 and args[1] < 80 then
-			return "<span color='#b23535'>temp </span><span color='#ff4b4b'>" .. args[1] .. "°C </span>"
+			return "" .. colred .. "temp " .. coldef .. colbred .. args[1] .. "°C " .. coldef .. ""
 		elseif args[1] > 80 then
 			naughty.notify({ title = "Temperature Warning", text = "Running hot! " .. args[1] .. "°C!\nTake it easy.", timeout = 10, position = "top_right", fg = beautiful.fg_urgent, bg = beautiful.bg_urgent })
-			return "<span color='#b23535'>temp </span><span color='#ff4b4b'>" .. args[1] .. "°C </span>" 
+			return "" .. colred .. "temp " .. coldef .. colbred .. args[1] .. "°C " .. coldef .. "" 
 		else
-			return "<span color='#60801f'>temp </span><span color='#9acd32'>" .. args[1] .. "°C </span>"
+			return "" .. colgre .. "temp " .. coldef .. colbgre .. args[1] .. "°C " .. coldef .. ""
 		end
 	end, 19, "thermal_zone0" )
 
 -- Ram widget
 memwidget = widget({ type = "textbox" })
 	vicious.cache(vicious.widgets.mem)
-	vicious.register(memwidget, vicious.widgets.mem, "<span color='#60801f'>ram </span><span color='#9acd32'>$1% ($2 MiB) </span>", 13)
+	vicious.register(memwidget, vicious.widgets.mem, "" .. colgre .. "ram " .. coldef .. colbgre .. "$1% ($2 MiB) " .. coldef .. "", 13)
 
 -- Filesystem widgets
 -- root
@@ -289,29 +308,29 @@ fsrwidget = widget({ type = "textbox" })
 	vicious.register(fsrwidget, vicious.widgets.fs,
 	function (widget, args)
 		if  args["{/ used_p}"] >= 93 and args["{/ used_p}"] < 97 then
-			return "<span color='#be6e00'>/ </span><span color='#d79b1e'>" .. args["{/ used_p}"] .. "% (" .. args["{/ avail_gb}"] .. " GiB free) </span>"
+			return "" .. colyel .. "/ " .. coldef .. colbyel .. args["{/ used_p}"] .. "% (" .. args["{/ avail_gb}"] .. " GiB free) " .. coldef .. ""
 		elseif args["{/ used_p}"] >= 97 and args["{/ used_p}"] < 99 then
-			return "<span color='#b23535'>/ </span><span color='#ff4b4b'>" .. args["{/ used_p}"] .. "% (" .. args["{/ avail_gb}"] .. " GiB free) </span>"
+			return "" .. colred .. "/ " .. coldef .. colbred .. args["{/ used_p}"] .. "% (" .. args["{/ avail_gb}"] .. " GiB free) " .. coldef .. ""
 		elseif args["{/ used_p}"] >= 99 and args["{/ used_p}"] <= 100 then
 			naughty.notify({ title = "Hard drive Warning", text = "No space left on root!\nMake some room.", timeout = 10, position = "top_right", fg = beautiful.fg_urgent, bg = beautiful.bg_urgent })
-			return "<span color='#b23535'>/ </span><span color='#ff4b4b'>" .. args["{/ used_p}"] .. "% (" .. args["{/ avail_gb}"] .. " GiB free) </span>" 
+			return "" .. colred .. "/ " .. coldef .. colbred .. args["{/ used_p}"] .. "% (" .. args["{/ avail_gb}"] .. " GiB free) " .. coldef .. "" 
 		else
-			return "<span color='#60801f'>/ </span><span color='#9acd32'>" .. args["{/ used_p}"] .. "% (" .. args["{/ avail_gb}"] .. " GiB free) </span>"
+			return "" .. colgre .. "/ " .. coldef .. colbgre .. args["{/ used_p}"] .. "% (" .. args["{/ avail_gb}"] .. " GiB free) " .. coldef .. ""
 		end
 	end, 620)
 -- /home
 fshwidget = widget({ type = "textbox" })
 	vicious.register(fshwidget, vicious.widgets.fs,
 	function (widget, args)
-		if  args["{/home used_p}"] >= 93 and args["{/home used_p}"] < 97 then
-			return "<span color='#be6e00'>/home </span><span color='#d79b1e'>" .. args["{/home used_p}"] .. "% (" .. args["{/home avail_gb}"] .. " GiB free) </span>"
+		if  args["{/home used_p}"] >= 96 and args["{/home used_p}"] < 97 then
+			return "" .. colyel .. "/home " .. coldef .. colbyel .. args["{/home used_p}"] .. "% (" .. args["{/home avail_gb}"] .. " GiB free) " .. coldef .. ""
 		elseif args["{/home used_p}"] >= 97 and args["{/home used_p}"] < 99 then
-			return "<span color='#b23535'>/home </span><span color='#ff4b4b'>" .. args["{/home used_p}"] .. "% (" .. args["{/home avail_gb}"] .. " GiB free) </span>"
+			return "" .. colred .. "/home " .. coldef .. colbred .. args["{/home used_p}"] .. "% (" .. args["{/home avail_gb}"] .. " GiB free) " .. coldef .. ""
 		elseif args["{/home used_p}"] >= 99 and args["{/home used_p}"] <= 100 then
 			naughty.notify({ title = "Hard drive Warning", text = "No space left on /home!\nMake some room.", timeout = 10, position = "top_right", fg = beautiful.fg_urgent, bg = beautiful.bg_urgent })
-			return "<span color='#b23535'>/home </span><span color='#ff4b4b'>" .. args["{/home used_p}"] .. "% (" .. args["{/home avail_gb}"] .. " GiB free) </span>" 
+			return "" .. colred .. "/home " .. coldef .. colbred .. args["{/home used_p}"] .. "% (" .. args["{/home avail_gb}"] .. " GiB free) " .. coldef .. "" 
 		else
-			return "<span color='#60801f'>/home </span><span color='#9acd32'>" .. args["{/home used_p}"] .. "% (" .. args["{/home avail_gb}"] .. " GiB free) </span>"
+			return "" .. colgre .. "/home " .. coldef .. colbgre .. args["{/home used_p}"] .. "% (" .. args["{/home avail_gb}"] .. " GiB free) " .. coldef .. ""
 		end
 	end, 620)
 
@@ -319,10 +338,10 @@ fshwidget = widget({ type = "textbox" })
 -- eth
 neteupwidget = widget({ type = "textbox" })
 	vicious.cache(vicious.widgets.net)
-	vicious.register(neteupwidget, vicious.widgets.net, "<span color='#60801f'>up </span><span color='#9acd32'>${eth0 up_kb} </span>")
+	vicious.register(neteupwidget, vicious.widgets.net, "" .. colgre .. "up " .. coldef .. colbgre .. "${eth0 up_kb} " .. coldef .. "")
 
 netedownwidget = widget({ type = "textbox" })
-	vicious.register(netedownwidget, vicious.widgets.net, "<span color='#60801f'>down </span><span color='#9acd32'>${eth0 down_kb} </span>")
+	vicious.register(netedownwidget, vicious.widgets.net, "" .. colgre .. "down " ..coldef .. colbgre .. "${eth0 down_kb} " .. coldef .. "")
 
 netwidget = widget({ type = "textbox" })
 	vicious.register(netwidget, vicious.widgets.netinfo,
@@ -334,16 +353,16 @@ netwidget = widget({ type = "textbox" })
 		else
 			netedownwidget.visible = true
 			neteupwidget.visible = true
-			return "<span color='#60801f'>eth0 </span><span color='#9acd32'>" .. args["{ip}"] .. " </span>"
+			return "" .. colgre .. "eth0 " .. coldef .. colbgre .. args["{ip}"] .. coldef .. " "
 		end
 	end, refresh_delay, "eth0")
 
 -- wlan
 netwupwidget = widget({ type = "textbox" })
-	vicious.register(netwupwidget, vicious.widgets.net, "<span color='#60801f'>up </span><span color='#9acd32'>${wlan0 up_kb} </span>")
+	vicious.register(netwupwidget, vicious.widgets.net, "" .. colgre .. "up " .. coldef .. colbgre .. "${wlan0 up_kb} " .. coldef .. "")
 
 netwdownwidget = widget({ type = "textbox" })
-	vicious.register(netwdownwidget, vicious.widgets.net, "<span color='#60801f'>down </span><span color='#9acd32'>${wlan0 down_kb} </span>")
+	vicious.register(netwdownwidget, vicious.widgets.net, "" .. colgre .. "down " .. coldef .. colbgre .. "${wlan0 down_kb} " .. coldef .. "")
 
 wifiwidget = widget({ type = "textbox" })
 	vicious.register(wifiwidget, vicious.widgets.wifi,
@@ -355,7 +374,7 @@ wifiwidget = widget({ type = "textbox" })
 		else
 			netwdownwidget.visible = true
 			netwupwidget.visible = true
-			return "<span color='#60801f'>wlan </span><span color='#9acd32'>" .. string.format("%s [%i%%]", args["{ssid}"], args["{link}"]/70*100) .. " </span>"
+			return "" .. colgre .. "wlan " .. coldef .. colbgre .. string.format("%s [%i%%]", args["{ssid}"], args["{link}"]/70*100) .. coldef .. " "
 		end
 	end, refresh_delay, "wlan0" )
 
@@ -363,19 +382,17 @@ wifiwidget = widget({ type = "textbox" })
 batwidget = widget({ type = "textbox" })
 	vicious.register(batwidget, vicious.widgets.bat,
 	function (widget, args)
-		if  args[2] >= 75 and args[2] < 95 then
-			return "<span color='#60801f'>bat </span><span color='#9acd32'>" .. args[2] .. "% </span>"
-		elseif args[2] >= 50 and args[2] < 75 then
-			return "<span color='#be6e00'>bat </span><span color='#d79b1e'>" .. args[2] .. "% </span>"
+		if args[2] >= 50 and args[2] < 75 then
+			return "" .. colyel .. "bat " .. coldef .. colbyel .. args[2] .. "% " .. coldef .. ""
 		elseif args[2] >= 20 and args[2] < 50 then
-			return "<span color='#b23535'>bat </span><span color='#ff4b4b'>" .. args[2] .. "% </span>"
+			return "" .. colred .. "bat " .. coldef .. colbred .. args[2] .. "% " .. coldef .. ""
 		elseif args[2] < 20 and args[1] == "-" then
 			naughty.notify({ title = "Battery Warning", text = "Battery low! "..args[2].."% left!\nBetter get some power.", timeout = 10, position = "top_right", fg = beautiful.fg_urgent, bg = beautiful.bg_urgent })
-			return "<span color='#b23535'>bat </span><span color='#ff4b4b'>" .. args[2] .. "% </span>"
+			return "" .. colred .. "bat " .. coldef .. colbred .. args[2] .. "% " .. coldef .. ""
 		elseif args[2] < 20 then 
-			return "<span color='#b23535'>bat </span><span color='#ff4b4b'>" .. args[2] .. "% </span>"
+			return "" .. colred .. "bat " .. coldef .. colbred .. args[2] .. "% " .. coldef .. ""
 		else
-			return "<span color='#60801f'>bat </span><span color='#9acd32'>" .. args[2] .. "% </span>"
+			return "" .. colgre .. "bat " .. coldef .. colbgre .. args[2] .. "% " .. coldef .. ""
 		end
 	end, 23, "BAT1"	)
 
@@ -384,9 +401,9 @@ volwidget = widget({ type = "textbox" })
 	vicious.register(volwidget, vicious.widgets.volume,
 		function (widget, args)
 			if args[1] == 0 or args[2] == "♩" then
-				return "<span color='#60801f'>vol </span><span color='#ff4b4b'>mute</span>" 
+				return "" .. colgre .. "vol " .. coldef .. colbred .. "mute" .. coldef .. "" 
 			else
-				return "<span color='#60801f'>vol </span><span color='#9acd32'>" .. args[1] .. "% </span>"
+				return "" .. colgre .. "vol " .. coldef .. colbgre .. args[1] .. "% " .. coldef .. ""
 			end
 		end, 2, "Master" )
 	volwidget:buttons(
@@ -406,9 +423,9 @@ mpdwidget = widget({ type = 'textbox' })
 			if args["{state}"] == "Stop" then
 				return ""
 			elseif args["{state}"] == "Play" then
-				return "<span color='#60801f'>mpd </span><span color='#9acd32'>" .. args["{Artist}"] .. " - " .. args["{Album}"] .. " - " .. args["{Title}"] .. "</span>"
+				return "" .. colgre .. "mpd " .. coldef .. colbgre .. args["{Artist}"] .. " - " .. args["{Album}"] .. " - " .. args["{Title}"] .. coldef .. ""
 			elseif args["{state}"] == "Pause" then
-				return "<span color='#60801f'>mpd </span><span color='#d79b1e'>paused</span>"
+				return "" .. colgre .. "mpd " .. coldef .. colbyel .. "paused" .. coldef .. ""
 			end
 		end)
 	mpdwidget:buttons(
@@ -538,55 +555,57 @@ globalkeys = awful.util.table.join(
 
 	-- Programs
 	-- launchers
-	awful.key({ modkey,           }, "w",                    function () mainmenu:show({keygrabber=true}) end),
-	awful.key({ modkey,           }, "p",                    function () awful.util.spawn("dmenu_run -b -fn 'terminus' -nb '#1a1918' -nf '#9acd32' -sb '#4c4b49' -sf '#9acd32'") end),
-	awful.key({ modkey,           }, "Tab",                  function () awful.util.spawn(terminal) end),
-	awful.key({ modkey, "Shift"   }, "Tab",                  function () awful.util.spawn(terminal .. " -e su") end),
+	awful.key({ modkey,           }, "w",                     function () mainmenu:show({keygrabber=true}) end),
+	awful.key({ modkey,           }, "p",                     function () awful.util.spawn("dmenu_run -b -fn 'terminus' -nb '#1a1918' -nf '#9acd32' -sb '#4c4b49' -sf '#9acd32'") end),
+	awful.key({ modkey,           }, "Tab",                   function () awful.util.spawn(terminal) end),
+	awful.key({ modkey, "Shift"   }, "Tab",                   function () awful.util.spawn(terminal .. " -e su") end),
 	-- miscellaneous
-	awful.key({                   }, "Print",                function () awful.util.spawn("scrot -b") end),
-	awful.key({                   }, "XF86Calculator",       function () awful.util.spawn("speedcrunch") end),
-	awful.key({ modkey, "Shift"   }, "x",                    function () awful.util.spawn("xkill") end),
-	awful.key({ modkey, "Shift"   }, "l",                    function () awful.util.spawn(terminal .. " -e xscreensaver-command --lock") end),
-	awful.key({ modkey, "Control", "Shift" }, "r",           rodentbane.start),         
-	awful.key({ modkey            }, "F8",                   function () awful.util.spawn("truecrypt") end),
-	awful.key({ modkey, "Control" }, "t",                    function () naughty.notify({ text = "<span color='#be6e00'>London    : </span><span color='#d79b1e'>" .. time_utc() .. "</span>\n<span color='#be6e00'>Düsseldorf: </span><span color='#d79b1e'>" .. time_cet() .. "</span>\n\n<span color='#be6e00'>Tauranga  : </span><span color='#d79b1e'>" .. time_nzst() .. "</span>\n<span color='#be6e00'>Rarotonga : </span><span color='#d79b1e'>" .. time_ckt() .. "</span>\n\n<span color='#be6e00'>Vancouver : </span><span color='#d79b1e'>" .. time_pst() .. "</span>\n<span color='#be6e00'>Woods Hole: </span><span color='#d79b1e'>" .. time_est() .. "</span>", timeout = 20, hover_timeout = 0.5 }) end),
+	awful.key({                   }, "Print",                 function () awful.util.spawn("scrot -b") end),
+	awful.key({                   }, "XF86Calculator",        function () awful.util.spawn("speedcrunch") end),
+	awful.key({ modkey, "Shift"   }, "x",                     function () awful.util.spawn("xkill") end),
+	awful.key({ modkey, "Shift"   }, "l",                     function () awful.util.spawn(terminal .. " -e xscreensaver-command --lock") end),
+	awful.key({ modkey, "Control", "Shift" }, "r",            rodentbane.start),         
+	awful.key({ modkey            }, "F8",                    function () awful.util.spawn("truecrypt") end),
+	awful.key({ modkey, "Control" }, "t",                     function () naughty.notify({ text = "" .. colyel .. "London    : " .. coldef .. colbyel .. time_utc() .. coldef .. colyel .. "\nDüsseldorf: " .. coldef .. colbyel .. time_cet() .. coldef .. colyel .. "\n\nTauranga  : " .. coldef .. colbyel .. time_nzst() .. coldef .. colyel .. "\nRarotonga : " .. coldef .. colbyel .. time_ckt() .. coldef .. colyel .. "\n\nVancouver : " .. coldef .. colbyel .. time_pst() .. coldef .. colyel .. "\nWoods Hole: " .. coldef .. colbyel .. time_est() .. coldef .. "",
+		timeout = 20, hover_timeout = 0.5 }) end),
 	-- volume + mpd
-	awful.key({                   }, "XF86AudioLowerVolume", function () awful.util.spawn("amixer -q sset Master 2dB-") end),
-	awful.key({                   }, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer -q sset Master 2dB+") end),
-	awful.key({                   }, "XF86AudioStop",        function () awful.util.spawn("mpc stop") end),
-	awful.key({                   }, "XF86AudioPlay",        function () awful.util.spawn("mpc toggle") end),
-	awful.key({                   }, "XF86AudioNext",        function () awful.util.spawn("mpc next") end),
-	awful.key({                   }, "XF86AudioPrev",        function () awful.util.spawn("mpc prev") end),
-	awful.key({                   }, "XF86AudioMute",        function () awful.util.spawn("amixer -q sset Master toggle") end),
-	awful.key({ modkey,           }, "m",                    function () awful.util.spawn(terminal .. " -e ncmpcpp") end),
+	awful.key({                   }, "XF86AudioLowerVolume",  function () awful.util.spawn("amixer -q sset Master 2dB-") end),
+	awful.key({                   }, "XF86AudioRaiseVolume",  function () awful.util.spawn("amixer -q sset Master 2dB+") end),
+	awful.key({                   }, "XF86AudioStop",         function () awful.util.spawn("mpc stop") end),
+	awful.key({                   }, "XF86AudioPlay",         function () awful.util.spawn("mpc toggle") end),
+	awful.key({                   }, "XF86AudioNext",         function () awful.util.spawn("mpc next") end),
+	awful.key({                   }, "XF86AudioPrev",         function () awful.util.spawn("mpc prev") end),
+	awful.key({                   }, "XF86AudioMute",         function () awful.util.spawn("amixer -q sset Master toggle") end),
+	awful.key({ modkey,           }, "m",                     function () awful.util.spawn(terminal .. " -e ncmpcpp") end),
 	-- office
-	awful.key({ modkey,           }, "F1",                   function () awful.util.spawn("texmaker") end),
-	awful.key({ modkey,           }, "F2",                   function () awful.util.spawn("soffice -writer") end),
-	awful.key({ modkey,           }, "F3",                   function () awful.util.spawn("soffice -calc") end),
-	awful.key({ modkey,           }, "F4",                   function () awful.util.spawn("soffice -impress") end),
+	awful.key({ modkey,           }, "F2",                    function () awful.util.spawn("soffice -writer") end),
+	awful.key({ modkey,           }, "F3",                    function () awful.util.spawn("soffice -calc") end),
+	awful.key({ modkey,           }, "F4",                    function () awful.util.spawn("soffice -impress") end),
 	-- web
-	awful.key({                   }, "XF86HomePage",         function () awful.util.spawn("firefox") end),
-	awful.key({                   }, "XF86Mail",             function () awful.util.spawn(terminal .. " -e mutt") end),
-	awful.key({ modkey,           }, "i",                    function () awful.util.spawn(terminal .. " -e irssi") end),
-	awful.key({ modkey,           }, "d",                    function () awful.util.spawn(terminal .. " -e wicd-curses") end),
-	awful.key({ modkey, "Shift"   }, "d",                    function () awful.util.spawn(terminal .. " -e sudo wvdial optus") end),
-	awful.key({ modkey,           }, "F12",                  function () awful.util.spawn(terminal .. " -e rtorrent") end),
+	awful.key({                   }, "XF86HomePage",          function () awful.util.spawn("firefox") end),
+	awful.key({                   }, "XF86Mail",              function () awful.util.spawn(terminal .. " -e mutt") end),
+	awful.key({ modkey,           }, "i",                     function () awful.util.spawn(terminal .. " -e irssi") end),
+	awful.key({ modkey,           }, "d",                     function () awful.util.spawn(terminal .. " -e wicd-curses") end),
+	awful.key({ modkey, "Shift"   }, "d",                     function () awful.util.spawn(terminal .. " -e sudo wvdial optus") end),
+	awful.key({ modkey,           }, "F12",                   function () awful.util.spawn(terminal .. " -e rtorrent") end),
 	-- file managers
-	awful.key({ modkey,           }, "r",                    function () awful.util.spawn(terminal .. " -e ranger") end),
-	awful.key({ modkey,           }, "t",                    function () awful.util.spawn("thunar") end),
+	awful.key({ modkey,           }, "r",                     function () awful.util.spawn(terminal .. " -e ranger") end),
+	awful.key({ modkey,           }, "t",                     function () awful.util.spawn("thunar") end),
 
 	-- Layouts
-	awful.key({ modkey, "Shift"   }, "Right",                function () awful.client.swap.byidx(  1) end),
-	awful.key({ modkey, "Shift"   }, "Left",                 function () awful.client.swap.byidx( -1) end),
-	awful.key({ modkey, "Control" }, "Right",                function () awful.screen.focus_relative( 1) end),
-	awful.key({ modkey, "Control" }, "Left",                 function () awful.screen.focus_relative(-1) end),
-	awful.key({ modkey,           }, "u",                    awful.client.urgent.jumpto),
+	awful.key({ modkey, "Shift"   }, "Right",                 function () awful.client.swap.byidx(  1) end),
+	awful.key({ modkey, "Shift"   }, "Left",                  function () awful.client.swap.byidx( -1) end),
+	awful.key({ modkey, "Control" }, "Right",                 function () awful.screen.focus_relative( 1) end),
+	awful.key({ modkey, "Control" }, "Left",                  function () awful.screen.focus_relative(-1) end),
+	awful.key({ modkey,           }, "u",                     awful.client.urgent.jumpto),
 
 	-- Awesome
-	awful.key({ modkey, "Control" }, "r",                    awesome.restart),
-	awful.key({ modkey, "Shift"   }, "q",                    awesome.quit),
-	awful.key({ modkey,           }, "space",                function () awful.layout.inc(layouts,  1) end),
-	awful.key({ modkey, "Shift"   }, "space",                function () awful.layout.inc(layouts, -1) end),
+	awful.key({ modkey, "Control" }, "r",                     awesome.restart),
+	awful.key({ modkey,           }, "space",                 function () awful.layout.inc(layouts,  1) end),
+	awful.key({ modkey, "Shift"   }, "space",                 function () awful.layout.inc(layouts, -1) end),
+	awful.key({ modkey,           }, "XF86PowerOff",          awesome.quit),
+	awful.key({ modkey, "Shift"   }, "XF86PowerOff",          function () awful.util.spawn("reboot") end),
+	awful.key({ modkey, "Control", "Shift" }, "XF86PowerOff", function () awful.util.spawn("shutdown") end),
 
 	-- Prompts
 	awful.key({ modkey, "Shift"   }, "r",                    function () mypromptbox[mouse.screen]:run() end),
