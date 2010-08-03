@@ -1,7 +1,7 @@
 #BASICS
 HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=100
+SAVEHIST=100
 #bindkey -v
 
 zstyle :compinstall filename '/home/jack/.zshrc'
@@ -19,7 +19,7 @@ autoload -Uz compinit
 compinit
 zstyle ':completion:*' menu select
 
-export PS1="$(print '%{\e[0;32m%}┌─[%n]─%{\e[1;32m%}[%~]\n%{\e[0;32m%}└─%{\e[1;32m%}$%b')"
+export PS1="$(print '%F\e[1;32m∙∙∙%f')"
 
 export EDITOR='vim'
 export BROWSER='firefox'

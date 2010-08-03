@@ -20,13 +20,13 @@ colblu  = "<span color='#1f6080'>"
 colmag  = "<span color='#8f46b2'>"
 colcya  = "<span color='#73afb4'>"
 colwhi  = "<span color='#b2b2b2'>"
-colbblk = "<span color='#4c4c4c'>"
+colbblk = "<span color='#333333'>"
 colbred = "<span color='#ff4b4b'>"
 colbgre = "<span color='#9bcd32'>"
 colbyel = "<span color='#d79b1e'>"
 colbblu = "<span color='#329bcd'>"
 colbmag = "<span color='#cd64ff'>"
-colbcya = "<span color='#9acdff'>"
+colbcya = "<span color='#9bcdff'>"
 colbwhi = "<span color='#ffffff'>"
 
 -- DEFAULTS
@@ -57,7 +57,7 @@ shifty.config.tags = {
 	["4-office"] = { position = 4, layout = awful.layout.suit.tile.bottom                  },
 	["5-pdf"]    = { position = 5, layout = awful.layout.suit.tile.bottom                  },
 	["6-gimp"]   = { position = 6, layout = awful.layout.suit.floating, spawn = "gimp"     },
-	["7-video"]  = { position = 7, layout = awful.layout.suit.max                          },
+	["7-video"]  = { position = 7, layout = awful.layout.suit.floating                     },
 	["8-music"]  = { position = 8, layout = awful.layout.suit.tile.bottom                  },
 	["9-irc"]    = { position = 9, layout = awful.layout.suit.max                          },
 	["torrent"]  = { layout = awful.layout.suit.max                                        },
@@ -180,8 +180,20 @@ spacerwidget = widget({ type = "imagebox" })
 
 -- Calendar widget
 calwidget = widget({ type = "textbox" })
-	vicious.register(calwidget, vicious.widgets.date, "" .. colyel .. " %a, %d %b " .. coldef .. "")
-	calendar2.addCalendarToWidget(calwidget, "" .. colbyel .. "%s" .. coldef .. "")
+	function dayth()
+		local osd = os.date("%d")
+		if osd == "01" or osd == "21" or osd == "31" then
+			return "<span font='proggytiny 7'><sup>st</sup></span>"
+		elseif osd == "02" or osd == "22" then
+			return "<span font='proggytiny 7'><sup>nd</sup></span>"
+		elseif osd == "03" or osd == "23" then
+			return "<span font='proggytiny 7'><sup>rd</sup></span>"
+		else
+			return "<span font='proggytiny 7'><sup>th</sup></span>"
+		end
+	end
+	vicious.register(calwidget, vicious.widgets.date, "" .. colyel .. " %a, %e" .. dayth() .. " %B" .. coldef .. " ")
+	calendar2.addCalendarToWidget(calwidget, "" .. colyel .. "%s" .. coldef .. "")
 
 -- Clock widget
 clockwidget = widget({ type = "textbox" })
@@ -201,15 +213,15 @@ clockwidget = widget({ type = "textbox" })
 			rem = string.gsub(rem, "\027%[0;37m", "<span color='#b2b2b2'>") --white
 			rem = string.gsub(rem, "\027%[1;30m", "<span color='#4c4c4c'>") --br-black
 			rem = string.gsub(rem, "\027%[1;31m", "<span color='#ff4b4b'>") --br-red
-			rem = string.gsub(rem, "\027%[1;32m", "<span color='#9acd32'>") --br-green
+			rem = string.gsub(rem, "\027%[1;32m", "<span color='#9bcd32'>") --br-green
 			rem = string.gsub(rem, "\027%[1;33m", "<span color='#d79b1e'>") --br-yellow
 			rem = string.gsub(rem, "\027%[1;34m", "<span color='#329bcd'>") --br-blue
 			rem = string.gsub(rem, "\027%[1;35m", "<span color='#cd64ff'>") --br-magenta
-			rem = string.gsub(rem, "\027%[1;36m", "<span color='#9acdff'>") --br-cyan
+			rem = string.gsub(rem, "\027%[1;36m", "<span color='#9bcdff'>") --br-cyan
 			rem = string.gsub(rem, "\027%[1;37m", "<span color='#ffffff'>") --br-white
 			return rem
 	end
-	clockwidget:add_signal('mouse::enter', function () cal_remt = { naughty.notify({ text = cal_gett(), timeout = 0, hover_timeout = 0.5 }) } end)
+	clockwidget:add_signal('mouse::enter', function () cal_remt = { naughty.notify({ text = cal_gett(), border_color = "#1a1a1a", timeout = 0, hover_timeout = 0.5 }) } end)
 	clockwidget:add_signal('mouse::leave', function () naughty.destroy(cal_remt[1]) end)
 
 	local function time_cet()
@@ -251,15 +263,12 @@ clockwidget = widget({ type = "textbox" })
 
 -- Weather widget
 weatherwidget = widget({ type = "textbox" })
-	vicious.cache(vicious.widgets.weather)
 	vicious.register(weatherwidget, vicious.widgets.weather,
 	function (widget, args)
 		if args["{tempc}"] == "N/A" then
 			return ""
 		else
-			local wea_extt = "" .. colblu .. "Current conditions for:\n" .. args["{city}"] .. ":" .. coldef .. ""
-			local wea_ext  = "" .. colbblu .. "Wind    : " .. args["{windkmh}"] .. " km/h " .. args["{wind}"] .. "\nHumidity: " .. args["{humid}"] .. " %\nPressure: " .. args["{press}"] .. " hPa" .. coldef .. ""
-			weatherwidget:add_signal('mouse::enter', function () weather_n = { naughty.notify({ title = wea_extt, text = wea_ext, timeout = 0, hover_timeout = 0.5 }) } end)
+			weatherwidget:add_signal('mouse::enter', function () weather_n = { naughty.notify({ title = "" .. colblu .. "───────────── Weather ─────────────" .. coldef .. "", text = "" .. colbblu .. "Wind    : " .. args["{windkmh}"] .. " km/h " .. args["{wind}"] .. "\nHumidity: " .. args["{humid}"] .. " %\nPressure: " .. args["{press}"] .. " hPa" .. coldef .. "", border_color = "#1a1a1a", timeout = 0, hover_timeout = 0.5 }) } end)
 			weatherwidget:add_signal('mouse::leave', function () naughty.destroy(weather_n[1]) end)
 			return "" .. colblu .. " weather " .. coldef .. colbblu .. string.lower(args["{sky}"]) .. ", " .. args["{tempc}"] .. "°C" .. coldef .. ""
 		end
@@ -276,7 +285,7 @@ cputwidget = widget({ type = "textbox" })
 		elseif args[1] >= 50 then
 			return "" .. colred .. "cpu " .. coldef .. colbred .. args[1] .. "% " .. coldef .. ""
 		else
-			return "" .. colgre .. "cpu " .. coldef .. colbgre .. args[1] .. "% " .. coldef .. ""
+			return "" .. colblk .. "cpu " .. coldef .. colbblk .. args[1] .. "% " .. coldef .. ""
 		end
 	end )
 cputwidget:buttons(awful.util.table.join(awful.button({}, 1, function () awful.util.spawn ( terminal .. " -e htop --sort-key PERCENT_CPU") end ) ) )
@@ -293,14 +302,14 @@ tempwidget = widget({ type = "textbox" })
 			naughty.notify({ title = "Temperature Warning", text = "Running hot! " .. args[1] .. "°C!\nTake it easy.", timeout = 10, position = "top_right", fg = beautiful.fg_urgent, bg = beautiful.bg_urgent })
 			return "" .. colred .. "temp " .. coldef .. colbred .. args[1] .. "°C " .. coldef .. "" 
 		else
-			return "" .. colgre .. "temp " .. coldef .. colbgre .. args[1] .. "°C " .. coldef .. ""
+			return "" .. colblk .. "temp " .. coldef .. colbblk .. args[1] .. "°C " .. coldef .. ""
 		end
 	end, 19, "thermal_zone0" )
 
 -- Ram widget
 memwidget = widget({ type = "textbox" })
 	vicious.cache(vicious.widgets.mem)
-	vicious.register(memwidget, vicious.widgets.mem, "" .. colgre .. "ram " .. coldef .. colbgre .. "$1% ($2 MiB) " .. coldef .. "", 13)
+	vicious.register(memwidget, vicious.widgets.mem, "" .. colblk .. "ram " .. coldef .. colbblk .. "$1% ($2 MiB) " .. coldef .. "", 13)
 
 -- Filesystem widgets
 -- root
@@ -315,7 +324,7 @@ fsrwidget = widget({ type = "textbox" })
 			naughty.notify({ title = "Hard drive Warning", text = "No space left on root!\nMake some room.", timeout = 10, position = "top_right", fg = beautiful.fg_urgent, bg = beautiful.bg_urgent })
 			return "" .. colred .. "/ " .. coldef .. colbred .. args["{/ used_p}"] .. "% (" .. args["{/ avail_gb}"] .. " GiB free) " .. coldef .. "" 
 		else
-			return "" .. colgre .. "/ " .. coldef .. colbgre .. args["{/ used_p}"] .. "% (" .. args["{/ avail_gb}"] .. " GiB free) " .. coldef .. ""
+			return "" .. colblk .. "/ " .. coldef .. colbblk .. args["{/ used_p}"] .. "% (" .. args["{/ avail_gb}"] .. " GiB free) " .. coldef .. ""
 		end
 	end, 620)
 -- /home
@@ -330,7 +339,7 @@ fshwidget = widget({ type = "textbox" })
 			naughty.notify({ title = "Hard drive Warning", text = "No space left on /home!\nMake some room.", timeout = 10, position = "top_right", fg = beautiful.fg_urgent, bg = beautiful.bg_urgent })
 			return "" .. colred .. "/home " .. coldef .. colbred .. args["{/home used_p}"] .. "% (" .. args["{/home avail_gb}"] .. " GiB free) " .. coldef .. "" 
 		else
-			return "" .. colgre .. "/home " .. coldef .. colbgre .. args["{/home used_p}"] .. "% (" .. args["{/home avail_gb}"] .. " GiB free) " .. coldef .. ""
+			return "" .. colblk .. "/home " .. coldef .. colbblk .. args["{/home used_p}"] .. "% (" .. args["{/home avail_gb}"] .. " GiB free) " .. coldef .. ""
 		end
 	end, 620)
 
@@ -338,10 +347,10 @@ fshwidget = widget({ type = "textbox" })
 -- eth
 neteupwidget = widget({ type = "textbox" })
 	vicious.cache(vicious.widgets.net)
-	vicious.register(neteupwidget, vicious.widgets.net, "" .. colgre .. "up " .. coldef .. colbgre .. "${eth0 up_kb} " .. coldef .. "")
+	vicious.register(neteupwidget, vicious.widgets.net, "" .. colblk .. "up " .. coldef .. colbblk .. "${eth0 up_kb} " .. coldef .. "")
 
 netedownwidget = widget({ type = "textbox" })
-	vicious.register(netedownwidget, vicious.widgets.net, "" .. colgre .. "down " ..coldef .. colbgre .. "${eth0 down_kb} " .. coldef .. "")
+	vicious.register(netedownwidget, vicious.widgets.net, "" .. colblk .. "down " ..coldef .. colbblk .. "${eth0 down_kb} " .. coldef .. "")
 
 netwidget = widget({ type = "textbox" })
 	vicious.register(netwidget, vicious.widgets.netinfo,
@@ -353,16 +362,16 @@ netwidget = widget({ type = "textbox" })
 		else
 			netedownwidget.visible = true
 			neteupwidget.visible = true
-			return "" .. colgre .. "eth0 " .. coldef .. colbgre .. args["{ip}"] .. coldef .. " "
+			return "" .. colblk .. "eth0 " .. coldef .. colbblk .. args["{ip}"] .. coldef .. " "
 		end
 	end, refresh_delay, "eth0")
 
 -- wlan
 netwupwidget = widget({ type = "textbox" })
-	vicious.register(netwupwidget, vicious.widgets.net, "" .. colgre .. "up " .. coldef .. colbgre .. "${wlan0 up_kb} " .. coldef .. "")
+	vicious.register(netwupwidget, vicious.widgets.net, "" .. colblk .. "up " .. coldef .. colbblk .. "${wlan0 up_kb} " .. coldef .. "")
 
 netwdownwidget = widget({ type = "textbox" })
-	vicious.register(netwdownwidget, vicious.widgets.net, "" .. colgre .. "down " .. coldef .. colbgre .. "${wlan0 down_kb} " .. coldef .. "")
+	vicious.register(netwdownwidget, vicious.widgets.net, "" .. colblk .. "down " .. coldef .. colbblk .. "${wlan0 down_kb} " .. coldef .. "")
 
 wifiwidget = widget({ type = "textbox" })
 	vicious.register(wifiwidget, vicious.widgets.wifi,
@@ -374,7 +383,7 @@ wifiwidget = widget({ type = "textbox" })
 		else
 			netwdownwidget.visible = true
 			netwupwidget.visible = true
-			return "" .. colgre .. "wlan " .. coldef .. colbgre .. string.format("%s [%i%%]", args["{ssid}"], args["{link}"]/70*100) .. coldef .. " "
+			return "" .. colblk .. "wlan " .. coldef .. colbblk .. string.format("%s [%i%%]", args["{ssid}"], args["{link}"]/70*100) .. coldef .. " "
 		end
 	end, refresh_delay, "wlan0" )
 
@@ -392,7 +401,7 @@ batwidget = widget({ type = "textbox" })
 		elseif args[2] < 20 then 
 			return "" .. colred .. "bat " .. coldef .. colbred .. args[2] .. "% " .. coldef .. ""
 		else
-			return "" .. colgre .. "bat " .. coldef .. colbgre .. args[2] .. "% " .. coldef .. ""
+			return "" .. colblk .. "bat " .. coldef .. colbblk .. args[2] .. "% " .. coldef .. ""
 		end
 	end, 23, "BAT1"	)
 
@@ -401,9 +410,9 @@ volwidget = widget({ type = "textbox" })
 	vicious.register(volwidget, vicious.widgets.volume,
 		function (widget, args)
 			if args[1] == 0 or args[2] == "♩" then
-				return "" .. colgre .. "vol " .. coldef .. colbred .. "mute" .. coldef .. "" 
+				return "" .. colblk .. "vol " .. coldef .. colbred .. "mute" .. coldef .. "" 
 			else
-				return "" .. colgre .. "vol " .. coldef .. colbgre .. args[1] .. "% " .. coldef .. ""
+				return "" .. colblk .. "vol " .. coldef .. colbblk .. args[1] .. "% " .. coldef .. ""
 			end
 		end, 2, "Master" )
 	volwidget:buttons(
@@ -423,9 +432,9 @@ mpdwidget = widget({ type = 'textbox' })
 			if args["{state}"] == "Stop" then
 				return ""
 			elseif args["{state}"] == "Play" then
-				return "" .. colgre .. "mpd " .. coldef .. colbgre .. args["{Artist}"] .. " - " .. args["{Album}"] .. " - " .. args["{Title}"] .. coldef .. ""
+				return "" .. colblk .. "mpd " .. coldef .. colbblk .. args["{Artist}"] .. " - " .. args["{Album}"] .. " - " .. args["{Title}"] .. coldef .. ""
 			elseif args["{state}"] == "Pause" then
-				return "" .. colgre .. "mpd " .. coldef .. colbyel .. "paused" .. coldef .. ""
+				return "" .. colblk .. "mpd " .. coldef .. colbyel .. "paused" .. coldef .. ""
 			end
 		end)
 	mpdwidget:buttons(
@@ -556,7 +565,7 @@ globalkeys = awful.util.table.join(
 	-- Programs
 	-- launchers
 	awful.key({ modkey,           }, "w",                     function () mainmenu:show({keygrabber=true}) end),
-	awful.key({ modkey,           }, "p",                     function () awful.util.spawn("dmenu_run -b -fn 'terminus' -nb '#1a1918' -nf '#9acd32' -sb '#4c4b49' -sf '#9acd32'") end),
+	awful.key({ modkey,           }, "p",                     function () awful.util.spawn("dmenu_run -b -fn 'terminus' -nb '#1a1a1a' -nf '#9bcd32' -sb '#4c4b49' -sf '#9bcd32'") end),
 	awful.key({ modkey,           }, "Tab",                   function () awful.util.spawn(terminal) end),
 	awful.key({ modkey, "Shift"   }, "Tab",                   function () awful.util.spawn(terminal .. " -e su") end),
 	-- miscellaneous
@@ -566,8 +575,8 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey, "Shift"   }, "l",                     function () awful.util.spawn(terminal .. " -e xscreensaver-command --lock") end),
 	awful.key({ modkey, "Control", "Shift" }, "r",            rodentbane.start),         
 	awful.key({ modkey            }, "F8",                    function () awful.util.spawn("truecrypt") end),
-	awful.key({ modkey, "Control" }, "t",                     function () naughty.notify({ text = "" .. colyel .. "London    : " .. coldef .. colbyel .. time_utc() .. coldef .. colyel .. "\nDüsseldorf: " .. coldef .. colbyel .. time_cet() .. coldef .. colyel .. "\n\nTauranga  : " .. coldef .. colbyel .. time_nzst() .. coldef .. colyel .. "\nRarotonga : " .. coldef .. colbyel .. time_ckt() .. coldef .. colyel .. "\n\nVancouver : " .. coldef .. colbyel .. time_pst() .. coldef .. colyel .. "\nWoods Hole: " .. coldef .. colbyel .. time_est() .. coldef .. "",
-		timeout = 20, hover_timeout = 0.5 }) end),
+	awful.key({ modkey, "Control" }, "t",                     function () naughty.notify({ text = "" .. colbyel .. "────────────────────────────────── World Clock ─────────────────────────────────" .. coldef .. colblk .."\nOOO      OOOO             OO                                     OOOOO  OOOOOOOO\nOO " .. coldef .. colyel .. "London" .. coldef .. colblk .. "             O  OOOOOOOOOOO  O                    OOOO O OO O    OOOOOO\n  O" .. coldef .. colbyel .. time_utc() .. coldef .. colblk .. "OO OO OOOOOOOOOOOOOOOOOOOOOOOOO  OOOOOOOOOOOOOOOOOOOO OO    OO\n      OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO    O        OOO  OOOOOOOOOO   OOO\n    OOOOO" .. coldef .. colyel .. "Düsseldorf" .. coldef .. colblk .. "OOOOOOOOOOOOOOOOOO               " .. coldef .. colyel .. "Vancouver" .. coldef .. colblk .. "OOOOOOOOOO\n  OOOOO  " .. coldef .. colbyel .. time_cet() .. coldef .. colblk .. "OOOOOOOOOOOOOOOO O             " .. coldef .. colbyel .. time_pst() .. coldef .. colblk .. "OOO\n       OO      OOOOOOOOOOOOOOOOOOO O O                     OOOOOOOO" .. coldef .. colyel .. "Woods Hole" .. coldef .. colblk .. "\n     OOOOOOOOOOOOOOOOOOOOOOOOOOOOO                           OOOO  " .. coldef .. colbyel .. time_est() .. coldef .. colblk .. "\n    OOOOOOOOOOOO OOOO  OOOO OOOOO                               OO\n   OOOOOOOOOOOOO O      O    OO                                   OO\n     OOOOOOOOOOOOO                O                                  OOOO\n         OOOOO O              O OOO                                 OOOOOOO\n          OOOOOO               O      OO          " .. coldef .. colyel .. "Rarotonga" .. coldef .. colblk .. "        OOOOOOOOO\n          OOOOOO                    O O           " .. coldef .. colbyel .. time_ckt() .. coldef .. colblk .. "     OOOOOOOO\n          OOOOO  O              OOOOOOOO                            OOOOOO\n           OOO                  OOOOOOOOO                            OOOO\n            O                         OO  " .. coldef .. colyel .. "Tauranga" .. coldef .. colblk .. "                   OOOO\n                                          " .. coldef .. colbyel .. time_nzst() .. coldef .. colblk .. "               OO\n                                                                     O" .. coldef .. "", border_color = "#1a1a1a", timeout = 20, hover_timeout = 0.5 }) end),
+	awful.key({ modkey, "Control" }, "r",                     function () naughty.notify({ text = cal_gett(), border_color = "#1a1a1a", timeout = 20, hover_timeout = 0.5 }) end),
 	-- volume + mpd
 	awful.key({                   }, "XF86AudioLowerVolume",  function () awful.util.spawn("amixer -q sset Master 2dB-") end),
 	awful.key({                   }, "XF86AudioRaiseVolume",  function () awful.util.spawn("amixer -q sset Master 2dB+") end),
@@ -600,7 +609,7 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey,           }, "u",                     awful.client.urgent.jumpto),
 
 	-- Awesome
-	awful.key({ modkey, "Control" }, "r",                     awesome.restart),
+--	awful.key({ modkey, "Control" }, "r",                     awesome.restart),
 	awful.key({ modkey,           }, "space",                 function () awful.layout.inc(layouts,  1) end),
 	awful.key({ modkey, "Shift"   }, "space",                 function () awful.layout.inc(layouts, -1) end),
 	awful.key({ modkey,           }, "XF86PowerOff",          awesome.quit),
