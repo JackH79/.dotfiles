@@ -67,9 +67,9 @@ shifty.config.tags = {
 
 -- shifty: tags matching and client rules
 shifty.config.apps = {
-	{ match = { "Namoroka", "jumanji"        }, tag = "2-web",                                               },
+	{ match = { "Namoroka", "luakit"         }, tag = "2-web",                                               },
 	{ match = { "mutt", "Lanikai"            }, tag = "3-mail",                                              },
-	{ match = { "OpenOffice.org 3.2"         }, tag = "4-office",                                            },
+	{ match = { "LibreOffice.org 3.3"        }, tag = "4-office",                                            },
 	{ match = { "Zathura", "Epdfview"        }, tag = "5-pdf",                                               },
 	{ match = { "Gimp"                       }, tag = "6-gimp",                                              },
 	{ match = { "gimp%-image%-window"        }, geometry = {175,15,930,770}, border_width = 0                },
@@ -110,9 +110,9 @@ networkmenu = {
 }
 
 officemenu = {
-	{ "writer",      "soffice -writer" },
-	{ "calc",        "soffice -calc" },
-	{ "impress",     "soffice -impress" },
+	{ "writer",      "libreoffice -writer" },
+	{ "calc",        "libreoffice -calc" },
+	{ "impress",     "libreoffice -impress" },
 	{ "speedcrunch", "speedcrunch" },
 	{ "r",           terminal .. " -e R" }
 }
@@ -130,7 +130,8 @@ graphicsmenu = {
 mediamenu = {
 	{ "vlc",         "vlc" },
 	{ "ncmpcpp",     terminal .. " -e ncmpcpp" },
-	{ "audacity",    "audacity" }
+	{ "audacity",    "audacity" },
+	{ "avidemux",    "avidemux2_gtk" }
 }
 
 utilitiesmenu = {
@@ -331,9 +332,9 @@ fsrwidget = widget({ type = "textbox" })
 fshwidget = widget({ type = "textbox" })
 	vicious.register(fshwidget, vicious.widgets.fs,
 	function (widget, args)
-		if  args["{/home used_p}"] >= 96 and args["{/home used_p}"] < 97 then
+		if  args["{/home used_p}"] >= 97 and args["{/home used_p}"] < 98 then
 			return "" .. colyel .. "/home " .. coldef .. colbyel .. args["{/home used_p}"] .. "% (" .. args["{/home avail_gb}"] .. " GiB free) " .. coldef .. ""
-		elseif args["{/home used_p}"] >= 97 and args["{/home used_p}"] < 99 then
+		elseif args["{/home used_p}"] >= 98 and args["{/home used_p}"] < 99 then
 			return "" .. colred .. "/home " .. coldef .. colbred .. args["{/home used_p}"] .. "% (" .. args["{/home avail_gb}"] .. " GiB free) " .. coldef .. ""
 		elseif args["{/home used_p}"] >= 99 and args["{/home used_p}"] <= 100 then
 			naughty.notify({ title = "Hard drive Warning", text = "No space left on /home!\nMake some room.", timeout = 10, position = "top_right", fg = beautiful.fg_urgent, bg = beautiful.bg_urgent })
@@ -641,14 +642,11 @@ clientkeys = awful.util.table.join(
 		for _,c in ipairs(allclients) do
 			if c.minimized and c:tags()[mouse.screen] == awful.tag.selected(mouse.screen) then
 				c.minimized = false client.focus = c c:raise()
-				return
-			end
-		end end),
-	awful.key({ modkey,           }, "f",                    function (c)
-		c.maximized_horizontal = not c.maximized_horizontal
-		c.maximized_vertical   = not c.maximized_vertical
-	end)
-)
+				return end end end), awful.key({ modkey,
+			}, "f",                    function (c)
+				c.maximized_horizontal = not
+				c.maximized_horizontal c.maximized_vertical   =
+				not c.maximized_vertical end))
 
 -- WORKSPACES
 -- shifty:

@@ -28,10 +28,10 @@ function displayMonth(month,year,weekStart)
         local lines = "    "
 
         for x=0,6 do
-                lines = lines .. os.date("%a ",os.time{year=2006,month=1,day=x+wkSt})
-        end
+                lines = lines .. os.date("<span color='#60801f'>%a</span> ",os.time{year=2006,month=1,day=x+wkSt})
+	end
 
-        lines = lines .. "\n" .. os.date(" %V",os.time{year=year,month=month,day=1})
+        lines = lines .. "\n" .. os.date("<span color='#1a1918'> %V</span>",os.time{year=year,month=month,day=1})
 
         local writeLine = 1
         while writeLine < (stDay + 1) do
@@ -44,7 +44,7 @@ function displayMonth(month,year,weekStart)
                 local t = os.time{year=year,month=month,day=d}
                 if writeLine == 8 then
                         writeLine = 1
-                        lines = lines .. "\n" .. os.date(" %V",t)
+                        lines = lines .. "\n" .. os.date("<span color='#1a1918'> %V</span>",t)
                 end
                 if os.date("%Y-%m-%d") == os.date("%Y-%m-%d", t) then
                         x = string.format(current_day_format, d)
@@ -55,7 +55,7 @@ function displayMonth(month,year,weekStart)
                 lines = lines .. "  " .. x
                 writeLine = writeLine + 1
         end
-        local header = os.date("%B %Y\n",os.time{year=year,month=month,day=1})
+        local header = os.date("<span color='#be6e00'>─────────── Calendar ──────────\n</span><span color='#1f6080'>%B %Y</span>",os.time{year=year,month=month,day=1})
 
         return header .. "\n" .. lines
 end
@@ -64,24 +64,31 @@ function switchNaughtyMonth(switchMonths)
         if (#calendar < 3) then return end
         local swMonths = switchMonths or 1
         calendar[1] = calendar[1] + swMonths
-        calendar[3].box.widgets[2].text = string.format('<span font_desc="%s">%s</span>', "monospace", displayMonth(calendar[1], calendar[2], 2))
+        calendar[3].box.widgets[2].text = string.format('<span font_desc="%s">%s</span>', "Terminus", displayMonth(calendar[1], calendar[2], 2))
 end
 
 function addCalendarToWidget(mywidget, custom_current_day_format)
   if custom_current_day_format then current_day_format = custom_current_day_format end
 
-  mywidget:add_signal('mouse::enter', function ()
-        local month, year = os.date('%m'), os.date('%Y')
-        calendar = { month, year,
-        naughty.notify({
-                text = string.format('<span font_desc="%s">%s</span>', "monospace", displayMonth(month, year, 2)),
-                timeout = 0,
-                hover_timeout = 0.5,
-                screen = capi.mouse.screen
-        })
-  }
-  end)
-  mywidget:add_signal('mouse::leave', function () naughty.destroy(calendar[3]) end)
+mywidget:add_signal('mouse::enter', function ()
+local month, year = os.date('%m'), os.date('%Y')
+	calendar = { month, year, naughty.notify({ 
+		text = string.format('<span font_desc="%s">%s</span>', "Terminus", displayMonth(month, year, 2)),
+		border_color = "#1a1918",
+		timeout = 0,
+		hover_timeout = 0.5,
+	}) }
+end )
+--awful.key({ modkey, "Control" }, "c", function ()
+--local month, year = os.date('%m'), os.date('%Y')
+--        calendar = { month, year, naughty.notify({ 
+--	text = string.format('<span font_desc="%s">%s</span>', "Terminus", displayMonth(month, year, 2)),
+--	border_color = "#1a1918",
+--	timeout = 20,
+--	hover_timeout = 0.5,
+--}) } end )
+
+mywidget:add_signal('mouse::leave', function () naughty.destroy(calendar[3]) end)
 
   mywidget:buttons(awful.util.table.join(
     awful.button({ }, 1, function()
