@@ -19,7 +19,8 @@ autoload -Uz compinit
 compinit
 zstyle ':completion:*' menu select
 
-export PS1="$(print '%F\e[1;32m∙∙∙%f')"
+#export PS1="$(print '%{\e[0;32m%}┌─[%n]─%{\e[1;32m%}[%~]\n%{\e[0;32m%}└─%{\e[1;32m%}$%b')"
+export PS1="$(print '%F\e[0;32m%/ %f%F\e[1;32m■ %f')" #%F\e[0;32m%/%f%F\e[1;32m∙∙∙%f')" #'%F\e[0;32m%/%f %F\e[1;32m►►►%f')"
 
 export EDITOR='vim'
 export BROWSER='firefox'
@@ -34,7 +35,7 @@ alias grep='grep --color=auto'
 alias ping='ping -c 5'
 alias dvd='mplayer -channels 6 -af hrtf dvd://'
 alias mplayer='mplayer -vo gl2'
-alias pacman='clyde'
+#alias pacman='clyde'
 #auto open files
 alias -s {mpg,mpeg,avi,ogm,wmv,m4v,mp4,mov}='mplayer'
 alias -s {mp3,ogg,wav,flac}='mplayer'

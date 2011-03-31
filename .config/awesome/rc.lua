@@ -67,9 +67,9 @@ shifty.config.tags = {
 
 -- shifty: tags matching and client rules
 shifty.config.apps = {
-	{ match = { "Namoroka", "luakit"         }, tag = "2-web",                                               },
+	{ match = { "Firefox", "luakit"          }, tag = "2-web",                                               },
 	{ match = { "mutt", "Lanikai"            }, tag = "3-mail",                                              },
-	{ match = { "LibreOffice.org 3.3"        }, tag = "4-office",                                            },
+	{ match = { "VCLSalFrame"                }, tag = "4-office",                                            },
 	{ match = { "Zathura", "Epdfview"        }, tag = "5-pdf",                                               },
 	{ match = { "Gimp"                       }, tag = "6-gimp",                                              },
 	{ match = { "gimp%-image%-window"        }, geometry = {175,15,930,770}, border_width = 0                },
@@ -101,7 +101,7 @@ shifty.init()
 
 -- MENU
 networkmenu = {
-	{ "namoroka",    "firefox" },
+	{ "firefox",    "firefox" },
 	{ "mutt",        terminal .. " -e mutt" },
 	{ "irssi",       terminal .. " -e irssi" },
 	{ "wicd",        terminal .. " -e wicd-curses" },
@@ -269,8 +269,8 @@ weatherwidget = widget({ type = "textbox" })
 		if args["{tempc}"] == "N/A" then
 			return ""
 		else
-			weatherwidget:add_signal('mouse::enter', function () weather_n = { naughty.notify({ title = "" .. colblu .. "───────────── Weather ─────────────" .. coldef .. "", text = "" .. colbblu .. "Wind    : " .. args["{windkmh}"] .. " km/h " .. args["{wind}"] .. "\nHumidity: " .. args["{humid}"] .. " %\nPressure: " .. args["{press}"] .. " hPa" .. coldef .. "", border_color = "#1a1a1a", timeout = 0, hover_timeout = 0.5 }) } end)
-			weatherwidget:add_signal('mouse::leave', function () naughty.destroy(weather_n[1]) end)
+--			weatherwidget:add_signal('mouse::enter', function () weather_n = { naughty.notify({ title = "" .. colblu .. "───────────── Weather ─────────────" .. coldef .. "", text = "" .. colbblu .. "Wind    : " .. args["{windkmh}"] .. " km/h " .. args["{wind}"] .. "\nHumidity: " .. args["{humid}"] .. " %\nPressure: " .. args["{press}"] .. " hPa" .. coldef .. "", border_color = "#1a1a1a" }) } end)
+--			weatherwidget:add_signal('mouse::leave', function () naughty.destroy(weather_n[1]) end)
 			return "" .. colblu .. " weather " .. coldef .. colbblu .. string.lower(args["{sky}"]) .. ", " .. args["{tempc}"] .. "°C" .. coldef .. ""
 		end
 	end, 1200, "YBTL" )
@@ -500,9 +500,19 @@ mytasklist.buttons = awful.util.table.join(
 for s = 1, screen.count() do
 	mypromptbox[s] = awful.widget.prompt({ layout = awful.widget.layout.horizontal.leftright })
 	mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.label.all, mytaglist.buttons)
-	mytasklist[s] = awful.widget.tasklist(function(c)
-		return awful.widget.tasklist.label.currenttags(c, s)
-	end, mytasklist.buttons)
+--	mytasklist[s] = awful.widget.tasklist(
+--		function(c)
+--			return awful.widget.tasklist.label.currenttags(c, s)
+--	end,
+--	mytasklist.buttons
+--	)
+	mytasklist[s] = awful.widget.tasklist(
+		function(c)
+			local text, bg, status_image, icon = awful.widget.tasklist.label.currenttags(c, s)
+			return text, bg, status_image, nil
+		end,
+		mytasklist.buttons
+	)
 	-- top box
 	mywibox[s] = awful.wibox({ position = "top", height = "14", screen = s })
 	mywibox[s].widgets = { {
@@ -588,9 +598,9 @@ globalkeys = awful.util.table.join(
 	awful.key({                   }, "XF86AudioMute",         function () awful.util.spawn("amixer -q sset Master toggle") end),
 	awful.key({ modkey,           }, "m",                     function () awful.util.spawn(terminal .. " -e ncmpcpp") end),
 	-- office
-	awful.key({ modkey,           }, "F2",                    function () awful.util.spawn("soffice -writer") end),
-	awful.key({ modkey,           }, "F3",                    function () awful.util.spawn("soffice -calc") end),
-	awful.key({ modkey,           }, "F4",                    function () awful.util.spawn("soffice -impress") end),
+	awful.key({ modkey,           }, "F2",                    function () awful.util.spawn("libreoffice -writer") end),
+	awful.key({ modkey,           }, "F3",                    function () awful.util.spawn("libreoffice -calc") end),
+	awful.key({ modkey,           }, "F4",                    function () awful.util.spawn("libreoffice -impress") end),
 	-- web
 	awful.key({                   }, "XF86HomePage",          function () awful.util.spawn("firefox") end),
 	awful.key({                   }, "XF86Mail",              function () awful.util.spawn(terminal .. " -e mutt") end),
