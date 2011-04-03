@@ -30,7 +30,7 @@ colbcya = "<span color='#9bcdff'>"
 colbwhi = "<span color='#ffffff'>"
 
 -- DEFAULTS
-terminal = "urxvt"
+terminal = "urxvtc"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
 browser = "firefox"
@@ -577,8 +577,8 @@ globalkeys = awful.util.table.join(
 	-- launchers
 	awful.key({ modkey,           }, "w",                     function () mainmenu:show({keygrabber=true}) end),
 	awful.key({ modkey,           }, "p",                     function () awful.util.spawn("dmenu_run -b -fn 'terminus' -nb '#1a1a1a' -nf '#9bcd32' -sb '#4c4b49' -sf '#9bcd32'") end),
-	awful.key({ modkey,           }, "Tab",                   function () awful.util.spawn(terminal) end),
-	awful.key({ modkey, "Shift"   }, "Tab",                   function () awful.util.spawn(terminal .. " -e su") end),
+	awful.key({ modkey,           }, "s",                     function () awful.util.spawn("gmrun") end),
+	awful.key({ modkey, "Shift"   }, "Return",                function () awful.util.spawn(terminal) end),
 	-- miscellaneous
 	awful.key({                   }, "Print",                 function () awful.util.spawn("scrot -b") end),
 	awful.key({                   }, "XF86Calculator",        function () awful.util.spawn("speedcrunch") end),
@@ -603,6 +603,7 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey,           }, "F4",                    function () awful.util.spawn("libreoffice -impress") end),
 	-- web
 	awful.key({                   }, "XF86HomePage",          function () awful.util.spawn("firefox") end),
+	awful.key({ modkey            }, "XF86HomePage",          function () awful.util.spawn("luakit") end),
 	awful.key({                   }, "XF86Mail",              function () awful.util.spawn(terminal .. " -e mutt") end),
 	awful.key({ modkey,           }, "i",                     function () awful.util.spawn(terminal .. " -e irssi") end),
 	awful.key({ modkey,           }, "d",                     function () awful.util.spawn(terminal .. " -e wicd-curses") end),
