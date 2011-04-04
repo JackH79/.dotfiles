@@ -63,6 +63,7 @@ shifty.config.tags = {
 	["torrent"]  = { layout = awful.layout.suit.max                                        },
 	["picture"]  = { layout = awful.layout.suit.max                                        },
 	["dial"]     = { layout = awful.layout.suit.max                                        },
+	["rss"]      = { layout = awful.layout.suit.max                                        },
 }
 
 -- shifty: tags matching and client rules
@@ -82,6 +83,7 @@ shifty.config.apps = {
 	{ match = { "rtorrent"                   }, tag = "torrent",                                             },
 	{ match = { "Mirage", "Geeqie"           }, tag = "picture",                                             },
 	{ match = { "wicd%-curses", "wvdial"     }, tag = "dial",                                                },
+	{ match = { "canto"                      }, tag = "rss",                                                 },
 	-- client manipulation
 	{ match = { "" },
 		honorsizehints = false,
@@ -609,6 +611,7 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey,           }, "d",                     function () awful.util.spawn(terminal .. " -e wicd-curses") end),
 	awful.key({ modkey, "Shift"   }, "d",                     function () awful.util.spawn(terminal .. " -e sudo wvdial optus") end),
 	awful.key({ modkey,           }, "F12",                   function () awful.util.spawn(terminal .. " -e rtorrent") end),
+	awful.key({ modkey,           }, "c",                     function () awful.util.spawn(terminal .. " -e canto -u") end),
 	-- file managers
 	awful.key({ modkey,           }, "r",                     function () awful.util.spawn(terminal .. " -e ranger") end),
 	awful.key({ modkey,           }, "t",                     function () awful.util.spawn("thunar") end),
