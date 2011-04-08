@@ -7,9 +7,9 @@
 #
 ## set it in order to make tag editor and renaming files work properly
 #
-#mpd_host = "localhost"
+mpd_host = "localhost"
 #
-#mpd_port = "6600"
+mpd_port = "6600"
 #
 mpd_music_dir = "/home/jack/music"
 #
@@ -34,7 +34,7 @@ mpd_music_dir = "/home/jack/music"
 ## }
 ##
 #
-#visualizer_fifo_path = ""
+#visualizer_fifo_path = "/tmp/mpd.fifo"
 #
 ##
 ## Note: Below parameter is needed for ncmpcpp
@@ -44,7 +44,7 @@ mpd_music_dir = "/home/jack/music"
 ## are some problems with it.
 ##
 #
-#visualizer_output_name = ""
+#visualizer_output_name = "My FIFO"
 #
 ##
 ## Note: To enable spectrum frequency visualization
@@ -152,9 +152,9 @@ song_status_format = "{$3%a{ - $4%b - }{$8%t}}"
 ## with reversed colors.
 ##
 #
-#alternative_header_first_line_format = "$b$1$aqqu$/a$9 {%t}|{%f} $1$atqq$/a$9$/b"
+alternative_header_first_line_format = "$b$1$aqqu$/a$8 {%t}|{%f} $1$atqq$/a$9$/b"
 #
-#alternative_header_second_line_format = "{{$4$b%a$/b$9}{ - $7%b$9}{ ($4%y$9)}}|{%D}"
+alternative_header_second_line_format = "{{$3%a$9}{$8 - $4%b$9}{ ($4%y$9)}}|{%D}"
 #
 ##
 ## Note: Below variables also supports
@@ -229,11 +229,11 @@ playlist_display_mode = "columns" (classic/columns)
 #
 #centered_cursor = "no"
 #
-#progressbar_look = "->"
+progressbar_look = "═■"
 #
 #default_place_to_search_in = "database" (database/playlist)
 #
-#user_interface = "alternative" (classic/alternative)
+user_interface = "alternative" (classic/alternative)
 #
 #media_library_left_column = "g" (possible values: a,y,g,c,p, legend above)
 #
@@ -281,7 +281,7 @@ clock_display_seconds = "no"
 #
 #display_bitrate = "no"
 #
-#display_remaining_time = "no"
+display_remaining_time = "no"
 #
 #regular_expressions = "basic" (basic/extended)
 #
@@ -331,7 +331,7 @@ ignore_leading_the = "yes"
 #
 #colors_enabled = "yes"
 #
-#empty_tag_color = "cyan"
+empty_tag_color = "green"
 #
 header_window_color = "green"
 #
@@ -339,7 +339,7 @@ volume_color = "white"
 #
 #state_line_color = "default"
 #
-state_flags_color = "white"
+state_flags_color = "black"
 #
 main_window_color = "white"
 #
@@ -349,11 +349,11 @@ main_window_color = "white"
 #
 main_window_highlight_color = "white"
 #
-progressbar_color = "white"
+progressbar_color = "black"
 #
 #statusbar_color = "default"
 #
-alternative_ui_separator_color = "white"
+alternative_ui_separator_color = "black"
 #
 active_column_color = "green"
 #

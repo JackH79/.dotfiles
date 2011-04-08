@@ -8,7 +8,7 @@ require("shifty")
 require("calendar2")
 
 -- THEME
-beautiful.init("/home/jack/.config/awesome/themes/jack2/theme.lua")
+beautiful.init("/home/jack/.config/awesome/themes/jack/theme.lua")
 
 -- COLOURS
 coldef  = "</span>"
@@ -35,6 +35,7 @@ editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
 browser = "firefox"
 modkey = "Mod4"
+altkey = "Mod1"
 
 -- TAGS + TAG MATCHING
 -- layouts
@@ -68,22 +69,22 @@ shifty.config.tags = {
 
 -- shifty: tags matching and client rules
 shifty.config.apps = {
-	{ match = { "Firefox", "luakit"          }, tag = "2-web",                                               },
-	{ match = { "mutt", "Lanikai"            }, tag = "3-mail",                                              },
-	{ match = { "VCLSalFrame"                }, tag = "4-office",                                            },
-	{ match = { "Zathura", "Epdfview"        }, tag = "5-pdf",                                               },
-	{ match = { "Gimp"                       }, tag = "6-gimp",                                              },
-	{ match = { "gimp%-image%-window"        }, geometry = {175,15,930,770}, border_width = 0                },
-	{ match = { "^gimp%-toolbox$"            }, geometry = {0,15,175,770}, slave = true, border_width = 0    },
-	{ match = { "^gimp%-dock$"               }, geometry = {1105,15,175,770}, slave = true, border_width = 0 },
-	{ match = { "MPlayer", "Vlc", "Audacity" }, tag = "7-video",                                             },
-	{ match = { "MPlayer"                    }, geometry = {0,15,nil,nil}, float = true                      },
-	{ match = { "ncmpcpp"                    }, tag = "8-music",                                             },
-	{ match = { "irssi"                      }, tag = "9-irc",                                               },
-	{ match = { "rtorrent"                   }, tag = "torrent",                                             },
-	{ match = { "Mirage", "Geeqie"           }, tag = "picture",                                             },
-	{ match = { "wicd%-curses", "wvdial"     }, tag = "dial",                                                },
-	{ match = { "canto"                      }, tag = "rss",                                                 },
+	{ match = { "Firefox", "luakit"                  }, tag = "2-web",                                               },
+	{ match = { "mutt", "Lanikai"                    }, tag = "3-mail",                                              },
+	{ match = { "VCLSalFrame", "abiword", "Gnumeric" }, tag = "4-office",                                            },
+	{ match = { "Zathura", "Epdfview"                }, tag = "5-pdf",                                               },
+	{ match = { "Gimp"                               }, tag = "6-gimp",                                              },
+	{ match = { "gimp%-image%-window"                }, geometry = {175,15,930,770}, border_width = 0                },
+	{ match = { "^gimp%-toolbox$"                    }, geometry = {0,15,175,770}, slave = true, border_width = 0    },
+	{ match = { "^gimp%-dock$"                       }, geometry = {1105,15,175,770}, slave = true, border_width = 0 },
+	{ match = { "MPlayer", "Vlc", "Audacity"         }, tag = "7-video",                                             },
+	{ match = { "MPlayer"                            }, geometry = {0,15,nil,nil}, float = true                      },
+	{ match = { "ncmpcpp"                            }, tag = "8-music",                                             },
+	{ match = { "irssi"                              }, tag = "9-irc",                                               },
+	{ match = { "rtorrent"                           }, tag = "torrent",                                             },
+	{ match = { "Mirage", "Geeqie", "sxiv"           }, tag = "picture",                                             },
+	{ match = { "wicd%-curses", "wvdial"             }, tag = "dial",                                                },
+	{ match = { "canto"                              }, tag = "rss",                                                 },
 	-- client manipulation
 	{ match = { "" },
 		honorsizehints = false,
@@ -558,8 +559,6 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey,           }, "Next",                 awful.tag.viewnext       ),
 	awful.key({ modkey, "Shift"   }, "Prior",                shifty.shift_prev        ),
 	awful.key({ modkey, "Shift"   }, "Next",                 shifty.shift_next        ),
-	awful.key({ modkey            }, "a",                    function() shifty.add({ rel_index = 1 }) end ),
-	awful.key({ modkey, "Shift"   }, "a",                    function() shifty.add({ rel_index = 1, nopopup = true }) end ),
 	awful.key({ modkey            }, "z",                    shifty.del ),
 	awful.key({ modkey,           }, "Escape",               awful.tag.history.restore),
 	awful.key({ modkey,           }, "Right",                function ()
@@ -574,12 +573,13 @@ globalkeys = awful.util.table.join(
 			client.focus:raise()
 		end
 	end),
+	awful.key({ modkey,           }, "l",                     function () awful.tag.incmwfact( 0.05) end),
+	awful.key({ modkey,           }, "h",                     function () awful.tag.incmwfact(-0.05) end),
 
 	-- Programs
 	-- launchers
 	awful.key({ modkey,           }, "w",                     function () mainmenu:show({keygrabber=true}) end),
-	awful.key({ modkey,           }, "p",                     function () awful.util.spawn("dmenu_run -b -fn 'terminus' -nb '#1a1a1a' -nf '#9bcd32' -sb '#4c4b49' -sf '#9bcd32'") end),
-	awful.key({ modkey,           }, "s",                     function () awful.util.spawn("gmrun") end),
+	awful.key({ modkey,           }, "p",                     function () awful.util.spawn("dmenu_run -fn 'terminus' -nb '#000000' -nf '#4c4c4c' -sb '#000000' -sf '#be6e00'") end),
 	awful.key({ modkey, "Shift"   }, "Return",                function () awful.util.spawn(terminal) end),
 	-- miscellaneous
 	awful.key({                   }, "Print",                 function () awful.util.spawn("scrot -b") end),
@@ -603,6 +603,8 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey,           }, "F2",                    function () awful.util.spawn("libreoffice -writer") end),
 	awful.key({ modkey,           }, "F3",                    function () awful.util.spawn("libreoffice -calc") end),
 	awful.key({ modkey,           }, "F4",                    function () awful.util.spawn("libreoffice -impress") end),
+	awful.key({ modkey,           }, "a",                     function () awful.util.spawn("abiword") end),
+	awful.key({ modkey,           }, "s",                     function () awful.util.spawn("gnumeric") end),
 	-- web
 	awful.key({                   }, "XF86HomePage",          function () awful.util.spawn("firefox") end),
 	awful.key({ modkey            }, "XF86HomePage",          function () awful.util.spawn("luakit") end),

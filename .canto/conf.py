@@ -5,7 +5,7 @@ if os.getenv("TERM") == "linux":
 	image_handler("fbi \"%u\"", text=True, fetch=True)
 else:
 	link_handler("luakit \"%u\"")
-	image_handler("geeqie \"%u\"", fetch=True)
+	image_handler("sxiv \"%u\"", fetch=True)
 
 colors[0] = ("white", "default")
 colors[1] = ("blue", "default")
@@ -17,6 +17,6 @@ colors[6] = ("blue", "default")
 reader_lines = 20
 default_rate(30)
 default_keep(20)
+add("http://www.nationstates.net/cgi-bin/rss.cgi?nation=ngaloo&key=881276&nh=1")
 add("http://www.archlinux.org/feeds/news/")
-add("http://feeds.bbci.co.uk/news/rss.xml")
-add("http://www.stuff.co.nz/rss/")
+add("http://rss.gmane.org/messages/complete/gmane.comp.window-managers.awesome")

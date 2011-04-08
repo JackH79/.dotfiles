@@ -2,7 +2,7 @@
 # gmail specific options
 ###
 
-color status green default
+color status brightgreen default
 
   set from      = "holborn79@gmail.com"
   set sendmail  = "/usr/bin/msmtp -a gmailhol"

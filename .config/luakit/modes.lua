@@ -25,7 +25,12 @@ window.init_funcs.modes_setup = function (w)
 
         -- Get new modes functions/hooks/data
         local mode = modes[name]
-        w.mode = mode
+
+        -- Create w.mode object
+        w.mode = setmetatable({}, {
+            __index    = mode,
+            __newindex = function () error("trying to edit w.mode") end,
+        })
 
         -- Call last modes leave hook.
         if leave then leave(w) end
@@ -71,7 +76,6 @@ end
 local mset, mget = lousy.mode.set, lousy.mode.get
 for name, func in pairs({
     set_mode = function (w, name)        mset(w, name)   end,
-    get_mode = function (w)       return mget(w)         end,
     is_mode  = function (w, name) return name == mget(w) end,
 }) do window.methods[name] = func end
 
@@ -89,6 +93,8 @@ new_mode("insert", {
         w:set_prompt("-- INSERT --")
         w:set_input()
     end,
+    -- Send key events to webview
+    passthrough = true,
 })
 
 new_mode("passthrough", {
@@ -96,6 +102,12 @@ new_mode("passthrough", {
         w:set_prompt("-- PASS THROUGH --")
         w:set_input()
     end,
+    -- Send key events to webview
+    passthrough = true,
+    -- Don't exit mode when clicking outside of form fields
+    reset_on_focus = false,
+    -- Don't exit mode on navigation
+    reset_on_navigation = false,
 })
 
 -- Setup command mode
@@ -111,12 +123,27 @@ new_mode("command", {
     activate = function (w, text)
         w:set_mode()
         local cmd = string.sub(text, 2)
+        -- Ignore blank commands
+        if string.match(cmd, "^%s*$") then return end
         local success, match = pcall(w.match_cmd, w, cmd)
         if not success then
             w:error("In command call: " .. match)
         elseif not match then
             w:error(string.format("Not a browser command: %q", cmd))
         end
+    end,
+    history = {maxlen = 50},
+})
+
+new_mode("lua", {
+    enter = function (w)
+        w:set_prompt(">")
+        w:set_input("")
+    end,
+    activate = function (w, text)
+        w:set_input("")
+        local ret = assert(loadstring("return function(w) return "..text.." end"))()(w)
+        if ret then print(ret) end
     end,
     history = {maxlen = 50},
 })

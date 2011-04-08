@@ -5,9 +5,9 @@
 # settings
   set sidebar_delim       = '│'
   set sidebar_visible     = yes
-  set sidebar_width       = 30
+  set sidebar_width       = 20
 
-# colors
+# colours
 color sidebar_new brightyellow default
 
 # bindings
