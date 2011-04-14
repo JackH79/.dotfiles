@@ -33,7 +33,7 @@ colbwhi = "<span color='#ffffff'>"
 terminal = "urxvtc"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
-browser = "firefox"
+browser = "luakit"
 modkey = "Mod4"
 altkey = "Mod1"
 
@@ -51,45 +51,52 @@ layouts = {
 }
 
 -- shifty: predefined tags
-shifty.config.tags = {
+shifty.config.tags   = {
 	["1-term"]   = { init = true, position = 1, layout = awful.layout.suit.fair.horizontal },
 	["2-web"]    = { position = 2, layout = awful.layout.suit.max                          },
-	["3-mail"]   = { position = 3, layout = awful.layout.suit.max                          },
+	["3-com"]    = { position = 3, layout = awful.layout.suit.max                          },
 	["4-office"] = { position = 4, layout = awful.layout.suit.tile.bottom                  },
 	["5-pdf"]    = { position = 5, layout = awful.layout.suit.tile.bottom                  },
 	["6-gimp"]   = { position = 6, layout = awful.layout.suit.floating, spawn = "gimp"     },
 	["7-video"]  = { position = 7, layout = awful.layout.suit.floating                     },
 	["8-music"]  = { position = 8, layout = awful.layout.suit.tile.bottom                  },
-	["9-irc"]    = { position = 9, layout = awful.layout.suit.max                          },
 	["torrent"]  = { layout = awful.layout.suit.max                                        },
 	["picture"]  = { layout = awful.layout.suit.max                                        },
 	["dial"]     = { layout = awful.layout.suit.max                                        },
-	["rss"]      = { layout = awful.layout.suit.max                                        },
 }
 
 -- shifty: tags matching and client rules
 shifty.config.apps = {
+	-- web
 	{ match = { "Firefox", "luakit"                  }, tag = "2-web",                                               },
-	{ match = { "mutt", "Lanikai"                    }, tag = "3-mail",                                              },
+	-- communications
+	{ match = { "mutt", "Lanikai"                    }, tag = "3-com",                                               },
+	{ match = { "canto"                              }, tag = "3-com",                                               },
+	{ match = { "irssi"                              }, tag = "3-com",                                               },
+	--office
 	{ match = { "VCLSalFrame", "abiword", "Gnumeric" }, tag = "4-office",                                            },
-	{ match = { "Zathura", "Epdfview"                }, tag = "5-pdf",                                               },
+	{ match = { "geany"                              }, tag = "4-office",                                            },
+	{ match = { "Zathura"                            }, tag = "5-pdf",                                               },
+	-- gimp
 	{ match = { "Gimp"                               }, tag = "6-gimp",                                              },
 	{ match = { "gimp%-image%-window"                }, geometry = {175,15,930,770}, border_width = 0                },
 	{ match = { "^gimp%-toolbox$"                    }, geometry = {0,15,175,770}, slave = true, border_width = 0    },
 	{ match = { "^gimp%-dock$"                       }, geometry = {1105,15,175,770}, slave = true, border_width = 0 },
+	--video
 	{ match = { "MPlayer", "Vlc", "Audacity"         }, tag = "7-video",                                             },
 	{ match = { "MPlayer"                            }, geometry = {0,15,nil,nil}, float = true                      },
+	-- music
 	{ match = { "ncmpcpp"                            }, tag = "8-music",                                             },
-	{ match = { "irssi"                              }, tag = "9-irc",                                               },
+	-- miscellaneous
 	{ match = { "rtorrent"                           }, tag = "torrent",                                             },
 	{ match = { "Mirage", "Geeqie", "sxiv"           }, tag = "picture",                                             },
 	{ match = { "wicd%-curses", "wvdial"             }, tag = "dial",                                                },
-	{ match = { "canto"                              }, tag = "rss",                                                 },
+
 	-- client manipulation
 	{ match = { "" },
 		honorsizehints = false,
 		buttons = awful.util.table.join (
-		awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
+		awful.button({        }, 1, function (c) client.focus = c; c:raise() end),
 		awful.button({ modkey }, 1, awful.mouse.client.move),
 		awful.button({ modkey }, 3, awful.mouse.client.resize))
 	},
@@ -104,76 +111,70 @@ shifty.init()
 
 -- MENU
 networkmenu = {
-	{ "firefox",    "firefox" },
-	{ "mutt",        terminal .. " -e mutt" },
-	{ "irssi",       terminal .. " -e irssi" },
-	{ "wicd",        terminal .. " -e wicd-curses" },
+	{ "luakit",      "luakit"                            },
+	{ "firefox",     "firefox"                           },
+	{ "mutt",        terminal .. " -e mutt"              },
+	{ "irssi",       terminal .. " -e irssi"             },
+	{ "wicd",        terminal .. " -e wicd-curses"       },
 	{ "wvdial",      terminal .. " -e sudo wvdial optus" },
-	{ "rtorrent",    terminal .. " -e rtorrent" }
+	{ "rtorrent",    terminal .. " -e rtorrent"          }
 }
-
 officemenu = {
-	{ "writer",      "libreoffice -writer" },
-	{ "calc",        "libreoffice -calc" },
+	{ "abiword",     "abiword"              },
+	{ "writer",      "libreoffice -writer"  },
+	{ "gnumeric",    "gnumeric"             },
+	{ "calc",        "libreoffice -calc"    },
 	{ "impress",     "libreoffice -impress" },
-	{ "speedcrunch", "speedcrunch" },
-	{ "r",           terminal .. " -e R" }
+	{ "speedcrunch", "speedcrunch"          },
+	{ "r",           terminal .. " -e R"    }
 }
-
 editorsmenu = {
 	{ "vim",         terminal .. " -e vim" },
-	{ "medit",       "medit" }
+	{ "geany",       "geany"               }
 }
-
 graphicsmenu = {
-	{ "gimp",        "gimp" },
+	{ "gimp",        "gimp"   },
+	{ "sxiv",        "sxiv"   },
 	{ "geeqie",      "geeqie" }
 }
-
 mediamenu = {
-	{ "vlc",         "vlc" },
+	{ "vlc",         "vlc"                     },
 	{ "ncmpcpp",     terminal .. " -e ncmpcpp" },
-	{ "audacity",    "audacity" },
-	{ "avidemux",    "avidemux2_gtk" }
+	{ "audacity",    "audacity"                },
+	{ "avidemux",    "avidemux2_gtk"           }
 }
-
 utilitiesmenu = {
-	{ "virtualbox",  "VirtualBox" },
-	{ "xfburn",      "xfburn" },
+	{ "xfburn",      "xfburn"    },
 	{ "truecrypt",   "truecrypt" }
 }
-
 monitormenu = {
-	{ "scroff",      "xrandr --output LVDS --off" },
-	{ "scron",       "xrandr --output LVDS --auto" },
+	{ "scroff",      "xrandr --output LVDS --off"        },
+	{ "scron",       "xrandr --output LVDS --auto"       },
 	{ "scrmax",      "xrandr --output VGA-0 --preferred" }
 }
-
 systemmenu = {
-	{ "monitor",     monitormenu },
+	{ "monitor",     monitormenu            },
 	{ "htop",        terminal .. " -e htop" },
-	{ "kill",        "xkill" }
+	{ "kill",        "xkill"                }
 }
-
 awesomemenu = {
 	{ "edit config", editor_cmd .. " " .. awful.util.getdir("config") .. "/rc.lua" },
-	{ "restart",     awesome.restart },
-	{ "lock",        terminal .. " -e xscreensaver-command --lock" },
-	{ "quit",        awesome.quit },
-	{ "reboot",      terminal .. " -e reboot" },
-	{ "shutdown",    terminal .. " -e shutdown" }
+	{ "restart",     awesome.restart                                               },
+	{ "lock",        terminal .. " -e xscreensaver-command --lock"                 },
+	{ "quit",        awesome.quit                                                  },
+	{ "reboot",      terminal .. " -e reboot"                                      },
+	{ "shutdown",    terminal .. " -e shutdown"                                    }
 }
-
 mainmenu = awful.menu({
 	items = {
-		{ "network",   networkmenu },
-		{ "office",    officemenu },
-		{ "editors",   editorsmenu },
-		{ "graphics",  graphicsmenu },
-		{ "media",     mediamenu },
+		{ "network",   networkmenu   },
+		{ "office",    officemenu    },
+		{ "editors",   editorsmenu   },
+		{ "graphics",  graphicsmenu  },
+		{ "media",     mediamenu     },
 		{ "utilities", utilitiesmenu },
-		{ "sytem",     systemmenu },
-		{ "awesome",   awesomemenu }
+		{ "sytem",     systemmenu    },
+		{ "awesome",   awesomemenu   }
 	}
 })
 
@@ -357,16 +358,23 @@ netedownwidget = widget({ type = "textbox" })
 	vicious.register(netedownwidget, vicious.widgets.net, "" .. colblk .. "down " ..coldef .. colbblk .. "${eth0 down_kb} " .. coldef .. "")
 
 netwidget = widget({ type = "textbox" })
-	vicious.register(netwidget, vicious.widgets.netinfo,
+	vicious.register(netwidget, vicious.widgets.net,
 	function (widget, args)
-		if args["{ip}"] == nil then
+			function ip_addr()
+				local ip = io.popen("ip addr show eth0 | grep 'inet '")
+				local addr = ip:read("*a")
+				ip:close()
+				addr = string.match(addr, "%d+.%d+.%d+.%d+")
+				return addr
+			end
+		if ip_addr() == nil then
 			netedownwidget.visible = false
 			neteupwidget.visible = false
 			return ""
 		else
 			netedownwidget.visible = true
 			neteupwidget.visible = true
-			return "" .. colblk .. "eth0 " .. coldef .. colbblk .. args["{ip}"] .. coldef .. " "
+			return "" .. colblk .. "eth0 " .. coldef .. colbblk .. ip_addr() .. coldef .. " "
 		end
 	end, refresh_delay, "eth0")
 
@@ -380,6 +388,13 @@ netwdownwidget = widget({ type = "textbox" })
 wifiwidget = widget({ type = "textbox" })
 	vicious.register(wifiwidget, vicious.widgets.wifi,
 	function (widget, args)
+			function ip_addr()
+				local ip = io.popen("ip addr show wlan0 | grep 'inet '")
+				local addr = ip:read("*a")
+				ip:close()
+				addr = string.match(addr, "%d+.%d+.%d+.%d+")
+				return addr
+			end
 		if args["{link}"] == 0 then
 			netwdownwidget.visible = false
 			netwupwidget.visible = false
@@ -387,7 +402,13 @@ wifiwidget = widget({ type = "textbox" })
 		else
 			netwdownwidget.visible = true
 			netwupwidget.visible = true
-			return "" .. colblk .. "wlan " .. coldef .. colbblk .. string.format("%s [%i%%]", args["{ssid}"], args["{link}"]/70*100) .. coldef .. " "
+			if args["{link}"]/70*100 <= 50 then
+				return "" .. colblk .. "wlan " .. coldef .. colbblk .. ip_addr() .. coldef .. colblk .. " on " .. coldef .. colbblk .. args["{ssid}"] .. coldef .. colred .. " at " .. coldef .. colbred .. string.format("[%i%%]", args["{link}"]/70*100) .. coldef .. " "
+			elseif args["{link}"]/70*100 > 50 and args["{link}"]/70*100 <=75 then
+				return "" .. colblk .. "wlan " .. coldef .. colbblk .. ip_addr() .. coldef .. colblk .. " on " .. coldef .. colbblk .. args["{ssid}"] .. coldef .. colyel .. " at " .. coldef .. colbyel .. string.format("[%i%%]", args["{link}"]/70*100) .. coldef .. " "
+			else
+				return "" .. colblk .. "wlan " .. coldef .. colbblk .. ip_addr() .. coldef .. colblk .. " on " .. coldef .. colbblk .. args["{ssid}"] .. coldef .. colblk .. " at " .. coldef .. colbblk .. string.format("[%i%%]", args["{link}"]/70*100) .. coldef .. " "
+			end
 		end
 	end, refresh_delay, "wlan0" )
 
@@ -554,6 +575,9 @@ root.buttons(awful.util.table.join(
 -- Key bindings
 -- Global
 globalkeys = awful.util.table.join(
+	-- Awesome
+	awful.key({ modkey, "Shift"   }, "q",                    awesome.quit             ),
+	awful.key({ modkey, "Shift"   }, "r",                    awesome.restart          ),
 	-- Tags
 	awful.key({ modkey,           }, "Prior",                awful.tag.viewprev       ),
 	awful.key({ modkey,           }, "Next",                 awful.tag.viewnext       ),
@@ -663,7 +687,6 @@ clientkeys = awful.util.table.join(
 				c.maximized_horizontal = not
 				c.maximized_horizontal c.maximized_vertical   =
 				not c.maximized_vertical end))
-
 -- WORKSPACES
 -- shifty:
 for i=1,9 do
