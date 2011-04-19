@@ -2,12 +2,27 @@
 #
 # ~/.xinitrc
 
-#feh --bg-scale /home/jack/.config/awesome/background/bg.png &
-#exec ck-launch-session dbus-launch --exit-with-session openbox-session
-
+### GENERAL STUFF
 xset -dpms
 xset s off
 export GTK2_RC_FILES="/home/jack/.gtkrc-2.0"
 xscreensaver &
-exec ck-launch-session dbus-launch --exit-with-session awesome
+unclutter -root -idle 3 &
+xmodmap /home/jack/.Xmodmap &
+urxvtd -q -o -f &
+#xcompmgr -c &
 
+### AWESOME
+exec ck-launch-session awesome
+
+### XMONAD
+#imlibsetroot /home/jack/.background/bg.png &
+#xsetroot -cursor_name left_ptr
+#exec xmonad
+
+### DWM
+#imlibsetroot /home/jack/.background/bg.png &
+#exec ck-launch-session dwm
+
+### WMFS
+#exec ck-launch-session wmfs

@@ -1,0 +1,27 @@
+!NIGHT
+*background: #1a1918
+*foreground: #807b76
+!black
+*color0 : #1a1a1a
+*color8 : #4c4c4c
+!red
+*color1 : #b23535
+*color9 : #ff4b4b
+!green
+*color2 : #60801f
+*color10: #9bcd32
+!yellow
+*color3 : #be6e00
+*color11: #d79b1e
+!blue
+*color4 : #1f6080
+*color12: #329bcd
+!magenta
+*color5 : #8f46b2
+*color13: #cd64ff
+!cyan
+*color6 : #73afb4
+*color14: #9bcdff
+!white
+*color7 : #b2b2b2
+*color15: #FFFFFF

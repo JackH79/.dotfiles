@@ -1,39 +1,25 @@
 !URXVT
-URxvt*termName:    rxvt
-URxvt*scrollBar:   false
-URxvt*urlLauncher: firefox
-URxvt*buffered: true
-!URxvt*font: xft:terminus:pixelsize=14
+URxvt*termName:       rxvt
+URxvt*scrollBar:      false
+URxvt*urlLauncher:    firefox
+URxvt*buffered:       true
+!URxvt*font:          xft:terminus:pixelsize=14
 URxvt*font:           -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
 URxvt*boldFont:       -*-terminus-bold-*-*-*-12-*-*-*-*-*-*-*
-URxvt*italicFont:     -*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*
-URxvt*boldItalicFont: -*-terminus-bold-r-*-*-12-*-*-*-*-*-*-*
-URxvt*transparent: true
-URxvt*shading: 100
+URxvt*italicFont:     -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
+URxvt*boldItalicFont: -*-terminus-bold-*-*-*-12-*-*-*-*-*-*-*
+URxvt*transparent:    true
+URxvt*shading:        100
 
 !XTERM
-xterm*toolBar: false
-xterm*scrollBar: fasle
-xterm*background: #1a1918
-xterm*foreground: #a4a4a4
-xterm*font: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
+xterm*toolBar:       false
+xterm*scrollBar:     false
+xterm*background:    #1a1918
+xterm*foreground:    #a4a4a4
+xterm*font:          -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
 
-!COLOURS
-*background:  #1a1918
-*foreground:  #807b76
-!#include "/home/jack/.config/Xcolours/allblue"
-!#include "/home/jack/.config/Xcolours/allgreen"
-#include "/home/jack/.config/Xcolours/bright"
-!#include "/home/jack/.config/Xcolours/bright2"
-!#include "/home/jack/.config/Xcolours/yelloworange"
-!#include "/home/jack/.config/Xcolours/greenish"
-!#include "/home/jack/.config/Xcolours/brightest"
-!#include "/home/jack/.config/Xcolours/boring"
-!#include "/home/jack/.config/Xcolours/pale"
-!#include "/home/jack/.config/Xcolours/pale2"
-!#include "/home/jack/.config/Xcolours/darkish"
-!#include "/home/jack/.config/Xcolours/brightorange"
-!#include "/home/jack/.config/Xcolours/boring2"
+!COLOUR THEME
+#include "/home/jack/.config/Xcolours/colours"
 
 !XSCREENSAVER
 #include "/home/jack/.config/Xcolours/xscreendark"
