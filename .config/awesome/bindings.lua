@@ -24,26 +24,26 @@ globalkeys = awful.util.table.join(
 	end, awesome.restart ),
 
 	-- Tags
-	awful.key({ modkey,           }, "Prior",                awful.tag.viewprev       ),
-	awful.key({ modkey,           }, "Next",                 awful.tag.viewnext       ),
-	awful.key({ modkey, "Shift"   }, "Prior",                shifty.shift_prev        ),
-	awful.key({ modkey, "Shift"   }, "Next",                 shifty.shift_next        ),
-	awful.key({ modkey            }, "z",                    shifty.del ),
-	awful.key({ modkey,           }, "Escape",               awful.tag.history.restore),
-	awful.key({ modkey,           }, "Right",                function ()
+	awful.key({ modkey,           }, "Prior",                 awful.tag.viewprev       ),
+	awful.key({ modkey,           }, "Next",                  awful.tag.viewnext       ),
+	awful.key({ modkey, "Shift"   }, "Prior",                 shifty.shift_prev        ),
+	awful.key({ modkey, "Shift"   }, "Next",                  shifty.shift_next        ),
+	awful.key({ modkey            }, "z",                     shifty.del ),
+	awful.key({ modkey,           }, "Escape",                awful.tag.history.restore),
+	awful.key({ modkey,           }, "Right",                 function ()
 		awful.client.focus.byidx( 1)
 		if client.focus then
 			client.focus:raise()
 		end
 	end),
-	awful.key({ modkey,           }, "Left",                 function ()
+	awful.key({ modkey,           }, "Left",                  function ()
 		awful.client.focus.byidx(-1)
 		if client.focus then
 			client.focus:raise()
 		end
 	end),
-	awful.key({ modkey,           }, "l",                     function () awful.tag.incmwfact( 0.05) end),
-	awful.key({ modkey,           }, "h",                     function () awful.tag.incmwfact(-0.05) end),
+	awful.key({ modkey, "Control" }, "Right",                 function () awful.tag.incmwfact( 0.05) end),
+	awful.key({ modkey, "Control" }, "Left",                  function () awful.tag.incmwfact(-0.05) end),
 
 	-- Programs
 	-- launchers
@@ -55,7 +55,6 @@ globalkeys = awful.util.table.join(
 	awful.key({                   }, "XF86Calculator",        function () awful.util.spawn("speedcrunch") end),
 	awful.key({ modkey, "Shift"   }, "x",                     function () awful.util.spawn("xkill") end),
 	awful.key({ modkey, "Shift"   }, "l",                     function () awful.util.spawn(terminal .. " -e xscreensaver-command --lock") end),
---	awful.key({ modkey, "Control" }, "r",                     rodentbane.start),         
 	awful.key({ modkey            }, "F8",                    function () awful.util.spawn("truecrypt") end),
 	awful.key({ modkey, "Control" }, "t",                     function () naughty.notify({ text = "" .. colbyel .. "────────────────────────────────── World Clock ─────────────────────────────────" .. coldef .. colblk .."\nOOO      OOOO             OO                                     OOOOO  OOOOOOOO\nOO " .. coldef .. colyel .. "London" .. coldef .. colblk .. "             O  OOOOOOOOOOO  O                    OOOO O OO O    OOOOOO\n  O" .. coldef .. colbyel .. time_utc() .. coldef .. colblk .. "OO OO OOOOOOOOOOOOOOOOOOOOOOOOO  OOOOOOOOOOOOOOOOOOOO OO    OO\n      OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO    O        OOO  OOOOOOOOOO   OOO\n    OOOOO" .. coldef .. colyel .. "Düsseldorf" .. coldef .. colblk .. "OOOOOOOOOOOOOOOOOO               " .. coldef .. colyel .. "Vancouver" .. coldef .. colblk .. "OOOOOOOOOO\n  OOOOO  " .. coldef .. colbyel .. time_cet() .. coldef .. colblk .. "OOOOOOOOOOOOOOOO O             " .. coldef .. colbyel .. time_pst() .. coldef .. colblk .. "OOO\n       OO      OOOOOOOOOOOOOOOOOOO O O                     OOOOOOOO" .. coldef .. colyel .. "Woods Hole" .. coldef .. colblk .. "\n     OOOOOOOOOOOOOOOOOOOOOOOOOOOOO                           OOOO  " .. coldef .. colbyel .. time_est() .. coldef .. colblk .. "\n    OOOOOOOOOOOO OOOO  OOOO OOOOO                               OO\n   OOOOOOOOOOOOO O      O    OO                                   OO\n     OOOOOOOOOOOOO                O                                  OOOO\n         OOOOO O              O OOO                                 OOOOOOO\n          OOOOOO               O      OO          " .. coldef .. colyel .. "Rarotonga" .. coldef .. colblk .. "        OOOOOOOOO\n          OOOOOO                    O O           " .. coldef .. colbyel .. time_ckt() .. coldef .. colblk .. "     OOOOOOOO\n          OOOOO  O              OOOOOOOO                            OOOOOO\n           OOO                  OOOOOOOOO                            OOOO\n            O                         OO  " .. coldef .. colyel .. "Tauranga" .. coldef .. colblk .. "                   OOOO\n                                          " .. coldef .. colbyel .. time_nzst() .. coldef .. colblk .. "               OO\n                                                                     O" .. coldef .. "", border_color = "#1a1a1a", timeout = 20, hover_timeout = 0.5 }) end),
 	awful.key({ modkey, "Control" }, "r",                     function () naughty.notify({ text = cal_gett(), border_color = "#1a1a1a", timeout = 20, hover_timeout = 0.5 }) end),
@@ -75,12 +74,12 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey,           }, "a",                     function () awful.util.spawn("abiword") end),
 	awful.key({ modkey,           }, "s",                     function () awful.util.spawn("gnumeric") end),
 	-- web
-	awful.key({                   }, "XF86HomePage",          function () awful.util.spawn("firefox") end),
-	awful.key({ modkey            }, "XF86HomePage",          function () awful.util.spawn("luakit") end),
+	awful.key({  modkey           }, "XF86HomePage",          function () awful.util.spawn("firefox") end),
+	awful.key({                   }, "XF86HomePage",          function () awful.util.spawn("luakit") end),
 	awful.key({                   }, "XF86Mail",              function () awful.util.spawn(terminal .. " -e mutt") end),
 	awful.key({ modkey,           }, "i",                     function () awful.util.spawn(terminal .. " -e irssi") end),
 	awful.key({ modkey,           }, "d",                     function () awful.util.spawn(terminal .. " -e wicd-curses") end),
-	awful.key({ modkey, "Shift"   }, "d",                     function () awful.util.spawn(terminal .. " -e sudo wvdial optus") end),
+--	awful.key({ modkey, "Shift"   }, "d",                     function () awful.util.spawn(terminal .. " -e sudo wvdial optus") end),
 	awful.key({ modkey,           }, "F12",                   function () awful.util.spawn(terminal .. " -e rtorrent") end),
 	awful.key({ modkey,           }, "c",                     function () awful.util.spawn(terminal .. " -e canto -u") end),
 	-- file managers
@@ -90,8 +89,8 @@ globalkeys = awful.util.table.join(
 	-- Layouts
 	awful.key({ modkey, "Shift"   }, "Right",                 function () awful.client.swap.byidx(  1) end),
 	awful.key({ modkey, "Shift"   }, "Left",                  function () awful.client.swap.byidx( -1) end),
-	awful.key({ modkey, "Control" }, "Right",                 function () awful.screen.focus_relative( 1) end),
-	awful.key({ modkey, "Control" }, "Left",                  function () awful.screen.focus_relative(-1) end),
+--	awful.key({ modkey, "Control" }, "Right",                 function () awful.screen.focus_relative( 1) end),
+--	awful.key({ modkey, "Control" }, "Left",                  function () awful.screen.focus_relative(-1) end),
 	awful.key({ modkey,           }, "u",                     awful.client.urgent.jumpto),
 
 	-- Awesome
@@ -126,11 +125,13 @@ clientkeys = awful.util.table.join(
 		for _,c in ipairs(allclients) do
 			if c.minimized and c:tags()[mouse.screen] == awful.tag.selected(mouse.screen) then
 				c.minimized = false client.focus = c c:raise()
-				return end end end), awful.key({ modkey,
-			}, "f",                    function (c)
-				c.maximized_horizontal = not
-				c.maximized_horizontal c.maximized_vertical   =
-				not c.maximized_vertical end))
+				return
+			end
+		end
+	end),
+	awful.key({ modkey,           }, "f",                    function (c)
+				c.maximized_horizontal = not c.maximized_horizontal c.maximized_vertical = not c.maximized_vertical
+	end))
 
 -- WORKSPACES
 -- shifty:

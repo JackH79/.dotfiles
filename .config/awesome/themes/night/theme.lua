@@ -1,25 +1,25 @@
----------------------------
--- Default awesome theme --
----------------------------
+-- THEME NIGHT
+
+require("coloursnight")
 
 theme = {}
 
 theme.font          = "terminus 8"
 
-theme.bg_normal     = "#000000"
-theme.bg_focus      = "#000000"
-theme.bg_urgent     = "#b23535"
-theme.bg_minimize   = "#000000"
+theme.bg_normal     = trblk
+theme.bg_focus      = trblk
+theme.bg_urgent     = red
+theme.bg_minimize   = trblk
 
-theme.fg_normal     = "#4c4c4c"
-theme.fg_focus      = "#be6e00"
-theme.fg_urgent     = "#ffffff"
-theme.fg_minimize   = "#1a1a1a"
+theme.fg_normal     = brblk
+theme.fg_focus      = yel
+theme.fg_urgent     = trwhi
+theme.fg_minimize   = blk
 
 theme.border_width  = "1"
-theme.border_normal = "#050505"
-theme.border_focus  = "#313233"
-theme.border_marked = "#a4a4a4"
+theme.border_normal = blk
+theme.border_focus  = brblk
+theme.border_marked = blu
 
 -- TAGLIST
 theme.taglist_squares_sel   = "/home/jack/.config/awesome/themes/night/taglist/squarefw.png"
@@ -30,11 +30,11 @@ theme.tasklist_floating_icon = "/home/jack/.config/awesome/themes/night/tasklist
 
 -- MENU
 theme.menu_submenu_icon = "/home/jack/.config/awesome/themes/night/submenu.png"
-theme.menu_border_color = "#0a0a0a"
+theme.menu_border_color = blk
 theme.menu_height = "14"
 theme.menu_width  = "90"
 
 -- WALLPAPER
 --theme.wallpaper_cmd = { "awsetbg /home/jack/.background/bg.png" }
-theme.wallpaper_cmd = { "imlibsetroot /home/jack/.background/bgnight.png" }
+theme.wallpaper_cmd = { "imlibsetroot -s /home/jack/.background/bgnight.png" }
 return theme

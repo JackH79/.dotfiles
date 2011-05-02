@@ -1,3 +1,4 @@
+-- CREATION
 -- SYSTRAY
 mysystray = widget({ type = "systray" })
 
@@ -82,11 +83,16 @@ for s = 1, screen.count() do
 		mpdwidget, layout = awful.widget.layout.horizontal.leftright },
 		volwidget,
 		batwidget,
-		neteupwidget, netedownwidget, netwidget,
-		netwupwidget, netwdownwidget, wifiwidget,
+		netupwidget, netdownwidget, netwidget,
+		wifiupwidget, wifidownwidget, wifiwidget,
 		fshwidget, fsrwidget,
 		memwidget,
 		tempwidget,
 		cputwidget,
 		layout = awful.widget.layout.horizontal.rightleft }
+--	if infoswitch == 0 then
+--		infobox[s].visible = false
+--	else
+--		infobox[s].visible = true
+--	end
 end

@@ -41,13 +41,17 @@ fsrwidget = widget({ type = "textbox" })
 	vicious.register(fsrwidget, vicious.widgets.fs,
 	function (widget, args)
 		if  args["{/ used_p}"] >= 93 and args["{/ used_p}"] < 97 then
+			infoswitch = 1
 			return "" .. colyel .. "/ " .. coldef .. colbyel .. args["{/ used_p}"] .. "% (" .. args["{/ avail_gb}"] .. " GiB free) " .. coldef .. ""
 		elseif args["{/ used_p}"] >= 97 and args["{/ used_p}"] < 99 then
+			infoswitch = 1
 			return "" .. colred .. "/ " .. coldef .. colbred .. args["{/ used_p}"] .. "% (" .. args["{/ avail_gb}"] .. " GiB free) " .. coldef .. ""
 		elseif args["{/ used_p}"] >= 99 and args["{/ used_p}"] <= 100 then
 			naughty.notify({ title = "Hard drive Warning", text = "No space left on root!\nMake some room.", timeout = 10, position = "top_right", fg = beautiful.fg_urgent, bg = beautiful.bg_urgent })
+			infoswitch = 1
 			return "" .. colred .. "/ " .. coldef .. colbred .. args["{/ used_p}"] .. "% (" .. args["{/ avail_gb}"] .. " GiB free) " .. coldef .. "" 
 		else
+			infoswitch = 0
 			return "" .. colblk .. "/ " .. coldef .. colbblk .. args["{/ used_p}"] .. "% (" .. args["{/ avail_gb}"] .. " GiB free) " .. coldef .. ""
 		end
 	end, 620)
@@ -69,12 +73,12 @@ fshwidget = widget({ type = "textbox" })
 
 -- Net widgets
 -- eth
-neteupwidget = widget({ type = "textbox" })
+netupwidget = widget({ type = "textbox" })
 	vicious.cache(vicious.widgets.net)
-	vicious.register(neteupwidget, vicious.widgets.net, "" .. colblk .. "up " .. coldef .. colbblk .. "${eth0 up_kb} " .. coldef .. "")
+	vicious.register(netupwidget, vicious.widgets.net, "" .. colblk .. "up " .. coldef .. colbblk .. "${eth0 up_kb} " .. coldef .. "")
 
-netedownwidget = widget({ type = "textbox" })
-	vicious.register(netedownwidget, vicious.widgets.net, "" .. colblk .. "down " ..coldef .. colbblk .. "${eth0 down_kb} " .. coldef .. "")
+netdownwidget = widget({ type = "textbox" })
+	vicious.register(netdownwidget, vicious.widgets.net, "" .. colblk .. "down " ..coldef .. colbblk .. "${eth0 down_kb} " .. coldef .. "")
 
 netwidget = widget({ type = "textbox" })
 	vicious.register(netwidget, vicious.widgets.net,
@@ -87,22 +91,22 @@ netwidget = widget({ type = "textbox" })
 				return addr
 			end
 		if ip_addr() == nil then
-			netedownwidget.visible = false
-			neteupwidget.visible = false
+			netdownwidget.visible = false
+			netupwidget.visible = false
 			return ""
 		else
-			netedownwidget.visible = true
-			neteupwidget.visible = true
+			netdownwidget.visible = true
+			netupwidget.visible = true
 			return "" .. colblk .. "eth0 " .. coldef .. colbblk .. ip_addr() .. coldef .. " "
 		end
 	end, refresh_delay, "eth0")
 
 -- wlan
-netwupwidget = widget({ type = "textbox" })
-	vicious.register(netwupwidget, vicious.widgets.net, "" .. colblk .. "up " .. coldef .. colbblk .. "${wlan0 up_kb} " .. coldef .. "")
+wifiupwidget = widget({ type = "textbox" })
+	vicious.register(wifiupwidget, vicious.widgets.net, "" .. colblk .. "up " .. coldef .. colbblk .. "${wlan0 up_kb} " .. coldef .. "")
 
-netwdownwidget = widget({ type = "textbox" })
-	vicious.register(netwdownwidget, vicious.widgets.net, "" .. colblk .. "down " .. coldef .. colbblk .. "${wlan0 down_kb} " .. coldef .. "")
+wifidownwidget = widget({ type = "textbox" })
+	vicious.register(wifidownwidget, vicious.widgets.net, "" .. colblk .. "down " .. coldef .. colbblk .. "${wlan0 down_kb} " .. coldef .. "")
 
 wifiwidget = widget({ type = "textbox" })
 	vicious.register(wifiwidget, vicious.widgets.wifi,
@@ -115,12 +119,12 @@ wifiwidget = widget({ type = "textbox" })
 				return addr
 			end
 		if args["{link}"] == 0 then
-			netwdownwidget.visible = false
-			netwupwidget.visible = false
+			wifidownwidget.visible = false
+			wifiupwidget.visible = false
 			return ""
 		else
-			netwdownwidget.visible = true
-			netwupwidget.visible = true
+			wifidownwidget.visible = true
+			wifiupwidget.visible = true
 			if args["{link}"]/70*100 <= 50 then
 				return "" .. colblk .. "wlan " .. coldef .. colbblk .. ip_addr() .. coldef .. colblk .. " on " .. coldef .. colbblk .. args["{ssid}"] .. coldef .. colred .. " at " .. coldef .. colbred .. string.format("[%i%%]", args["{link}"]/70*100) .. coldef .. " "
 			elseif args["{link}"]/70*100 > 50 and args["{link}"]/70*100 <=75 then

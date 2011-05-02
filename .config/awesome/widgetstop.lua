@@ -1,8 +1,4 @@
 -- WIDGETS TOP
--- Spacer widget
-spacerwidget = widget({ type = "imagebox" })
-	spacerwidget.image = image("/home/jack/.config/awesome/themes/jack2/spacer.png")
-
 -- Calendar widget
 calwidget = widget({ type = "textbox" })
 	function dayth()
@@ -23,30 +19,8 @@ calwidget = widget({ type = "textbox" })
 -- Clock widget
 clockwidget = widget({ type = "textbox" })
 	vicious.register(clockwidget, vicious.widgets.date, "" .. colbyel .. "%l:%M%P" .. coldef .. "")
-	function cal_gett()
-		local fp = io.popen("remind /home/jack/.reminders")
-		local rem = fp:read("*a")
-		fp:close()
-			rem = string.gsub(rem, "\027%[0m", "</span>")
-			rem = string.gsub(rem, "\027%[0;30m", "<span color='#1a1a1a'>") --black
-			rem = string.gsub(rem, "\027%[0;31m", "<span color='#b23535'>") --red
-			rem = string.gsub(rem, "\027%[0;32m", "<span color='#60801f'>") --green
-			rem = string.gsub(rem, "\027%[0;33m", "<span color='#be6e00'>") --yellow
-			rem = string.gsub(rem, "\027%[0;34m", "<span color='#1f6080'>") --blue
-			rem = string.gsub(rem, "\027%[0;35m", "<span color='#8f46b2'>") --magenta
-			rem = string.gsub(rem, "\027%[0;36m", "<span color='#73afb4'>") --cyan
-			rem = string.gsub(rem, "\027%[0;37m", "<span color='#b2b2b2'>") --white
-			rem = string.gsub(rem, "\027%[1;30m", "<span color='#4c4c4c'>") --br-black
-			rem = string.gsub(rem, "\027%[1;31m", "<span color='#ff4b4b'>") --br-red
-			rem = string.gsub(rem, "\027%[1;32m", "<span color='#9bcd32'>") --br-green
-			rem = string.gsub(rem, "\027%[1;33m", "<span color='#d79b1e'>") --br-yellow
-			rem = string.gsub(rem, "\027%[1;34m", "<span color='#329bcd'>") --br-blue
-			rem = string.gsub(rem, "\027%[1;35m", "<span color='#cd64ff'>") --br-magenta
-			rem = string.gsub(rem, "\027%[1;36m", "<span color='#9bcdff'>") --br-cyan
-			rem = string.gsub(rem, "\027%[1;37m", "<span color='#ffffff'>") --br-white
-			return rem
-	end
-	clockwidget:add_signal('mouse::enter', function () cal_remt = { naughty.notify({ text = cal_gett(), border_color = "#1a1a1a", timeout = 0, hover_timeout = 0.5 }) } end)
+	require("remind")
+	clockwidget:add_signal('mouse::enter', function () cal_remt = { naughty.notify({ text = cal_gett(), border_color = "" .. blk .. "", timeout = 0, hover_timeout = 0.5 }) } end)
 	clockwidget:add_signal('mouse::leave', function () naughty.destroy(cal_remt[1]) end)
 
 	local function time_cet()

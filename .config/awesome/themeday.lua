@@ -1,29 +1,38 @@
--- BACKGROUND
+-- THEMEDAY
+-- background
 beautiful.init("/home/jack/.config/awesome/themes/day/theme.lua")
 
+-- xdefaults
 local x = io.open("/home/jack/.config/Xcolours/colours", "w")
 x:write('#include "/home/jack/.config/Xcolours/day"')
 x:close()
 
+-- gtk
 local t = io.open("/home/jack/.gtkrc-2.0.mine", "w")
-t:write('gtk-theme-name="Azel"')
+t:write('gtk-theme-name="ACYL_gtk_0.4"')
 t:close()
 
--- COLOURS
+-- Spacer widget
+spacerwidget = widget({ type = "imagebox" })
+	spacerwidget.image = image("/home/jack/.config/awesome/themes/day/spacer.png")
+
+-- colours
+require("coloursday")
+
 coldef  = "</span>"
-colblk  = "<span color='#222222'>"
-colred  = "<span color='#b22222'>"
-colgre  = "<span color='#37451e'>"
-colyel  = "<span color='#886100'>"
-colblu  = "<span color='#00457f'>"
-colmag  = "<span color='#8800cc'>"
-colcya  = "<span color='#007f7f'>"
-colwhi  = "<span color='#999999'>"
-colbblk = "<span color='#454545'>"
-colbred = "<span color='#ff4e3b'>"
-colbgre = "<span color='#9acd32'>"
-colbyel = "<span color='#daa520'>"
-colbblu = "<span color='#0055ed'>"
-colbmag = "<span color='#da00d2'>"
-colbcya = "<span color='#00cbcb'>"
-colbwhi = "<span color='#cccccc'>"
+colblk  = "<span color='" .. blk .. "'>"
+colred  = "<span color='" .. red .. "'>"
+colgre  = "<span color='" .. gre .. "'>"
+colyel  = "<span color='" .. yel .. "'>"
+colblu  = "<span color='" .. blu .. "'>"
+colmag  = "<span color='" .. mag .. "'>"
+colcya  = "<span color='" .. cya .. "'>"
+colwhi  = "<span color='" .. whi .. "'>"
+colbblk = "<span color='" .. brblk .. "'>"
+colbred = "<span color='" .. brred .. "'>"
+colbgre = "<span color='" .. brgre .. "'>"
+colbyel = "<span color='" .. bryel .. "'>"
+colbblu = "<span color='" .. brblu .. "'>"
+colbmag = "<span color='" .. brmag .. "'>"
+colbcya = "<span color='" .. brcya .. "'>"
+colbwhi = "<span color='" .. brwhi .. "'>"

@@ -13,7 +13,7 @@ layouts = {
 
 -- shifty: predefined tags
 shifty.config.tags   = {
-	["1-term"]   = { init = true, position = 1, layout = awful.layout.suit.fair.horizontal },
+	["1"]        = { init = true, position = 1, layout = awful.layout.suit.tile            },
 	["2-web"]    = { position = 2, layout = awful.layout.suit.max                          },
 	["3-com"]    = { position = 3, layout = awful.layout.suit.max                          },
 	["4-office"] = { position = 4, layout = awful.layout.suit.tile.bottom                  },
@@ -50,7 +50,7 @@ shifty.config.apps = {
 	{ match = { "ncmpcpp"                            }, tag = "8-music",                                             },
 	-- miscellaneous
 	{ match = { "rtorrent"                           }, tag = "torrent",                                             },
-	{ match = { "Geeqie", "sxiv", "feh"              }, tag = "picture",                                             },
+	{ match = { "Geeqie", "sxiv", "feh", "qiv"       }, tag = "picture",                                             },
 	{ match = { "wicd%-curses", "wvdial"             }, tag = "dial",                                                },
 
 	-- client manipulation
