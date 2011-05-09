@@ -13,52 +13,53 @@ calwidget = widget({ type = "textbox" })
 			return "<span font='proggytiny 7'><sup>th</sup></span>"
 		end
 	end
-	vicious.register(calwidget, vicious.widgets.date, "" .. colyel .. " %a, %e" .. dayth() .. " %B" .. coldef .. " ")
+	vicious.register(calwidget, vicious.widgets.date, "" .. colyel .. " %a, %d" .. dayth() .. " %B" .. coldef .. "")
 	calendar2.addCalendarToWidget(calwidget, "" .. colyel .. "%s" .. coldef .. "")
 
 -- Clock widget
+local function fuzzyclock()
+	-- Get variables
+	local hr   = os.date("%H")
+	local min  = os.date("%M")
+	local ampm = os.date("%P")
+	-- to do some easy math
+	local hr   = tonumber(hr)
+	-- using 24 hr clock to later implement noon, midnight, etc.
+	if hr >= 12 then hr = hr - 12 end
+	-- midnight is twelve
+	if hr == 00 then hr = 12 end
+	-- times that are 'to' the hour need a plus one
+	local hrp = hr + 1
+	-- set daytime switch
+	if ampm == "am" then dt = 1 else dt = 2 end	
+	
+	-- Set words
+	hours = { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve" }
+	minutes = { "o'clock", "five", "ten", "quarter", "twenty", "twenty-five", "half" }
+	daytime = { "in the morning", "in the afternoon" }
+	clock = "N/A"
+
+	-- Set the words according to time of the hour			
+	if     min >= "00" and min <= "02" then min = 1 return { ""   .. hours[hr] .. " "      .. minutes[min] .. " " .. daytime[dt] .. "" }
+	elseif min >= "03" and min <= "07" then	min = 2	return { ""   .. minutes[min] .. " past " .. hours[hr] .. " " .. daytime[dt] .. "" }
+	elseif min >= "08" and min <= "12" then min = 3	return { ""   .. minutes[min] .. " past " .. hours[hr] .. " " .. daytime[dt] .. "" }
+	elseif min >= "13" and min <= "17" then	min = 4	return { "a " .. minutes[min] .. " past " .. hours[hr] .. " " .. daytime[dt] .. "" }
+	elseif min >= "18" and min <= "22" then	min = 5 return { ""   .. minutes[min] .. " past " .. hours[hr] .. " " .. daytime[dt] .. "" }
+	elseif min >= "23" and min <= "27" then	min = 6	return { ""   .. minutes[min] .. " past " .. hours[hr] .. " " .. daytime[dt] .. "" }
+	elseif min >= "28" and min <= "32" then	min = 7	return { ""   .. minutes[min] .. " "      .. hours[hr] .. " " .. daytime[dt] .. "" }
+	elseif min >= "33" and min <= "37" then	min = 6	return { ""   .. minutes[min] .. " to "  .. hours[hrp] .. " " .. daytime[dt] .. "" }
+	elseif min >= "38" and min <= "42" then	min = 5 return { ""   .. minutes[min] .. " to "  .. hours[hrp] .. " " .. daytime[dt] .. "" }
+	elseif min >= "43" and min <= "47" then	min = 4	return { "a " .. minutes[min] .. " to "  .. hours[hrp] .. " " .. daytime[dt] .. "" }
+	elseif min >= "48" and min <= "52" then	min = 3	return { ""   .. minutes[min] .. " to "  .. hours[hrp] .. " " .. daytime[dt] .. "" }
+	elseif min >= "53" and min <= "57" then	min = 2	return { ""   .. minutes[min] .. " to "  .. hours[hrp] .. " " .. daytime[dt] .. "" }
+	elseif min >= "58" and min <= "59" then	min = 1	return { ""   .. hours[hrp] .. " "     .. minutes[min] .. " " .. daytime[dt] .. "" }
+	end
+end
 clockwidget = widget({ type = "textbox" })
-	vicious.register(clockwidget, vicious.widgets.date, "" .. colbyel .. "%l:%M%P" .. coldef .. "")
+	vicious.register(clockwidget, fuzzyclock, "" .. colbblk .. " at " .. coldef .. colyel .. "$1" .. coldef .. "")
 	require("remind")
 	clockwidget:add_signal('mouse::enter', function () cal_remt = { naughty.notify({ text = cal_gett(), border_color = "" .. blk .. "", timeout = 0, hover_timeout = 0.5 }) } end)
 	clockwidget:add_signal('mouse::leave', function () naughty.destroy(cal_remt[1]) end)
-
-	local function time_cet()
-		local time = os.time()
-		time2 = time - (8*3600)
-		local new_time = os.date("%a, %I:%M%P", time2)
-		return new_time
-	end
-	local function time_utc()
-		local time = os.time()
-		time2 = time - (9*3600)
-		local new_time = os.date("%a, %I:%M%P", time2)
-		return new_time
-	end
-	local function time_nzst()
-		local time = os.time()
-		time2 = time + (2*3600)
-		local new_time = os.date("%a, %I:%M%P", time2)
-		return new_time
-	end
-	local function time_ckt()
-		local time = os.time()
-		time2 = time - (20*3600)
-		local new_time = os.date("%a, %I:%M%P", time2)
-		return new_time
-	end
-	local function time_pst()
-		local time = os.time()
-		time2 = time - (17*3600)
-		local new_time = os.date("%a, %I:%M%P", time2)
-		return new_time
-	end
-	local function time_est()
-		local time = os.time()
-		time2 = time - (14*3600)
-		local new_time = os.date("%a, %I:%M%P", time2)
-		return new_time
-	end
 
 -- Weather widget
 weatherwidget = widget({ type = "textbox" })

@@ -33,7 +33,7 @@ tempwidget = widget({ type = "textbox" })
 -- Ram widget
 memwidget = widget({ type = "textbox" })
 	vicious.cache(vicious.widgets.mem)
-	vicious.register(memwidget, vicious.widgets.mem, "" .. colblk .. "ram " .. coldef .. colbblk .. "$1% ($2 MiB) " .. coldef .. "", 13)
+	vicious.register(memwidget, vicious.widgets.mem, "" .. colblk .. "ram " .. coldef .. colbblk .. "$1% ($2 MiB) " .. coldef .. "", 59)
 
 -- Filesystem widgets
 -- root
@@ -54,7 +54,7 @@ fsrwidget = widget({ type = "textbox" })
 			infoswitch = 0
 			return "" .. colblk .. "/ " .. coldef .. colbblk .. args["{/ used_p}"] .. "% (" .. args["{/ avail_gb}"] .. " GiB free) " .. coldef .. ""
 		end
-	end, 620)
+	end, 621)
 -- /home
 fshwidget = widget({ type = "textbox" })
 	vicious.register(fshwidget, vicious.widgets.fs,
@@ -64,12 +64,12 @@ fshwidget = widget({ type = "textbox" })
 		elseif args["{/home used_p}"] >= 98 and args["{/home used_p}"] < 99 then
 			return "" .. colred .. "/home " .. coldef .. colbred .. args["{/home used_p}"] .. "% (" .. args["{/home avail_gb}"] .. " GiB free) " .. coldef .. ""
 		elseif args["{/home used_p}"] >= 99 and args["{/home used_p}"] <= 100 then
-			naughty.notify({ title = "Hard drive Warning", text = "No space left on /home!\nMake some room.", timeout = 10, position = "top_right", fg = beautiful.fg_urgent, bg = beautiful.bg_urgent })
+--			naughty.notify({ title = "Hard drive Warning", text = "No space left on /home!\nMake some room.", timeout = 10, position = "top_right", fg = beautiful.fg_urgent, bg = beautiful.bg_urgent })
 			return "" .. colred .. "/home " .. coldef .. colbred .. args["{/home used_p}"] .. "% (" .. args["{/home avail_gb}"] .. " GiB free) " .. coldef .. "" 
 		else
 			return "" .. colblk .. "/home " .. coldef .. colbblk .. args["{/home used_p}"] .. "% (" .. args["{/home avail_gb}"] .. " GiB free) " .. coldef .. ""
 		end
-	end, 620)
+	end, 622)
 
 -- Net widgets
 -- eth
@@ -151,7 +151,7 @@ batwidget = widget({ type = "textbox" })
 		else
 			return "" .. colblk .. "bat " .. coldef .. colbblk .. args[2] .. "% " .. coldef .. ""
 		end
-	end, 23, "BAT1"	)
+	end, 236, "BAT1" )
 
 -- Volume widget
 volwidget = widget({ type = "textbox" })
@@ -184,7 +184,7 @@ mpdwidget = widget({ type = 'textbox' })
 			elseif args["{state}"] == "Pause" then
 				return "" .. colblk .. "mpd " .. coldef .. colbyel .. "paused" .. coldef .. ""
 			end
-		end)
+		end, refresh_delay )
 	mpdwidget:buttons(
 		awful.util.table.join(
 			awful.button({}, 1, function () awful.util.spawn("mpc toggle", false) end),

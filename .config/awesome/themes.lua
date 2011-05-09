@@ -9,7 +9,7 @@ elseif r == "night" then
 	f:close()
 else
 	local tod = os.date("%H")
-	if tod >= "07" and tod <="18" then
+	if tod >= "07" and tod <="17" then
 		themeset = "themeday"
 	else
 		themeset = "themenight"
