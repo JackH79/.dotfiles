@@ -21,39 +21,61 @@ local function fuzzyclock()
 	-- Get variables
 	local hr   = os.date("%H")
 	local min  = os.date("%M")
-	local ampm = os.date("%P")
+	-- 24 hr clock needed for noon and midnight
+	local nm   = hr
+	-- set daytime switch
+	if     hr >= "00" and hr <= "03" then dt = 5
+	elseif hr >= "04" and hr <= "06" then dt = 1
+	elseif hr >= "07" and hr <= "11" then dt = 2
+	elseif hr == "12"                then dt = 3
+	elseif hr >= "13" and hr <= "17" then dt = 4
+	elseif hr >= "18" and hr <= "21" then dt = 5
+	elseif hr >= "22" and hr <= "23" then dt = 6 end
 	-- to do some easy math
-	local hr   = tonumber(hr)
-	-- using 24 hr clock to later implement noon, midnight, etc.
-	if hr >= 12 then hr = hr - 12 end
+	local hr = tonumber(hr)
+	-- only need 12 hr clock for calling of time
+	if hr >= 13 then hr = hr - 12 end
 	-- midnight is twelve
 	if hr == 00 then hr = 12 end
 	-- times that are 'to' the hour need a plus one
-	local hrp = hr + 1
-	-- set daytime switch
-	if ampm == "am" then dt = 1 else dt = 2 end	
-	
-	-- Set words
-	hours = { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve" }
+	if hr >= 00 and hr <= 11 then hrp = hr + 1 else hrp = hr - 11 end
+	-- Get words
+	hours = { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "noon", "midnight" }
 	minutes = { "o'clock", "five", "ten", "quarter", "twenty", "twenty-five", "half" }
-	daytime = { "in the morning", "in the afternoon" }
-	clock = "N/A"
+	daytime = { "in the early morning", "in the morning", "at noon", "in the afternoon", "in the evening", "at night" }
+	local clock = "N/A"
 
-	-- Set the words according to time of the hour			
-	if     min >= "00" and min <= "02" then min = 1 return { ""   .. hours[hr] .. " "      .. minutes[min] .. " " .. daytime[dt] .. "" }
-	elseif min >= "03" and min <= "07" then	min = 2	return { ""   .. minutes[min] .. " past " .. hours[hr] .. " " .. daytime[dt] .. "" }
-	elseif min >= "08" and min <= "12" then min = 3	return { ""   .. minutes[min] .. " past " .. hours[hr] .. " " .. daytime[dt] .. "" }
-	elseif min >= "13" and min <= "17" then	min = 4	return { "a " .. minutes[min] .. " past " .. hours[hr] .. " " .. daytime[dt] .. "" }
-	elseif min >= "18" and min <= "22" then	min = 5 return { ""   .. minutes[min] .. " past " .. hours[hr] .. " " .. daytime[dt] .. "" }
-	elseif min >= "23" and min <= "27" then	min = 6	return { ""   .. minutes[min] .. " past " .. hours[hr] .. " " .. daytime[dt] .. "" }
-	elseif min >= "28" and min <= "32" then	min = 7	return { ""   .. minutes[min] .. " "      .. hours[hr] .. " " .. daytime[dt] .. "" }
-	elseif min >= "33" and min <= "37" then	min = 6	return { ""   .. minutes[min] .. " to "  .. hours[hrp] .. " " .. daytime[dt] .. "" }
-	elseif min >= "38" and min <= "42" then	min = 5 return { ""   .. minutes[min] .. " to "  .. hours[hrp] .. " " .. daytime[dt] .. "" }
-	elseif min >= "43" and min <= "47" then	min = 4	return { "a " .. minutes[min] .. " to "  .. hours[hrp] .. " " .. daytime[dt] .. "" }
-	elseif min >= "48" and min <= "52" then	min = 3	return { ""   .. minutes[min] .. " to "  .. hours[hrp] .. " " .. daytime[dt] .. "" }
-	elseif min >= "53" and min <= "57" then	min = 2	return { ""   .. minutes[min] .. " to "  .. hours[hrp] .. " " .. daytime[dt] .. "" }
-	elseif min >= "58" and min <= "59" then	min = 1	return { ""   .. hours[hrp] .. " "     .. minutes[min] .. " " .. daytime[dt] .. "" }
+	-- Set the words according to time of the hour and day
+	if     min >= "00" and min <= "02" and nm == "00" then min = 8 clock = ""   .. hours[14] .. ""
+	elseif min >= "00" and min <= "02" and nm == "12" then min = 8 clock = ""   .. hours[13] .. ""
+	elseif min >= "00" and min <= "02"                then min = 1 clock = ""   .. hours[hr] .. " "       .. minutes[min] .. " " .. daytime[dt] .. ""
+	elseif min >= "03" and min <= "07" and nm == "00" then min = 8 clock = ""   .. minutes[min] .. " past " .. hours[14] .. ""
+	elseif min >= "03" and min <= "07"                then min = 2 clock = ""   .. minutes[min] .. " past " .. hours[hr] .. " "  .. daytime[dt] .. ""
+	elseif min >= "08" and min <= "12" and nm == "00" then min = 8 clock = ""   .. minutes[min] .. " past " .. hours[14] .. ""
+	elseif min >= "08" and min <= "12"                then min = 3 clock = ""   .. minutes[min] .. " past " .. hours[hr] .. " "  .. daytime[dt] .. ""
+	elseif min >= "13" and min <= "17" and nm == "00" then min = 8 clock = ""   .. minutes[min] .. " past " .. hours[14] .. ""
+	elseif min >= "13" and min <= "17"                then min = 4 clock = "a " .. minutes[min] .. " past " .. hours[hr] .. " "  .. daytime[dt] .. ""
+	elseif min >= "18" and min <= "22" and nm == "00" then min = 8 clock = ""   .. minutes[min] .. " past " .. hours[14] .. ""
+	elseif min >= "18" and min <= "22"                then min = 5 clock = ""   .. minutes[min] .. " past " .. hours[hr] .. " "  .. daytime[dt] .. ""
+	elseif min >= "23" and min <= "27" and nm == "00" then min = 8 clock = ""   .. minutes[min] .. " past " .. hours[14] .. ""
+	elseif min >= "23" and min <= "27"                then min = 6 clock = ""   .. minutes[min] .. " past " .. hours[hr] .. " "  .. daytime[dt] .. ""
+	elseif min >= "28" and min <= "32" and nm == "00" then min = 8 clock = ""   .. minutes[min] .. " past " .. hours[14] .. ""
+	elseif min >= "28" and min <= "32"                then min = 7 clock = ""   .. minutes[min] .. " "      .. hours[hr] .. " "  .. daytime[dt] .. ""
+	elseif min >= "33" and min <= "37" and nm == "23" then min = 8 clock = ""   .. minutes[min] .. " till " .. hours[14] .. ""
+	elseif min >= "33" and min <= "37"                then min = 6 clock = ""   .. minutes[min] .. " to "   .. hours[hrp] .. " " .. daytime[dt] .. ""
+	elseif min >= "38" and min <= "42" and nm == "23" then min = 8 clock = ""   .. minutes[min] .. " till " .. hours[14] .. ""
+	elseif min >= "38" and min <= "42"                then min = 5 clock = ""   .. minutes[min] .. " to "   .. hours[hrp] .. " " .. daytime[dt] .. ""
+	elseif min >= "43" and min <= "47" and nm == "23" then min = 8 clock = ""   .. minutes[min] .. " till " .. hours[14] .. ""
+	elseif min >= "43" and min <= "47"                then min = 4 clock = "a " .. minutes[min] .. " to "   .. hours[hrp] .. " " .. daytime[dt] .. ""
+	elseif min >= "48" and min <= "52" and nm == "23" then min = 8 clock = ""   .. minutes[min] .. " till " .. hours[14] .. ""
+	elseif min >= "48" and min <= "52"                then min = 3 clock = ""   .. minutes[min] .. " to "   .. hours[hrp] .. " " .. daytime[dt] .. ""
+	elseif min >= "53" and min <= "57" and nm == "23" then min = 8 clock = ""   .. minutes[min] .. " till " .. hours[14] .. ""
+	elseif min >= "53" and min <= "57"                then min = 2 clock = ""   .. minutes[min] .. " to "   .. hours[hrp] .. " " .. daytime[dt] .. ""
+	elseif min >= "58" and min <= "59" and nm == "00" then min = 8 clock = ""   .. hours[14] .. ""
+	elseif min >= "58" and min <= "59" and nm == "12" then min = 8 clock = ""   .. hours[13] .. ""
+	elseif min >= "58" and min <= "59"                then min = 1 clock = ""   .. hours[hrp] .. " "      .. minutes[min] .. " " .. daytime[dt] .. ""
 	end
+	return { clock }
 end
 clockwidget = widget({ type = "textbox" })
 	vicious.register(clockwidget, fuzzyclock, "" .. colbblk .. " at " .. coldef .. colyel .. "$1" .. coldef .. "")
