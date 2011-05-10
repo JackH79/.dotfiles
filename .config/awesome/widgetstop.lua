@@ -19,18 +19,17 @@ calwidget = widget({ type = "textbox" })
 -- Clock widget
 local function fuzzyclock()
 	-- Get variables
-	local hr   = os.date("%H")
-	local min  = os.date("%M")
+	local hr  = os.date("%H")
+	local min = os.date("%M")
 	-- set daytime switch
-	if     hr >= "00" and hr <= "03" then dt = 6
+	if     hr >= "00" and hr <= "03" then dt = 5
 	elseif hr >= "04" and hr <= "06" then dt = 1
 	elseif hr >= "07" and hr <= "11" then dt = 2
-	elseif hr == "12"                then dt = 3
-	elseif hr >= "13" and hr <= "17" then dt = 4
-	elseif hr >= "18" and hr <= "21" then dt = 5
-	elseif hr >= "22" and hr <= "23" then dt = 6 end
+	elseif hr >= "12" and hr <= "17" then dt = 3
+	elseif hr >= "18" and hr <= "21" then dt = 4
+	elseif hr >= "22" and hr <= "23" then dt = 5 end
 	-- 24 hr clock needed for noon and midnight
-	local nm   = hr
+	local nm = hr
 	-- to do some easy math
 	local hr = tonumber(hr)
 	-- only need 12 hr clock for calling of time
@@ -40,9 +39,9 @@ local function fuzzyclock()
 	-- times that are 'to' the hour need a plus one
 	if hr >= 00 and hr <= 11 then hrp = hr + 1 else hrp = hr - 11 end
 	-- Get words
-	hours = { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "noon", "midnight" }
-	minutes = { "o'clock", "five", "ten", "quarter", "twenty", "twenty-five", "half" }
-	daytime = { "in the early morning", "in the morning", "at noon", "in the afternoon", "in the evening", "at night" }
+	local hours   = { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "noon", "midnight" }
+	local minutes = { "o'clock", "five", "ten", "quarter", "twenty", "twenty-five", "half" }
+	local daytime = { "in the early morning", "in the morning", "in the afternoon", "in the evening", "at night" }
 	-- Set vars local
 	local clock = "N/A"
 	local tod   = "N/A"
@@ -82,7 +81,7 @@ end
 clockwidget = widget({ type = "textbox" })
 	vicious.register(clockwidget, fuzzyclock, "" .. colbblk .. " at " .. coldef .. colyel .. "$1 $2" .. coldef .. "")
 	require("remind")
-	clockwidget:add_signal('mouse::enter', function () cal_remt = { naughty.notify({ text = cal_gett(), border_color = "" .. blk .. "", timeout = 0, hover_timeout = 0.5 }) } end)
+	clockwidget:add_signal('mouse::enter', function () cal_remt = { naughty.notify({ text = cal_gett(), border_color = "" .. blk .. "", timeout = 0 }) } end)
 	clockwidget:add_signal('mouse::leave', function () naughty.destroy(cal_remt[1]) end)
 
 -- Weather widget
