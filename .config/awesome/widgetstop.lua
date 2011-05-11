@@ -44,7 +44,7 @@ local function fuzzyclock()
 	local daytime = { "in the early morning", "in the morning", "in the afternoon", "in the evening", "at night" }
 	-- Set vars local
 	local clock = "N/A"
-	local tod   = "N/A"
+	local tod   = ""
 
 	-- Set the words according to time of the hour and day
 	if     min >= "00" and min <= "02" and nm == "00" then         clock = ""                               .. hours[14] ..  ""
