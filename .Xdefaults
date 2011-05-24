@@ -3,13 +3,17 @@ URxvt*termName:       rxvt
 URxvt*scrollBar:      false
 URxvt*urlLauncher:    firefox
 URxvt*buffered:       true
-!URxvt*font:          xft:terminus:pixelsize=14
-URxvt*font:           -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
-URxvt*boldFont:       -*-terminus-bold-*-*-*-12-*-*-*-*-*-*-*
-URxvt*italicFont:     -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
-URxvt*boldItalicFont: -*-terminus-bold-*-*-*-12-*-*-*-*-*-*-*
+URxvt*font:          xft:terminus:pixelsize=12
+!URxvt*font:           -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
+!URxvt*boldFont:       -*-terminus-bold-*-*-*-12-*-*-*-*-*-*-*
+!URxvt*italicFont:     -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
+!URxvt*boldItalicFont: -*-terminus-bold-*-*-*-12-*-*-*-*-*-*-*
 URxvt*transparent:    true
 URxvt*shading:        100
+URxvt.perl-ext-common: default,url-select
+URxvt.keysym.M-u:      perl:url-select:select_next
+URxvt.urlLauncher:     luakit
+URxvt.underlineURLs:   true
 
 !XTERM
 xterm*toolBar:       false

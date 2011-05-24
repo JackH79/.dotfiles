@@ -13,17 +13,17 @@ layouts = {
 
 -- shifty: predefined tags
 shifty.config.tags   = {
-	["1"]        = { init = true, position = 1, layout = awful.layout.suit.tile            },
-	["2-web"]    = { position = 2, layout = awful.layout.suit.max                          },
-	["3-com"]    = { position = 3, layout = awful.layout.suit.max                          },
-	["4-office"] = { position = 4, layout = awful.layout.suit.tile.bottom                  },
-	["5-pdf"]    = { position = 5, layout = awful.layout.suit.tile.bottom                  },
-	["6-gimp"]   = { position = 6, layout = awful.layout.suit.floating, spawn = "gimp"     },
-	["7-video"]  = { position = 7, layout = awful.layout.suit.floating                     },
-	["8-music"]  = { position = 8, layout = awful.layout.suit.tile.bottom                  },
-	["torrent"]  = { layout = awful.layout.suit.max                                        },
-	["picture"]  = { layout = awful.layout.suit.max                                        },
-	["dial"]     = { layout = awful.layout.suit.max                                        },
+	["1"]        = { init = true, position = 1, layout = awful.layout.suit.tile                    },
+	["2-web"]    = { position = 2, layout = awful.layout.suit.max, spawn = "luakit"                },
+	["3-com"]    = { position = 3, layout = awful.layout.suit.max,  spawn = terminal .. " -e mutt" },
+	["4-office"] = { position = 4, layout = awful.layout.suit.tile.bottom                          },
+	["5-pdf"]    = { position = 5, layout = awful.layout.suit.tile.bottom                          },
+	["6-gimp"]   = { position = 6, layout = awful.layout.suit.floating, spawn = "gimp"             },
+	["7-video"]  = { position = 7, layout = awful.layout.suit.floating                             },
+	["8-music"]  = { position = 8, layout = awful.layout.suit.tile.bottom                          },
+	["torrent"]  = { layout = awful.layout.suit.max                                                },
+	["picture"]  = { layout = awful.layout.suit.max                                                },
+	["dial"]     = { layout = awful.layout.suit.max                                                },
 }
 
 -- shifty: tags matching and client rules

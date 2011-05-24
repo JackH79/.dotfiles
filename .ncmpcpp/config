@@ -7,7 +7,7 @@
 #
 ## set it in order to make tag editor and renaming files work properly
 #
-mpd_host = "localhost"
+mpd_host = "127.0.0.1"
 #
 mpd_port = "6600"
 #

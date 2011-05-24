@@ -7,18 +7,18 @@
 
 # main colors
 # color status     brightgreen   default
-  color indicator  brightwhite   default
+# color indicator  brightred     default
   color tree       green         default
   color error      brightred     default
   color message    brightyellow  default
 
 # color all        ML            mails
-  color index      brightblack   default "~u"
+  color index      brightred     default "~u"
   color index      brightblue    default "~f 'archlinux.org'"
   color index      brightblue    default "~L 'jcu.edu.au'"
   color index      brightmagenta default "~L 'github.com'"
-  color index      brightred     default "~f ''"
-  color index      brightgreen   default "~f ''"
+  color index      brightyellow  default "~f 'test@gmail.com'"
+  color index      brightgreen   default "~f 'test2@gmail.com'"
 
 # uncolor certain messages
 uncolor index "~P"
@@ -31,8 +31,8 @@ uncolor index "~D"
 # and recolor them appropriately
   color index      brightblack   default "~P"
   color index      green         default "~C @.com"
-  color index      brightyellow  default "~N ~u"  # new ML mail
-  color index      yellow        default "~N !~u" # new non-ML mail
+  color index      brightred     default "~N ~u"  # new ML mail
+  color index      brightred     default "~N !~u" # new non-ML mail
   color index      brightgreen   default "~T"
   color index      brightred     default "~D"
 

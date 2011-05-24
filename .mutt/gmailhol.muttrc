@@ -3,6 +3,7 @@
 ###
 
 color status brightgreen default
+color indicator brightgreen default
 
   set from      = "holborn79@gmail.com"
   set sendmail  = "/usr/bin/msmtp -a gmailhol"

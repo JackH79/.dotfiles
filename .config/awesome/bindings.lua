@@ -85,14 +85,15 @@ globalkeys = awful.util.table.join(
 
 	-- Programs
 	-- launchers
-	awful.key({ modkey,           }, "w",                     function () mainmenu:show({keygrabber=true}) end),
+	awful.key({ modkey,           }, "w",                     function () mainmenu:show({keygrabber=true, coords={x=0, y=14} }) end),
+	awful.key({                   }, "XF86PowerOff",          function () leavemenu:show({keygrabber=true, coords={x=0, y=14} }) end),
 	awful.key({ modkey,           }, "p",                     function () awful.util.spawn("dmenu_run -fn 'terminus' -nb '#000000' -nf '#4c4c4c' -sb '#000000' -sf '#be6e00'") end),
 	awful.key({ modkey, "Shift"   }, "Return",                function () awful.util.spawn(terminal) end),
 	-- miscellaneous
 	awful.key({                   }, "Print",                 function () awful.util.spawn("scrot -b") end),
 	awful.key({                   }, "XF86Calculator",        function () awful.util.spawn("speedcrunch") end),
 	awful.key({ modkey, "Shift"   }, "x",                     function () awful.util.spawn("xkill") end),
-	awful.key({ modkey, "Shift"   }, "l",                     function () awful.util.spawn(terminal .. " -e xscreensaver-command --lock") end),
+	awful.key({ modkey, "Shift"   }, "l",                     function () awful.util.spawn(terminal .. " -e slock") end),
 	awful.key({ modkey            }, "F8",                    function () awful.util.spawn("truecrypt") end),
 	awful.key({ modkey, "Shift" }, "t",                     function () naughty.notify({ text = "" .. colbyel .. "────────────────────────────────── World Clock ─────────────────────────────────" .. coldef .. colblk .."\nOOO      OOOO             OO                                     OOOOO  OOOOOOOO\nOO " .. coldef .. colyel .. "London" .. coldef .. colblk .. "             O  OOOOOOOOOOO  O                    OOOO O OO O    OOOOOO\n  O" .. coldef .. colbyel .. time_utc() .. coldef .. colblk .. "OO OO OOOOOOOOOOOOOOOOOOOOOOOOO  OOOOOOOOOOOOOOOOOOOO OO    OO\n      OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO    O        OOO  OOOOOOOOOO   OOO\n    OOOOO" .. coldef .. colyel .. "Düsseldorf" .. coldef .. colblk .. "OOOOOOOOOOOOOOOOOO               " .. coldef .. colyel .. "Vancouver" .. coldef .. colblk .. "OOOOOOOOOO\n  OOOOO  " .. coldef .. colbyel .. time_cet() .. coldef .. colblk .. "OOOOOOOOOOOOOOOO O             " .. coldef .. colbyel .. time_pst() .. coldef .. colblk .. "OOO\n       OO      OOOOOOOOOOOOOOOOOOO O O                     OOOOOOOO" .. coldef .. colyel .. "Woods Hole" .. coldef .. colblk .. "\n     OOOOOOOOOOOOOOOOOOOOOOOOOOOOO                           OOOO  " .. coldef .. colbyel .. time_est() .. coldef .. colblk .. "\n    OOOOOOOOOOOO OOOO  OOOO OOOOO                               OO\n   OOOOOOOOOOOOO O      O    OO                                   OO\n     OOOOOOOOOOOOO                O                                  OOOO\n         OOOOO O              O OOO                                 OOOOOOO\n          OOOOOO               O      OO          " .. coldef .. colyel .. "Rarotonga" .. coldef .. colblk .. "        OOOOOOOOO\n          OOOOOO                    O O           " .. coldef .. colbyel .. time_ckt() .. coldef .. colblk .. "     OOOOOOOO\n          OOOOO  O              OOOOOOOO                            OOOOOO\n           OOO                  OOOOOOOOO                            OOOO\n            O                         OO  " .. coldef .. colyel .. "Tauranga" .. coldef .. colblk .. "                   OOOO\n                                          " .. coldef .. colbyel .. time_nzst() .. coldef .. colblk .. "               OO\n                                                                     O" .. coldef .. "", border_color = "#1a1a1a", timeout = 20, hover_timeout = 0.5 }) end),
 	awful.key({ modkey, "Control" }, "r",                     function () naughty.notify({ text = cal_gett(), border_color = "#1a1a1a", timeout = 20, hover_timeout = 0.5 }) end),
@@ -134,9 +135,6 @@ globalkeys = awful.util.table.join(
 	-- Awesome
 	awful.key({ modkey,           }, "space",                 function () awful.layout.inc(layouts,  1) end),
 	awful.key({ modkey, "Shift"   }, "space",                 function () awful.layout.inc(layouts, -1) end),
-	awful.key({ modkey,           }, "XF86PowerOff",          awesome.quit),
-	awful.key({ modkey, "Shift"   }, "XF86PowerOff",          function () awful.util.spawn("reboot") end),
-	awful.key({ modkey, "Control", "Shift" }, "XF86PowerOff", function () awful.util.spawn("shutdown") end),
 
 	-- Prompts
 	awful.key({ modkey, "Control", "Shift" }, "r",            function () mypromptbox[mouse.screen]:run() end),

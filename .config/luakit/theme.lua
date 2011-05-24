@@ -5,9 +5,9 @@
 local theme = {}
 
 -- Default settings
-theme.font = "monospace normal 9"
-theme.fg   = "#fff"
-theme.bg   = "#000"
+theme.font = "terminus normal 9"
+theme.fg   = "#b2b2b2"
+theme.bg   = "#262626"
 
 -- Genaral colours
 theme.success_fg = "#0f0"
@@ -48,18 +48,18 @@ theme.dbar_bg         = "#000"
 theme.dbar_error_fg   = "#F00"
 
 -- Input bar specific
-theme.ibar_fg           = "#000"
-theme.ibar_bg           = "#fff"
+theme.ibar_fg           = "#d79b1e"
+theme.ibar_bg           = "#333333"
 
 -- Tab label
-theme.tab_fg            = "#888"
-theme.tab_bg            = "#222"
+theme.tab_fg            = "#b2b2b2"
+theme.tab_bg            = "#262626"
 theme.tab_ntheme        = "#ddd"
-theme.selected_fg       = "#fff"
-theme.selected_bg       = "#000"
+theme.selected_fg       = "#d79b1e"
+theme.selected_bg       = "#151515"
 theme.selected_ntheme   = "#ddd"
-theme.loading_fg        = "#33AADD"
-theme.loading_bg        = "#000"
+theme.loading_fg        = "#9bcd32"
+theme.loading_bg        = "#151515"
 
 -- Trusted/untrusted ssl colours
 theme.trust_fg          = "#0F0"

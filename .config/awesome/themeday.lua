@@ -9,7 +9,7 @@ x:close()
 
 -- gtk
 local t = io.open("/home/jack/.gtkrc-2.0.mine", "w")
-t:write('gtk-theme-name="ACYL_gtk_0.4"')
+t:write('gtk-theme-name="ACYL_Day"\ngtk-icon-theme-name="ACYL_Icons_Day"')
 t:close()
 
 -- Spacer widget

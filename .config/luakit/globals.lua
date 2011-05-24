@@ -1,14 +1,11 @@
 -- Global variables for luakit
 globals = {
- -- homepage            = "http://luakit.org/",
- -- homepage            = "http://github.com/mason-larobina/luakit",
     homepage            = "http://www.google.com.au/",
     scroll_step         = 40,
     zoom_step           = 0.1,
     max_cmd_history     = 100,
     max_srch_history    = 100,
- -- http_proxy          = "http://example.com:3128",
-    default_window_size = "800x600",
+    default_window_size = "1280x800",
 
  -- Disables loading of hostnames from /etc/hosts (for large host files)
  -- load_etc_hosts      = false,
@@ -91,12 +88,17 @@ search_engines.default = search_engines.google
 -- See http://webkitgtk.org/reference/webkitgtk-WebKitWebSettings.html
 domain_props = { 
     ["all"] = {
-        ["enable-scripts"]          = false,
-        ["enable-plugins"]          = false,
-        ["enable-private-browsing"] = false,
+        ["enable-scripts"]          = true,
+        ["enable-plugins"]          = true,
+        ["enable-private-browsing"] = true,
         ["user-stylesheet-uri"]     = "",
     },
-    ["youtube.com"] = {
+--    ["mail.google.com"] = {
+--    ["enable-scripts"]          = true,
+--    ["enable-plugins"]          = true,
+--    ["enable-private-browsing"] = false,
+--    },
+   ["youtube.com"] = {
         ["enable-scripts"] = true,
         ["enable-plugins"] = true,
     },

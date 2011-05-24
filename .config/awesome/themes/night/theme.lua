@@ -17,7 +17,7 @@ theme.fg_urgent     = trwhi
 theme.fg_minimize   = blk
 
 theme.border_width  = "1"
-theme.border_normal = blk
+theme.border_normal = trblk
 theme.border_focus  = brblk
 theme.border_marked = blu
 

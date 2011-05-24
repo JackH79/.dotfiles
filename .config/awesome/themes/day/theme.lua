@@ -11,14 +11,14 @@ theme.bg_urgent     = brred
 theme.bg_minimize   = trwhi
 
 theme.fg_normal     = brblk
-theme.fg_focus      = gre
+theme.fg_focus      = brgre
 theme.fg_urgent     = trwhi
 theme.fg_minimize   = brwhi
 
 theme.border_width  = "1"
 theme.border_normal = trwhi
-theme.border_focus  = gre
-theme.border_marked = blu
+theme.border_focus  = brgre
+theme.border_marked = red
 
 -- TAGLIST
 theme.taglist_squares_sel   = "/home/jack/.config/awesome/themes/day/taglist/squarefw.png"

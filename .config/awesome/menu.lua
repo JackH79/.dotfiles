@@ -14,7 +14,7 @@ officemenu = {
 	{ "gnumeric",    "gnumeric"             },
 	{ "calc",        "libreoffice -calc"    },
 	{ "impress",     "libreoffice -impress" },
-	{ "speedcrunch", "speedcrunch"          },
+	{ "galculator",  "galculator"           },
 	{ "r",           terminal .. " -e R"    }
 }
 editorsmenu = {
@@ -64,5 +64,13 @@ mainmenu = awful.menu({
 		{ "utilities", utilitiesmenu },
 		{ "sytem",     systemmenu    },
 		{ "awesome",   awesomemenu   }
+	}
+})
+
+leavemenu = awful.menu({
+	items = {
+		{ "quit",        awesome.quit                                                  },
+		{ "reboot",      terminal .. " -e dbus-send --system --print-reply --dest='org.freedesktop.ConsoleKit' /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Restart" },
+		{ "shutdown",    terminal .. " -e dbus-send --system --print-reply --dest='org.freedesktop.ConsoleKit' /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Stop" }
 	}
 })

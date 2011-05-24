@@ -1,6 +1,6 @@
 [user]
-	name = "Jack Holborn"
-	email = "holborn79@gmail.com"
+	name = Jack Holborn
+	email = holborn79@gmail.com
 
 [core]
 	pager = less -FRSX
