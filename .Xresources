@@ -1,0 +1,35 @@
+!!!URXVT
+URxvt.termName:		rxvt
+URxvt.scrollBar:	false
+URxvt.buffered:		true
+URxvt.font:		-*-terminus-*-*-*-*-12-*-*-*-*-*-*-*
+URxvt.geometry:         95x30
+!!For true transparency (with e.g. xcompmgr)
+!URxvt.depth:		32
+!URxvt.background:	rgba:1111/1111/1111/dddd
+!!For native transparency
+!URxvt.transparent:	true
+!URxvt.shading:		20
+!! URL cut'n'paste
+URxvt.perl-ext-common:	default,url-select
+URxvt.keysym.M-u:	perl:url-select:select_next
+URxvt.urlLauncher:	opera
+URxvt.underlineURLs:	true
+
+!!!XTERM
+!xterm.geometry:	80x25
+xterm.font:		-*-terminus-*-*-*-*-12-*-*-*-*-*-*-*
+xterm.dynamicColors:	true
+xterm.utf8:		2
+xterm.eightBitInaput:	true
+xterm.saveLines:	512
+xterm.scrollTtyKeypress:true
+xterm.scrollTtyOutput:	false
+xterm.toolBar:		false
+xterm.scrollBar:	false
+
+!COLOUR THEME
+#include "/home/jack/.config/Xcolours/default"
+
+!XSCREENSAVER
+#include "/home/jack/.config/Xcolours/xscreendark"

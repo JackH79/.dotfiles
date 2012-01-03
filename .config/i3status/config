@@ -1,0 +1,56 @@
+general {
+	output_format = "none"
+	colors =	true
+	interval =	5
+}
+
+#order  = "ipv6"
+#order += "run_watch DHCP"
+#order += "run_watch VPN"
+order = "wireless wlan0"
+order += "ethernet eth0"
+order += "disk /"
+order += "disk /home"
+order += "battery 0"
+#order += "cpu_temperature 0"
+#order += "load"
+order += "time"
+
+disk "/" {
+	format = "root: %free free"
+}
+
+disk "/home" {
+	format = "home: %free free"
+}
+
+wireless wlan0 {
+	format_up = "wlan: (%ip on %essid at %quality, %bitrate)"
+	format_down = "wlan: down"
+}
+
+ethernet eth0 {
+	# %speed requires the cap_net_admin capability
+	format_up = "eth: %ip (%speed)"
+	format_down = "eth: down"
+}
+
+battery 0 {
+	format = "bat: %percentage, %remaining remaining"
+}
+
+#run_watch DHCP {
+#	pidfile = "/var/run/dhclient*.pid"
+#}
+
+time {
+	format = "%d %b %Y %I:%M%P"
+
+#load {
+#	format = "%5min"
+#}
+
+#cpu_temperature 0 {
+#	format = "temp: %degrees C"
+#	path = "/sys/devices/platform/applesmc.768/temp1-input"
+#}
