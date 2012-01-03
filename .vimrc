@@ -41,16 +41,21 @@ set backspace=indent,eol,start
 if has("vms")
   set nobackup		" do not keep a backup file, use versions instead
 else
-  set backup		" keep a backup file
+  set backup	" keep a backup file
+  set backupdir=/home/jack/.vim/bak,/tmp
 endif
 set history=50		" keep 50 lines of command line history
 set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
 set incsearch		" do incremental searching
+"set spell		" Check spelling
+"setlocal spell spelllang=en_au
 set number
 set lbr
-"setlocal spell spelllang=en_au
-
+"set tabstop=4
+"set shiftwidth=4
+"set noerrorbells
+set background=dark
 " For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
 " let &guioptions = substitute(&guioptions, "t", "", "g")
 
@@ -100,6 +105,8 @@ if has("autocmd")
     \ endif
 
   augroup END
+
+  au BufWritePre * let &bex = strftime("-%y-%m-%d-%H%M")
 
 else
 

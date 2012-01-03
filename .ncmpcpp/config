@@ -11,7 +11,7 @@ mpd_host = "127.0.0.1"
 #
 mpd_port = "6600"
 #
-mpd_music_dir = "/home/jack/music"
+mpd_music_dir = "/home/jack/Music"
 #
 #mpd_connection_timeout = "5"
 #
@@ -127,11 +127,11 @@ mpd_music_dir = "/home/jack/music"
 ## Note: colors can be nested.
 ##
 #
-song_list_format = "{$3%a - }{$4%b - }{$8%t$9}$R{$3(%l)$9}"
+song_list_format = "{$5%a - }{$4%b - }{$8%t$9}$R{$5(%l)$9}"
 #
-song_status_format = "{$3%a{ - $4%b - }{$8%t}}"
+song_status_format = "{$5%a{ - $4%b - }{$8%t}}"
 #
-#song_library_format = "{%n - }{%t}|{%f}"
+song_library_format = "{%n - }{%t}|{%f}"
 #
 #tag_editor_album_format = "{(%y) }%b"
 #
@@ -154,7 +154,7 @@ song_status_format = "{$3%a{ - $4%b - }{$8%t}}"
 #
 alternative_header_first_line_format = "$b$1$aqqu$/a$8 {%t}|{%f} $1$atqq$/a$9$/b"
 #
-alternative_header_second_line_format = "{{$3%a$9}{$8 - $4%b$9}{ ($4%y$9)}}|{%D}"
+alternative_header_second_line_format = "{{$b$5%a$9$/b}{$b$8 - $7%b$9$/b}{ ($8%y$9)}}|{%D}"
 #
 ##
 ## Note: Below variables also supports
@@ -200,7 +200,7 @@ alternative_header_second_line_format = "{{$3%a$9}{$8 - $4%b$9}{ ($4%y$9)}}|{%D}
 ## E.g. {lr} will give you right aligned column of lengths.
 ##
 #
-song_columns_list_format = "(5)[red]{l} (25)[green]{a} (30)[yellow]{b} (40)[white]{t}"
+song_columns_list_format = "(5)[yellow]{l} (25)[blue]{a} (30)[cyan]{b} (40)[white]{t}"
 #
 ##### various settings #####
 #
@@ -217,9 +217,9 @@ song_columns_list_format = "(5)[red]{l} (25)[green]{a} (30)[yellow]{b} (40)[whit
 #
 playlist_display_mode = "columns" (classic/columns)
 #
-#browser_display_mode = "classic" (classic/columns)
+browser_display_mode = "columns" (classic/columns)
 #
-#search_engine_display_mode = "classic" (classic/columns)
+search_engine_display_mode = "columns" (classic/columns)
 #
 #incremental_seeking = "yes"
 #
@@ -229,7 +229,7 @@ playlist_display_mode = "columns" (classic/columns)
 #
 #centered_cursor = "no"
 #
-progressbar_look = "═■"
+progressbar_look = "‣‣"
 #
 #default_place_to_search_in = "database" (database/playlist)
 #
@@ -331,9 +331,9 @@ ignore_leading_the = "yes"
 #
 #colors_enabled = "yes"
 #
-empty_tag_color = "green"
+empty_tag_color = "blue"
 #
-header_window_color = "green"
+header_window_color = "blue"
 #
 volume_color = "white"
 #
@@ -355,7 +355,7 @@ progressbar_color = "black"
 #
 alternative_ui_separator_color = "black"
 #
-active_column_color = "green"
+active_column_color = "blue"
 #
 #window_border_color = "green"
 #

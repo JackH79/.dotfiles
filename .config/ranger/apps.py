@@ -1,3 +1,87 @@
+# -*- coding: utf-8 -*-
+# Copyright (C) 2009, 2010, 2011  Roman Zimbelmann <romanz@lavabit.com>
+# This configuration file is licensed under the same terms as ranger.
+# ===================================================================
+# This is the configuration file for file type detection and application
+# handling.  It's all in python; lines beginning with # are comments.
+#
+# You can customize this in the file ~/.config/ranger/apps.py.
+# It has the same syntax as this file.  In fact, you can just copy this
+# file there with `ranger --copy-config=apps' and make your modifications.
+# But make sure you update your configs when you update ranger.
+#
+# In order to add application definitions "on top of" the default ones
+# in your ~/.config/ranger/apps.py, you should subclass the class defined
+# here like this:
+#
+# from ranger.defaults.apps import CustomApplications as DefaultApps
+# class CustomApplications(DeafultApps):
+#     <your definitions here>
+#
+# ===================================================================
+# This system is based on things called MODES and FLAGS.  You can read
+# in the man page about them.  To remind you, here's a list of all flags.
+# An uppercase flag inverts previous flags of the same name.
+#     s   Silent mode.  Output will be discarded.
+#     d   Detach the process.  (Run in background)
+#     p   Redirect output to the pager
+#     w   Wait for an Enter-press when the process is done
+#     c   Run the current file only, instead of the selection
+#
+# To implement flags in this file, you could do this:
+#     context.flags += "d"
+# Another example:
+#     context.flags += "Dw"
+#
+# To implement modes in this file, you can do something like:
+#     if context.mode == 1:
+#         <run in one way>
+#     elif context.mode == 2:
+#         <run in another way>
+#
+# ===================================================================
+# The methods are called with a "context" object which provides some
+# attributes that transfer information.  Relevant attributes are:
+#
+# mode -- a number, mainly used in determining the action in app_xyz()
+# flags -- a string with flags which change the way programs are run
+# files -- a list containing files, mainly used in app_xyz
+# filepaths -- a list of the paths of each file
+# file -- an arbitrary file from that list (or None)
+# fm -- the filemanager instance
+# popen_kws -- keyword arguments which are directly passed to Popen
+#
+# ===================================================================
+# The return value of the functions should be either:
+# 1. A reference to another app, like:
+#     return self.app_editor(context)
+#
+# 2. A call to the "either" method, which uses the first program that
+# is installed on your system.  If none are installed, None is returned.
+#     return self.either(context, "libreoffice", "soffice", "ooffice")
+#
+# 3. A tuple of arguments that should be run.
+#     return "mplayer", "-fs", context.file.path
+# If you use lists instead of strings, they will be flattened:
+#     args = ["-fs", "-shuf"]
+#     return "mplayer", args, context.filepaths
+# "context.filepaths" can, and will often be abbreviated with just "context":
+#     return "mplayer", context
+#
+# 4. "None" to indicate that no action was found.
+#     return None
+#
+# ===================================================================
+# When using the "either" method, ranger determines which program to
+# pick by looking at its dependencies.  You can set dependencies by
+# adding the decorator "depends_on":
+#     @depends_on("vim")
+#     def app_vim(self, context):
+#         ....
+# There is a special keyword which you can use as a dependence: "X"
+# This ensures that the program will only run when X is running.
+# ===================================================================
+
 import ranger
 from ranger.api.apps import *
 from ranger.ext.get_executables import get_executables
@@ -7,32 +91,40 @@ class CustomApplications(Applications):
 		"""How to determine the default application?"""
 		f = c.file
 
-		# ranger can act as a file chooser when running with --choosefile=...
-		if ranger.arg.choosefile:
-			open(ranger.arg.choosefile, 'w').write(f.path)
-			raise SystemExit()
-
-		if f.basename.lower() == 'makefile':
-			return self.either(c, 'make')
+		if f.basename.lower() == 'makefile' and c.mode == 1:
+			made = self.either(c, 'make')
+			if made: return made
 
 		if f.extension is not None:
 			if f.extension in ('pdf', ):
-				c.flags += 'd'
-				return self.either(c, 'zathura', 'apvlv')
+				return self.either(c, 'zathura', 'okular', 'evince', 'apvlv')
+			if f.extension in ('epub', ):
+				return self.either(c, 'okular')
+			if f.extension in ('mobi', 'lit', ):
+				return self.either(c, 'ebook-viewer')
+			if f.extension == 'djvu':
+				return self.either(c, 'okular', 'evince')
 			if f.extension in ('xml', ):
 				return self.either(c, 'editor')
-			if f.extension in ('html', 'htm', 'xhtml'):
-				return self.either(c, 'luakit', 'firefox', 'jumanji',
-						'opera', 'elinks', 'lynx')
+			if f.extension in ('html', 'htm', 'xhtml', 'mht'):
+				return self.either(c, 'opera', 'firefox', 'jumanji',
+						'luakit', 'elinks', 'lynx')
 			if f.extension == 'swf':
-				return self.either(c, 'luakit', 'firefox', 'jumanji', 'opera')
+				return self.either(c, 'opera', 'firefox', 'jumanji', 'luakit')
 			if f.extension == 'nes':
 				return self.either(c, 'fceux')
-			if f.extension in ('swc', 'smc'):
+			if f.extension in ('swc', 'smc', 'sfc'):
 				return self.either(c, 'zsnes')
 			if f.extension in ('odt', 'ods', 'odp', 'odf', 'odg',
-					'doc', 'xls', 'docx', 'xlsx'):
+					'doc', 'xls'):
 				return self.either(c, 'libreoffice', 'soffice', 'ooffice')
+# 			if f.extension in ('jpg', 'jpeg', 'png', 'bmp', 'tif',
+# 					'tiff', 'gif'):
+# 				return self.either(c, 'gwenview')
+
+
+
+
 
 		if f.mimetype is not None:
 			if INTERPRETED_LANGUAGES.match(f.mimetype):
@@ -44,11 +136,15 @@ class CustomApplications(Applications):
 		if f.video or f.audio:
 			if f.video:
 				c.flags += 'd'
-			return self.either(c, 'mplayer', 'smplayer', 'vlc', 'totem')
+			return self.either(c, 'vlc', 'mplayer', 'mplayer2', 'smplayer',
+					'totem')
 
 		if f.image:
-			return self.either(c, 'sxiv', 'geeqie', 'feh', 'mirage')
-#			return self.either(c, 'feh')
+			if c.mode in (11, 12, 13, 14):
+				return self.either(c, 'set_bg_with_feh')
+			else:
+				return self.either(c, 'sxiv', 'feh', 'eog', 'mirage')
+
 		if f.document or f.filetype.startswith('text') or f.size == 0:
 			return self.either(c, 'editor')
 
@@ -60,7 +156,7 @@ class CustomApplications(Applications):
 	# ----------------------------------------- application definitions
 	# Note: Trivial application definitions are at the bottom
 	def app_pager(self, c):
-		return tup('less', '-R', *c)
+		return 'less', '-R', c
 
 	def app_editor(self, c):
 		try:
@@ -83,53 +179,81 @@ class CustomApplications(Applications):
 	@depends_on('mplayer')
 	def app_mplayer(self, c):
 		if c.mode is 1:
-			return tup('mplayer', '-fs', *c)
+			return 'mplayer', '-fs', c
 
 		elif c.mode is 2:
 			args = "mplayer -fs -sid 0 -vfm ffmpeg -lavdopts " \
 					"lowres=1:fast:skiploopfilter=all:threads=8".split()
 			args.extend(c)
-			return tup(*args)
+			return args
 
 		elif c.mode is 3:
-			return tup('mplayer', '-mixer', 'software', *c)
+			return 'mplayer', '-mixer', 'software', c
 
 		else:
-			return tup('mplayer', *c)
+			return 'mplayer', c
 
-	@depends_on('feh')
-	def app_feh(self, c):
-		arg = {1: '--bg-scale', 2: '--bg-tile', 3: '--bg-center'}
+	@depends_on('mplayer2')
+	def app_mplayer2(self, c):
+		args = list(self.app_mplayer(c))
+		args[0] += '2'
+		return args
 
+	# A dependence on "X" means: this programs requires a running X server!
+	@depends_on('feh', 'X')
+	def app_set_bg_with_feh(self, c):
 		c.flags += 'd'
+		arg = {11: '--bg-scale', 12: '--bg-tile', 13: '--bg-center',
+				14: '--bg-fill'}
+		if c.mode in arg:
+			return 'feh', arg[c.mode], c.file.path
+		return 'feh', arg[11], c.file.path
 
-		if c.mode in arg: # mode 1, 2 and 3 will set the image as the background
-			return tup('feh', arg[c.mode], c.file.path)
-		if c.mode is 11 and len(c.files) is 1: # view all files in the cwd
-			images = (f.basename for f in self.fm.env.cwd.files if f.image)
-			return tup('feh', '--start-at', c.file.basename, *images)
-		return tup('feh', *c)
+	@depends_on('feh', 'X')
+	def app_feh(self, c):
+		c.flags += 'd'
+		if c.mode is 0 and len(c.files) is 1: # view all files in the cwd
+			images = [f.basename for f in self.fm.env.cwd.files if f.image]
+			return 'feh', '--start-at', c.file.basename, images
+		return 'feh', c
+
+	@depends_on('sxiv', 'X')
+	def app_sxiv(self, c):
+		c.flags = 'd' + c.flags
+		if len(c.files) is 1:
+			images = [f.basename for f in self.fm.env.cwd.files if f.image]
+			try:
+				position = images.index(c.file.basename) + 1
+			except:
+				return None
+			return 'sxiv', '-n', str(position), images
+		return 'sxiv', c
+
+#	@depends_on('gwenview', 'X')
+#	def app_gwenview(self, c):
+#		c.flags += 'd'
+#		return 'gwenview', c
 
 	@depends_on('aunpack')
 	def app_aunpack(self, c):
 		if c.mode is 0:
 			c.flags += 'p'
-			return tup('aunpack', '-l', c.file.path)
-		return tup('aunpack', c.file.path)
+			return 'aunpack', '-l', c.file.path
+		return 'aunpack', c.file.path
 
-	@depends_on('file-roller')
+	@depends_on('file-roller', 'X')
 	def app_file_roller(self, c):
 		c.flags += 'd'
-		return tup('file-roller', c.file.path)
+		return 'file-roller', c.file.path
 
 	@depends_on('make')
 	def app_make(self, c):
 		if c.mode is 0:
-			return tup("make")
+			return "make"
 		if c.mode is 1:
-			return tup("make", "install")
+			return "make", "install"
 		if c.mode is 2:
-			return tup("make", "clear")
+			return "make", "clear"
 
 	@depends_on('java')
 	def app_java(self, c):
@@ -138,43 +262,44 @@ class CustomApplications(Applications):
 				return file.path[:file.path.index('.')]
 			return file.path
 		files_without_extensions = map(strip_extensions, c.files)
-		return tup("java", files_without_extensions)
+		return "java", files_without_extensions
 
-	@depends_on('totem')
+	@depends_on('totem', 'X')
 	def app_totem(self, c):
 		if c.mode is 0:
-			return tup("totem", *c)
+			return "totem", c
 		if c.mode is 1:
-			return tup("totem", "--fullscreen", *c)
-
-	@depends_on('sxiv')
-	def app_sxiv(self, c):
-		c.flags += 'd'
-		return tup("sxiv", "*", *c)
+			return "totem", "--fullscreen", c
 
 	@depends_on('mimeopen')
 	def app_mimeopen(self, c):
 		if c.mode is 0:
-			return tup("mimeopen", *c)
+			return "mimeopen", c
 		if c.mode is 1: 
 			# Will ask user to select program
 			# aka "Open with..."
-			return tup("mimeopen", "--ask", *c)
+			return "mimeopen", "--ask", c
+
 
 # Often a programs invocation is trivial.  For example:
 #    vim test.py readme.txt [...]
+#
 # This could be implemented like:
 #    @depends_on("vim")
-#    def app_vim(self, c):
-#        return tup("vim", *c.files)
-# Instead of creating such a generic function for each program, just add
-# its name here and it will be automatically done for you.
-CustomApplications.generic('vim', 'fceux', 'elinks', 'wine',
-		'zsnes', 'javac')
+#    def app_vim(self, context):
+#        return "vim", context
+#
+# But this is redundant and ranger does this automatically.  However, sometimes
+# you want to change some properties like flags or dependencies.
+# The method "generic" defines a generic method for the given programs which
+# looks like the one above, but you can add dependencies and flags here.
+# Add programs (that are not defined yet) here if they should only run in X:
+CustomApplications.generic('fceux', 'wine', 'zsnes', deps=['X'])
 
-# By setting flags='d', this programs will not block ranger's terminal:
-CustomApplications.generic('opera', 'firefox', 'apvlv', 'evince',
-		'zathura', 'gimp', 'mirage', 'eog', flags='d')
+# Add those which should only run in X AND should be detached/forked here:
+CustomApplications.generic('gwenview', 'opera', 'firefox', 'apvlv', 'evince',
+	'okular', 'libreoffice', 'zathura', 'gimp', 'mirage', 'eog', 'jumanji',
+			flags='d', deps=['X'])
 
 # What filetypes are recognized as scripts for interpreted languages?
 # This regular expression is used in app_default()

@@ -1,6 +1,5 @@
 -- REMIND
-require("themes")
-require(themeset)
+require("colours")
 
 function cal_gett()
 	local fp = io.popen("remind /home/jack/.reminders")

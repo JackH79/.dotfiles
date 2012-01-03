@@ -1,4 +1,4 @@
-#PREAMBLE
+### PREAMBLE
 SET Esc CHAR(27)
 SET Def   Esc + "[0m"
 SET Blk   Esc + "[0;30m"
@@ -18,96 +18,62 @@ SET BrMag Esc + "[1;35m"
 SET BrCya Esc + "[1;36m"
 SET BrWhi Esc + "[1;37m"
 
-#BANNER
+### BANNER
 BANNER [BrYel]─────────  %w, %d%s %m  ─────────[Def]
 
-#PUBLIC HOLIDAYS
+### REMINDERS
+
+#RENT
+REM 2011-10-15 +5 *14 SPECIAL COLOR 0 0 255 [BrBlu]%"Rent $560%" %b %c[Def]
+
+### BIRTHDAYS
+ FSET _yr_num(yr) ORD(YEAR(trigdate()) - yr)
+ REM 28 Jan +6 SPECIAL COLOR 255 0 0 [BrRed]%"Natasha's [_yr_num(1983)] birthday%" is %b[Def]
+ REM 27 Mar +6 SPECIAL COLOR 255 0 0 [BrRed]%"Darryl's [_yr_num(1979)] birthday%" is %b[Def]
+ REM 17 Apr +6 SPECIAL COLOR 255 0 0 [BrRed]%"Joe's [_yr_num(1986)] birthday%" is %b[Def]
+ REM 25 Apr +6 SPECIAL COLOR 255 0 0 [BrRed]%"Hubert's [_yr_num(1930)] birthday%" is %b[Def]
+ REM 25 May +6 SPECIAL COLOR 255 0 0 [BrRed]%"Samantha's [_yr_num(1982)] birthday%" is %b[Def]
+ REM 26 May +6 SPECIAL COLOR 255 0 0 [BrRed]%"Sol's [_yr_num(1970)] birthday%" is %b[Def]
+ REM 25 Jun +6 SPECIAL COLOR 255 0 0 [BrRed]%"Anna's [_yr_num(1963)] birthday%" is %b[Def]
+ REM 28 Jul +6 SPECIAL COLOR 255 0 0 [BrRed]%"Stefan's [_yr_num(1984)] birthday%" is %b[Def]
+ REM 28 Jul +6 SPECIAL COLOR 255 0 0 [BrRed]%"Reiner's [_yr_num(1978)] birthday%" is %b[Def]
+ REM 04 Aug +6 SPECIAL COLOR 255 0 0 [BrRed]%"John's [_yr_num(1975)] birthday%" is %b[Def]
+ REM 25 Sep +6 SPECIAL COLOR 255 0 0 [BrRed]%"Lucy's [_yr_num(1978)] birthday%" is %b[Def]
+ REM 19 Nov +6 SPECIAL COLOR 255 0 0 [BrRed]%"Aurelie's birthday%" is %b[Def]
+ REM 22 Nov +6 SPECIAL COLOR 255 0 0 [BrRed]%"Mum's [_yr_num(1947)] birthday%" is %b[Def]
+ REM 05 Dec +6 SPECIAL COLOR 255 0 0 [BrRed]%"Brian's [_yr_num(1973)] birthday%" is %b[Def]
+ REM 13 Dec +6 SPECIAL COLOR 255 0 0 [BrRed]%"Anni's [_yr_num(1985)] birthday%" is %b[Def]
+ REM 23 Dec +6 SPECIAL COLOR 255 0 0 [BrRed]%"Roxi's [_yr_num(1984)] birthday%" is %b[Def]
+ REM 24 Dec +6 SPECIAL COLOR 255 0 0 [BrRed]%"Karin's [_yr_num(1973)] birthday%" is %b[Def]
+
+### PUBLIC HOLIDAYS
 FSET _back(days) TODAY()-days
 SET Week_1 1
 SET Week_2 8
 SET Week_3 15
 SET Week_4 22
 #NEW YEAR
-OMIT 01 Jan SPECIAL COLOR 75 0 0 New Year's Day
+OMIT 01 Jan              SPECIAL COLOR 75 75 0 New Year's Day
 #AUSTRALIA DAY
 REM Mon Tue Wed Thu Fri 26 Jan SCANFROM [_back(7)] SATISFY 1
-OMIT [trigdate()] SPECIAL COLOR 75 0 0 Australia Day
+OMIT [trigdate()]        SPECIAL COLOR 75 75 0 Australia Day
 #EASTER
-SET easter EASTERDATE(YEAR(TODAY()))
-OMIT [TRIGGER(easter-2)] SPECIAL COLOR 75 0 0 Good Friday
-REM [TRIGGER(easter-1)] SPECIAL COLOR 75 0 0 Easter Saturday
-REM [TRIGGER(easter)] SPECIAL COLOR 75 0 0 Easter Sunday
-OMIT [TRIGGER(easter+1)] SPECIAL COLOR 75 0 0 Easter Monday
+SET  easter EASTERDATE(YEAR(TODAY()))
+OMIT [TRIGGER(easter-2)] SPECIAL COLOR 75 75 0 Good Friday
+REM  [TRIGGER(easter-1)] SPECIAL COLOR 75 75 0 Easter Saturday
+REM  [TRIGGER(easter)]   SPECIAL COLOR 75 75 0 Easter Sunday
+OMIT [TRIGGER(easter+1)] SPECIAL COLOR 75 75 0 Easter Monday
 #ANZAC DAY
 REM  Mon Tue Wed Thu Fri 25 Apr SCANFROM [_back(7)] SATISFY 1
-OMIT [trigdate()] SPECIAL COLOR 75 0 0 ANZAC Day
+OMIT [trigdate()]        SPECIAL COLOR 75 75 0 ANZAC Day
 #LABOUR DAY
 REM  Mon May [Week_1] SCANFROM [_back(7)] SATISFY 1
-OMIT [trigdate()] SPECIAL COLOR 75 0 0 Labour Day
+OMIT [trigdate()]        SPECIAL COLOR 75 75 0 Labour Day
 #QUEEN'S BIRTHDAY
 REM  Mon Jun [Week_2] SCANFROM [_back(7)] SATISFY 1
-OMIT [trigdate()] SPECIAL COLOR 75 0 0 Queen's Birthday
+OMIT [trigdate()]        SPECIAL COLOR 75 75 0 Queen's Birthday
 #CHRISTMAS DAY
-OMIT 25 Dec SPECIAL COLOR 75 0 0 Christmas Day
+OMIT 25 Dec              SPECIAL COLOR 75 75 0 Christmas Day
 #BOXING DAY
 REM Mon Tue Wed Thu Fri Dec 26 SCANFROM [_back(7)] SATISFY 1
-OMIT [trigdate()] SPECIAL COLOR 75 0 0 Boxing Day
-
-#REMINDERS
-
-##UNIVERSITY
-# PUSH
-#  #UNI HOLIDAYS
-#   OMIT 2010-04-19 SPECIAL COLOR 75 75 0 [Yel]%"Lecture recess%"[Def]
-##FRIDAY
-# REM 2010-02-26 *7 AT 12:00 DURATION 0:50 UNTIL 2010-05-28 SKIP SPECIAL COLOR 0 175 0 [BrGre]%"BM1000 Tutorial DB025-001%" %2[Def]
-#
-#MB3050
-# REM 2010-05-24 +14 SPECIAL COLOR 255 0 0 [BrRed] %"MB3050 Kirby report due %b%" %c[Def]
-#
-#  #MB3210
-#   REM  2010-05-21 +14 SPECIAL COLOR 255 0 0 [BrRed]%"MB3210 Independent ProjectReport due %b%" %c[Def]
-#
-##EXAMS
-# REM 2010-06-08 +14 AT 08:15 DURATION 2:00 SPECIAL COLOR 175 75 0 [BrYel]%"MB3210 - 21-011 %b%" %c[Def]
-#
-#POP
-
-#RENT
-REM 2010-11-09 +5 *14 SPECIAL COLOR 0 0 125 [Blu]%"Rent due%" %b %c[Def]
-
-#BIRTHDAY
- FSET _yr_num(yr) ORD(YEAR(trigdate()) - yr)
- REM 28 Jan +6 SPECIAL COLOR 125 0 0 [Red]%"Natasha's [_yr_num(1983)] birthday%" is %b[Def]
- REM 27 Mar +6 SPECIAL COLOR 125 0 0 [Red]%"Darryl's [_yr_num(1979)] birthday%" is %b[Def]
- REM 17 Apr +6 SPECIAL COLOR 125 0 0 [Red]%"Joe's [_yr_num(1986)] birthday%" is %b[Def]
- REM 25 Apr +6 SPECIAL COLOR 125 0 0 [Red]%"Hubert's [_yr_num(1930)] birthday%" is %b[Def]
- REM 25 Jun +6 SPECIAL COLOR 125 0 0 [Red]%"Anna's [_yr_num(1963)] birthday%" is %b[Def]
- REM 28 Jul +6 SPECIAL COLOR 125 0 0 [Red]%"Stefan's [_yr_num(1984)] birthday%" is %b[Def]
- REM 28 Jul +6 SPECIAL COLOR 125 0 0 [Red]%"Reiner's [_yr_num(1978)] birthday%" is %b[Def]
- REM 04 Aug +6 SPECIAL COLOR 125 0 0 [Red]%"John's [_yr_num(1975)] birthday%" is %b[Def]
- REM 25 Sep +6 SPECIAL COLOR 125 0 0 [Red]%"Lucy's [_yr_num(1978)] birthday%" is %b[Def]
- REM 19 Nov +6 SPECIAL COLOR 125 0 0 [Red]%"Aurelie's birthday%" is %b[Def]
- REM 22 Nov +6 SPECIAL COLOR 125 0 0 [Red]%"Mum's [_yr_num(1947)] birthday%" is %b[Def]
- REM 05 Dec +6 SPECIAL COLOR 125 0 0 [Red]%"Brian's [_yr_num(1973)] birthday%" is %b[Def]
- REM 13 Dec +6 SPECIAL COLOR 125 0 0 [Red]%"Anni's [_yr_num(1985)] birthday%" is %b[Def]
- REM 23 Dec +6 SPECIAL COLOR 125 0 0 [Red]%"Roxi's [_yr_num(1984)] birthday%" is %b[Def]
- REM 24 Dec +6 SPECIAL COLOR 125 0 0 [Red]%"Karin's [_yr_num(1973)] birthday%" is %b[Def]
- REM 25 May +6 SPECIAL COLOR 125 0 0 [Red]%"Samantha's [_yr_num(1982)] birthday%" is %b[Def]
- REM 26 May +6 SPECIAL COLOR 125 0 0 [Red]%"Sol's [_yr_num(1970)] birthday%" is %b[Def]
-
-#MISCELLANEOUS
-# SET $LatDeg -19
-# SET $LatMin 15
-# SET $LatSec 23
-# SET $LongDeg -146
-# SET $LongMin 49
-# SET $LongSec 6
-# MSG [Blu]%"%"Sunrise: [sunrise()], Sunset: [sunset()]%[Def]
-# MSG [Blu]%"%"Next full moon: [moondate(2)]%[Def]
-# REM [moondate(0)] SPECIAL MOON 0 3
-# REM [moondate(1)] SPECIAL MOON 1 3
-# REM [moondate(2)] SPECIAL MOON 2 3
-# REM [moondate(3)] SPECIAL MOON 3 3
-# REM Sat SPECIAL SHADE 225
-# REM Sun SPECIAL SHADE 200
+OMIT [trigdate()]        SPECIAL COLOR 75 75 0 Boxing Day
