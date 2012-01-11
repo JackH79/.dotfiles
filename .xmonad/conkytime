@@ -1,0 +1,11 @@
+out_to_x no
+out_to_console yes
+out_to_ncurses no
+background yes
+update_interval 3
+total_run_times 0
+if_up_strictness link
+
+TEXT
+^fg(\#9bcd32):: \
+^fg(\#329bcd)${time %a %d %b %Y} ^fg(\#ffffff)${time %I:%M%P}^fg()
