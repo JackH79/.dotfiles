@@ -1,0 +1,13 @@
+[user]
+	name = Jack Holborn
+	email = holborn79@gmail.com
+
+[core]
+	pager = less -FRSX
+	editor = vim
+
+[color]
+	ui = auto
+
+[merge]
+	tool = vimdiff

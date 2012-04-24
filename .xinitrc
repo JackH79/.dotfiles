@@ -29,18 +29,16 @@ xrdb -merge ~/.Xresources
 urxvtd -q -o -f &
 
 ### AUTOCUTSEL
-#autocutsel -fork &
-#autocutsel -selection PRIMARY -fork &
+autocutsel -fork &
+autocutsel -selection PRIMARY -fork &
 
 ### FOR JERRY
 xsetroot -cursor_name left_ptr
 unclutter -root -idle 3 &
+keynav &
 
 ### WALLPAPER
 imlibsetroot -s /home/jack/.backgrounds/wanaka.jpg &
-
-### KEYBOARD MOUSE
-keynav &
 
 ### XCOMPMGR
 xcompmgr -cCfFD 3 &

@@ -1,0 +1,27 @@
+!Font Settings
+!xscreensaver.Dialog.headingFont:xft:terminus:medium:pixelsize=12
+!xscreensaver.Dialog.bodyFont:xft::terminus:medium:pixelsize=12
+!xscreensaver.Dialog.labelFont:xft:terminus:medium:pixelsize=12
+!xscreensaver.Dialog.unameFont:xft:terminus:medium:pixelsize=12
+!xscreensaver.Dialog.buttonFont:xft:terminus:medium:pixelsize=12
+!xscreensaver.Dialog.dateFont:xft:terminus:medium:pixelsize=12
+!xscreensaver.passwd.passwdFont::xft:terminus:medium:pixelsize=12
+!Dialog Bbox
+xscreensaver.Dialog.foreground:         #a4a4a4
+xscreensaver.Dialog.background:         #262524
+xscreensaver.Dialog.topShadowColor:     #333230
+xscreensaver.Dialog.bottomShadowColor:  #1a1918
+xscreensaver.Dialog.Button.foreground:  #a4a4a4
+xscreensaver.Dialog.Button.background:  #262524
+!Input Box & Date
+xscreensaver.Dialog.text.foreground:    #a4a4a4
+xscreensaver.Dialog.text.background:    #262524
+xscreensaver.Dialog.internalBorderWidth:24
+xscreensaver.Dialog.borderWidth:        20
+xscreensaver.Dialog.shadowThickness:    1
+!Timeout Bar
+xscreensaver.passwd.thermometer.foreground:  #a4a4a4
+xscreensaver.passwd.thermometer.background:  #262524
+xscreensaver.passwd.thermometer.width:       3
+!Date
+xscreensaver.dateFormat: %a, %d %b | %I:%M%P

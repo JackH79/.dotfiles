@@ -27,17 +27,19 @@ alias grep='grep --color=auto'
 alias sleep='sudo pm-suspend'
 alias dvd='mplayer -channels 6 -af hrtf /dev/sr0'
 alias copy='rsync -aP'
-#alias todo='remind /home/jack/.reminders'
 alias rem='remind /home/jack/.reminders'
 alias remc='remind -m -cuc+2 /home/jack/.reminders'
-alias aw='wiki-search'
+alias awiki='wiki-search'
 alias :q='exit'
 alias m='udisks --mount'
 alias m1='udisks --mount /dev/sdb1'
 alias m2='udisks --mount /dev/sdc1'
+alias m3='udisks --mount /dev/sdd1'
 alias um='udisks --unmount'
 alias um1='udisks --unmount /dev/sdb1'
 alias um2='udisks --unmount /dev/sdc1'
+alias um3='udisks --unmount /dev/sdd1'
+
 ### COLOURS IN MAN
 export LESS_TERMCAP_mb=$'\E[00;34m'
 export LESS_TERMCAP_md=$'\E[01;34m'
@@ -49,7 +51,7 @@ export LESS_TERMCAP_us=$'\E[01;36m'
 
 ### BROWSERS
 if [ -n "$DISPLAY" ]; then
-   BROWSER=opera
+   BROWSER=firefox
 else
    BROWSER=links
 fi

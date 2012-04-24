@@ -1,0 +1,25 @@
+!DAY
+!black
+*color0 :            #222222
+*color8 :            #454545
+!red
+*color1 :            #B22222
+*color9 :            #FF4E3B
+!green
+*color2 :            #37451E
+*color10:            #739925
+!yellow
+*color3 :            #886100
+*color11:            #DAA520
+!blue
+*color4 :            #00457F
+*color12:            #0055ED
+!magenta
+*color5 :            #8800CC
+*color13:            #DA00D2
+!cyan
+*color6 :            #007F7F
+*color14:            #00CBCB
+!white
+*color7 :            #666666
+*color15:            #888888

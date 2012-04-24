@@ -1,11 +1,16 @@
 -- REMIND
+<<<<<<< HEAD
 require("themes")
+=======
+require("colours")
+>>>>>>> 84376952260f4610cd857d8eee54fff1c4f27c22
 
 function cal_gett()
 	local fp = io.popen("remind /home/jack/.reminders")
 	local rem = fp:read("*a")
 	fp:close()
 		rem = string.gsub(rem, "\027%[0m", "</span>")
+<<<<<<< HEAD
 		rem = string.gsub(rem, "\027%[0;30m", "<span color='" ..   blk .. "'>") --black       #1a1a1a
 		rem = string.gsub(rem, "\027%[0;31m", "<span color='" ..   red .. "'>") --red         #b23535
 		rem = string.gsub(rem, "\027%[0;32m", "<span color='" ..   gre .. "'>") --green       #60801f
@@ -14,6 +19,16 @@ function cal_gett()
 		rem = string.gsub(rem, "\027%[0;35m", "<span color='" ..   mag .. "'>") --magenta     #8f46b2
 		rem = string.gsub(rem, "\027%[0;36m", "<span color='" ..   cya .. "'>") --cyan        #73afb4
 		rem = string.gsub(rem, "\027%[0;37m", "<span color='" ..   whi .. "'>") --white       #b2b2b2
+=======
+		rem = string.gsub(rem, "\027%[0;30m", "<span color='" .. blk .. "'>") --black    #1a1a1a
+		rem = string.gsub(rem, "\027%[0;31m", "<span color='" .. red .. "'>") --red      #b23535
+		rem = string.gsub(rem, "\027%[0;32m", "<span color='" .. gre .. "'>") --green    #60801f
+		rem = string.gsub(rem, "\027%[0;33m", "<span color='" .. yel .. "'>") --yellow   #be6e00
+		rem = string.gsub(rem, "\027%[0;34m", "<span color='" .. blu .. "'>") --blue     #1f6080
+		rem = string.gsub(rem, "\027%[0;35m", "<span color='" .. mag .. "'>") --magenta  #8f46b2
+		rem = string.gsub(rem, "\027%[0;36m", "<span color='" .. cya .. "'>") --cyan     #73afb4
+		rem = string.gsub(rem, "\027%[0;37m", "<span color='" .. whi .. "'>") --white    #b2b2b2
+>>>>>>> 84376952260f4610cd857d8eee54fff1c4f27c22
 		rem = string.gsub(rem, "\027%[1;30m", "<span color='" .. brblk .. "'>") --br-black    #4c4c4c
 		rem = string.gsub(rem, "\027%[1;31m", "<span color='" .. brred .. "'>") --br-red      #ff4b4b
 		rem = string.gsub(rem, "\027%[1;32m", "<span color='" .. brgre .. "'>") --br-green    #9bcd32

@@ -13,7 +13,7 @@ URxvt.background:			rgba:1a00/1a00/1a00/ef00
 !!! URL cut'n'paste
 URxvt.perl-ext-common:		default,url-select
 URxvt.keysym.M-u:			perl:url-select:select_next
-URxvt.urlLauncher:			opera
+URxvt.urlLauncher:			firefox
 URxvt.underlineURLs:		true
 
 !XTERM
