@@ -1,0 +1,7 @@
+INCLUDE /home/jack/.config/remind/colours
+INCLUDE /home/jack/.config/remind/banner
+INCLUDE /home/jack/.config/remind/recurring
+INCLUDE /home/jack/.config/remind/todo
+INCLUDE /home/jack/.config/remind/birthdays
+INCLUDE /home/jack/.config/remind/holidays
+INCLUDE /home/jack/.config/remind/miscellaneous

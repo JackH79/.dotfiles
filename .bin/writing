@@ -1,0 +1,7 @@
+#!/bin/bash
+
+exec "focuswriter" &
+exec "artha"&
+exec "gaiksaurus" &
+cd /home/jack/Documents/programs/coed11/
+exec wine coed11.exe &

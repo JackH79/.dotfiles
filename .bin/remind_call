@@ -1,0 +1,3 @@
+#! /bin/bash
+rem=`lua /home/jack/.bin/remind_colour.lua`
+notify-send -t 15000 "$rem" -i '/home/jack/.bin/remind_bang.png'

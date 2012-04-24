@@ -1,0 +1,31 @@
+### PUBLIC HOLIDAYS
+FSET _back(days) TODAY()-days
+SET Week_1 1
+SET Week_2 8
+SET Week_3 15
+SET Week_4 22
+#NEW YEAR
+OMIT 01 Jan              SPECIAL COLOR 75 75 0 New Year's Day
+#AUSTRALIA DAY
+REM Mon Tue Wed Thu Fri 26 Jan SCANFROM [_back(7)] SATISFY 1
+OMIT [trigdate()]        SPECIAL COLOR 75 75 0 Australia Day
+#EASTER
+SET  easter EASTERDATE(YEAR(TODAY()))
+OMIT [TRIGGER(easter-2)] SPECIAL COLOR 75 75 0 Good Friday
+REM  [TRIGGER(easter-1)] SPECIAL COLOR 75 75 0 Easter Saturday
+REM  [TRIGGER(easter)]   SPECIAL COLOR 75 75 0 Easter Sunday
+OMIT [TRIGGER(easter+1)] SPECIAL COLOR 75 75 0 Easter Monday
+#ANZAC DAY
+REM  Mon Tue Wed Thu Fri 25 Apr SCANFROM [_back(7)] SATISFY 1
+OMIT [trigdate()]        SPECIAL COLOR 75 75 0 ANZAC Day
+#LABOUR DAY
+REM  Mon May [Week_1] SCANFROM [_back(7)] SATISFY 1
+OMIT [trigdate()]        SPECIAL COLOR 75 75 0 Labour Day
+#QUEEN'S BIRTHDAY
+REM  Mon Jun [Week_2] SCANFROM [_back(7)] SATISFY 1
+OMIT [trigdate()]        SPECIAL COLOR 75 75 0 Queen's Birthday
+#CHRISTMAS DAY
+OMIT 25 Dec              SPECIAL COLOR 75 75 0 Christmas Day
+#BOXING DAY
+REM Mon Tue Wed Thu Fri Dec 26 SCANFROM [_back(7)] SATISFY 1
+OMIT [trigdate()]        SPECIAL COLOR 75 75 0 Boxing Day

@@ -1,0 +1,2 @@
+#!/bin/bash
+rsync -a --delete /home/jack/Documents /media/FULLBACKUP/BACKUP.NEW &> /dev/null

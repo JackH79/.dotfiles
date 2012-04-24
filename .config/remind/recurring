@@ -1,0 +1,4 @@
+### RECURRING REMINDERS
+
+#RENT
+REM 2011-10-15 +5 *14 MSG [BrBlu]%"Rent $560%" %b %c[Def]

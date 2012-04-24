@@ -1,0 +1,27 @@
+#!/bin/bash
+#
+# Jack Holborn 2012
+#
+# turn off all screen-/power-saver features and turn off caps lock
+
+# Print error messages
+errorout() { echo "error $*" >&2; exit 1; }
+
+# Use 'xset' only in X
+if [ -n "$DISPLAY" ]; then
+	xset -dpms
+	xset s off
+	xset s noblank
+	xset s noexpose
+	xset r rate 340 25
+	setterm -blank 0
+	setterm -powerdown 0
+	xmodmap -e "remove Lock = Caps_Lock"
+	xmodmap -e "keysym Caps_Lock = Shift_L"
+else
+	setterm -blank 0
+	setterm -powerdown 0
+fi
+
+# Print confirmation
+printf "\nDONE\n\n"

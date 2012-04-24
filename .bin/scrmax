@@ -1,0 +1,7 @@
+#!/bin/bash
+#
+# Jack Holborn 2012
+#
+# Only use external monitor
+
+xrandr --output VGA-0 --preferred --output LVDS --off

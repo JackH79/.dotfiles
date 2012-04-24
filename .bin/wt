@@ -1,0 +1,17 @@
+#!/bin/bash
+echo 'Australia   :' `date +"%a, %R %z"`
+export TZ=Pacific/Auckland
+echo 'New Zealand :' `date +"%a, %R %z"`
+export TZ=Pacific/Rarotonga
+echo 'Cook Islands:' `date +"%a, %R %z"`
+echo ''
+export TZ=Europe/Berlin
+echo 'Europe      :' `date +"%a, %R %z"`
+export TZ=Europe/London
+echo 'UK          :' `date +"%a, %R %z"`
+echo ''
+export TZ=America/Los_Angeles
+echo 'USA West    :' `date +"%a, %R %z"`
+export TZ=America/New_York
+echo 'USA East    :' `date +"%a, %R %z"`
+unset TZ

@@ -1,0 +1,15 @@
+### MISCELLANEOUS
+# SET $LatDeg -19
+# SET $LatMin 15
+# SET $LatSec 23
+# SET $LongDeg -146
+# SET $LongMin 49
+# SET $LongSec 6
+# MSG [Blu]%"%"Sunrise: [sunrise()], Sunset: [sunset()]%[Def]
+# MSG [Blu]%"%"Next full moon: [moondate(2)]%[Def]
+# REM [moondate(0)] SPECIAL MOON 0 3
+# REM [moondate(1)] SPECIAL MOON 1 3
+# REM [moondate(2)] SPECIAL MOON 2 3
+# REM [moondate(3)] SPECIAL MOON 3 3
+# REM Sat SPECIAL SHADE 225
+# REM Sun SPECIAL SHADE 200
