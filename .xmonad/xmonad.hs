@@ -3,47 +3,37 @@
 --
 -- Jack Holborn (https://github.com/JackH79)
 --
--- This Version: Jan 2012
+-- This Version: Apr 2012
 --------------------------------------------
-
--- CONTENTS
---   imports       20
---   defaults      49
---   rodent rules  68
---   workspaces    72
---   hooks         75
---   layouts       97
---   dzen2        104
---   bindings     121
-
 
 -- IMPORTS
 import XMonad
 
-import XMonad.Layout.Spacing          -- allow spaces around windows
-import XMonad.Layout.NoBorders        -- no border for fullscreen layout
-import XMonad.Layout.Named            -- custom layout names
-import XMonad.Layout.Grid             -- add grid layout
-import XMonad.Layout.MagicFocus       -- add magic focus layout modifyer
-import XMonad.Layout.Minimize         -- add minimise windows
-import XMonad.Layout.ToggleLayouts    -- add toggle layout keybind
-import XMonad.Layout.Magnifier        -- add magnifier layout modifier
-import XMonad.Actions.RotSlaves       -- rotates Windows anti-/clockwise
+import XMonad.Layout.Spacing              -- spaces around windows
+import XMonad.Layout.NoBorders            -- no border for fullscreen layout
+import XMonad.Layout.Named                -- custom layout names
+import XMonad.Layout.Grid                 -- grid layout
+import XMonad.Layout.MagicFocus           -- automagically switch focused window to master area
+import XMonad.Layout.Minimize             -- minimise windows
+import XMonad.Layout.ToggleLayouts        -- toggle layouts keybind
 
-import XMonad.Hooks.DynamicLog        -- status output for dock
-import XMonad.Hooks.ManageDocks       -- don't meddle with the dock
-import XMonad.Hooks.ManageHelpers     (isDialog, isFullscreen, doFullFloat, doCenterFloat)
+import XMonad.Actions.FindEmptyWorkspace  -- find next empty workspace
+import XMonad.Actions.RotSlaves           -- rotates Windows anti-/clockwise
+import XMonad.Actions.GridSelect          -- select windows via popup
 
-import XMonad.Util.Run (spawnPipe)    -- needed for spawnPipe (dzen)
+import XMonad.Hooks.SetWMName             -- set WM name for java
+import XMonad.Hooks.DynamicLog            -- output to dzen
+import XMonad.Hooks.ManageDocks           -- don't touch the dock
+import XMonad.Hooks.ManageHelpers         (isDialog, isFullscreen, doFullFloat, doCenterFloat)
+
+import XMonad.Util.Run (spawnPipe)        -- spawnPipe for dzen
+
 import Data.Monoid
 import System.Exit
-import System.IO (hPutStrLn)          -- hPutStrLn
-
+import System.IO (hPutStrLn)              -- hPutStrLn
+import Control.Monad (liftM2)             -- for viewShift
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
-
-import Control.Monad (liftM2)         -- for viewShift
-
 
 -- DEFAULTS
 main = do
@@ -53,15 +43,17 @@ main = do
     xmonad $ defaultConfig
         { terminal           = "urxvtc"
         , modMask            = mod4Mask
+--      , borderWidth        = 2
         , normalBorderColor  = "#1a1a1a"
-        , focusedBorderColor = "#1f6080"
+        , focusedBorderColor = "#329bcd"
         , focusFollowsMouse  = jackFocusFollowsMouse
         , workspaces         = jackWorkspaces
-        , keys               = jackKeys
+        , startupHook        = setWMName "LG3D"
         , layoutHook         = jackLayoutHook
         , manageHook         = jackManageHook
-        , handleEventHook    = docksEventHook
         , logHook            = jackLogHook status
+        , handleEventHook    = docksEventHook
+        , keys               = jackKeys
         }
 
 -- RODENT RULES
@@ -69,9 +61,16 @@ jackFocusFollowsMouse :: Bool
 jackFocusFollowsMouse = False
 
 -- WORKSPACES
-jackWorkspaces = [ "1-term" , "2-net" , "3-vid" , "4-pic" , "5-music" ] ++ map show [ 6..9 :: Int ]
+jackWorkspaces = [ "1-term" , "2-net" , "3-off", "4-vid" , "5-pic" , "6-music", "7-gimp" ] ++ map show [ 8..9 :: Int ]
 
--- HOOKS
+-- LAYOUTS
+jackLayoutHook = smartBorders $ toggleLayouts Full $ ( tile ||| focus ||| grid ||| full )
+    where   tile  = named "tile"  $ avoidStruts $ spacing 5 $ minimize              $ Tall 1 (3/100) (1/2)
+            focus = named "focus" $ avoidStruts $ spacing 5 $ minimize $ magicFocus $ Tall 1 (3/100) (3/4)
+            grid  = named "grid"  $ avoidStruts $ spacing 5 $ minimize $ Grid
+            full  = named "full"  $ noBorders   $ Full
+
+-- HOOKS AND WINDOW RULES
 jackManageHook :: ManageHook
 jackManageHook = composeAll $ concat
     [ [ manageDocks                                      ]
@@ -82,30 +81,32 @@ jackManageHook = composeAll $ concat
     ]
 
 jackRules = composeAll
-    [ className =? "MPlayer"     --> (doFloat <+> viewShift "3-vid")
-    , className =? "Vlc"         --> viewShift "3-vid"
-    , className =? "sxiv"        --> viewShift "4-pic"
-    , className =? "Firefox"     --> doShift   "2-net"
-    , className =? "Opera"       --> doShift   "2-net"
-    , title     =? "ncmpcpp"     --> viewShift "5-music"
-    , title     =? "wicd-curses" --> viewShift "9"
-    , className =? "Gimp"        --> doFloat
+    [ className =? "MPlayer"       --> (doFloat <+> viewShift "4-vid")
+    , className =? "mplayer2"      --> (doFloat <+> viewShift "4-vid")
+    , className =? "Galculator"    --> doFloat
+    , className =? "Convertall.py" --> doFloat
+    , className =? "LibreOffice"   --> viewShift "3-off"
+    , className =? "Zathura"       --> viewShift "3-off"
+    , className =? "Vlc"           --> viewShift "4-vid"
+    , className =? "sxiv"          --> viewShift "5-pic"
+    , className =? "Geeqie"        --> viewShift "5-pic"
+    , className =? "Firefox"       --> viewShift "2-net"
+    , className =? "Opera"         --> viewShift "2-net"
+    , className =? "dwb"           --> viewShift "2-net"
+    , title     =? "ncmpcpp"       --> viewShift "6-music"
+    , title     =? "wicd-curses"   --> viewShift "9"
+    , className =? "Gimp"          --> (doFloat <+> viewShift "7-gimp")
+    , className =? "Xfce4-notifyd" --> doIgnore
+    , className =? "dzen"          --> doIgnore
     ]
     where viewShift = doF . liftM2 (.) W.greedyView W.shift
-
--- LAYOUTS
-jackLayoutHook = smartBorders $ toggleLayouts Full $ ( tile ||| focus ||| grid ||| full )
-    where tile	= named "tile"  $ avoidStruts $ spacing 3 $ minimize              $ Tall 1 (3/100) (1/2)
-          focus	= named "focus" $ avoidStruts $ spacing 3 $ minimize $ magicFocus $ Tall 1 (3/100) (3/4)
-          grid  = named "grid"  $ avoidStruts $ spacing 3 $ minimize $ Grid
-          full	= named "full"  $ noBorders   $ Full
 
 -- DZEN2
 jackLogHook h  = dynamicLogWithPP $ jackDzenPP { ppOutput = hPutStrLn h }
 jackDzenStyle  = " -fg '#b2b2b2' -bg '#1a1a1a' -fn '-*-terminus-*-*-*-*-10-*-*-*-*-*-*-*'"
-jackDzenStatus = "dzen2 -w '1000' -ta 'l'" ++ jackDzenStyle
+jackDzenStatus = "dzen2 -w '700' -ta 'l'" ++ jackDzenStyle
 jackDzenConky  = "conky -c /home/jack/.xmonad/conkyrc | dzen2 -y '788' -w '1280' -ta 'r'" ++ jackDzenStyle
-jackDzenTime   = "conky -c /home/jack/.xmonad/conkytime | dzen2 -x '1000' -w '280' -ta 'r'" ++ jackDzenStyle
+jackDzenTime   = "conky -c /home/jack/.xmonad/conkytime | dzen2 -x '700' -w '580' -ta 'r'" ++ jackDzenStyle
 jackDzenPP     :: PP
 jackDzenPP     = dzenPP
     { ppCurrent         = dzenColor "#1a1a1a" "#329bcd" . pad
@@ -119,14 +120,19 @@ jackDzenPP     = dzenPP
 
 -- BINDINGS
 jackKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
+--  [ ((modm,                 xK_Return       ), spawn "urxvtc -e tmux")
     [ ((modm,                 xK_Return       ), spawn $ XMonad.terminal conf)
     , ((modm,                 xK_r            ), spawn "urxvtc -e ranger")
     , ((modm,                 xK_m            ), spawn "urxvtc -e ncmpcpp")
-    , ((modm,                 xK_d            ), spawn "urxvtc -e wicd-curses")
+    , ((modm,                 xK_w            ), spawn "urxvtc -e wicd-curses")
+    , ((modm,                 xK_i            ), spawn "urxvtc -e irssi")
     , ((modm,                 xK_grave        ), spawn "urxvtc -e htop")
+    , ((modm,                 xK_c            ), spawn "urxvtc -e calc")
     , ((modm,                 xK_t            ), spawn "remind_call")
     , ((modm,                 xK_o            ), spawn "opera")
     , ((modm,                 xK_f            ), spawn "firefox")
+    , ((modm,                 xK_d            ), spawn "dwb")
+    , ((modm,                 xK_l            ), spawn "libreoffice")
     , ((modm .|. shiftMask,   xK_z            ), spawn "slock")
     , ((modm,                 xK_p            ), spawn "exe=`dmenu_run -fn -*-terminus-*-*-*-*-12-*-*-*-*-*-*-* -nb '#1a1a1a' -nf '#b2b2b2' -sb '#329bcd' -sf '#1a1a1a'` && eval \"exec $exe\"")
     -- Volume / MPD control
@@ -135,13 +141,15 @@ jackKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,                 xK_F9           ), spawn "mpc next")
     , ((modm,                 xK_F10          ), spawn "amixer -q sset Master toggle")
     , ((modm,                 xK_F11          ), spawn "amixer -q sset Master 2dB-")
-    , ((modm,                 xK_F12          ), spawn "amixer -q sset Master 2dB+")
+    , ((modm,                 xK_F12           ), spawn "amixer -q sset Master 2dB+")
     -- Windows
-    , ((modm,                 xK_Tab          ), windows W.focusDown)
     , ((modm,                 xK_Left         ), windows W.focusDown)
     , ((modm,                 xK_Right        ), windows W.focusUp)
     , ((modm .|. shiftMask,   xK_Left         ), windows W.swapDown)
     , ((modm .|. shiftMask,   xK_Right        ), windows W.swapUp)
+    , ((modm,                 xK_equal        ), viewEmptyWorkspace)
+    , ((modm .|. shiftMask,   xK_equal        ), tagToEmptyWorkspace)
+    , ((modm,                 xK_g            ), goToSelected defaultGSConfig)
     , ((modm .|. controlMask, xK_Left         ), sendMessage Shrink)
     , ((modm .|. controlMask, xK_Right        ), sendMessage Expand)
     , ((modm .|. shiftMask,   xK_r            ), refresh)
@@ -169,7 +177,7 @@ jackKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask,   xK_space        ), setLayout $ XMonad.layoutHook conf)
     
     -- XMonad
-    , ((modm,                 xK_q            ), spawn "killall conky dzen2; xmonad --recompile; xmonad --restart")
+    , ((modm .|. shiftMask,   xK_r            ), spawn "killall conky dzen2; xmonad --recompile; xmonad --restart")
     , ((modm .|. shiftMask,   xK_q            ), io (exitWith ExitSuccess))
     ]
     ++
@@ -178,3 +186,5 @@ jackKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]
     ]
+
+-- vim:sw=4 sts=4 ts=4 tw=0 et ai

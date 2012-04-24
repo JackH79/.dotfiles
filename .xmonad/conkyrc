@@ -7,20 +7,16 @@ times_in_seconds
 if_up_strictness link
 
 TEXT
-${if_mpd_playing}^fg(\#329bcd)${mpd_artist} ^fg()${mpd_title}${endif} \
-${if_up wlan0}^fg(\#329bcd)wlan0 ^fg()${addr wlan0} ^fg(\#329bcd)on ^fg()${wireless_essid wlan0} ^fg(\#329bcd)at ^fg()${wireless_link_qual_perc wlan0} ^fg(\#329bcd)d ^fg()${downspeedf wlan0}KiB ^fg(\#329bcd)u ^fg()${upspeedf wlan0}KiB${endif} \
+${if_up wlan0}^fg(\#329bcd)wlan0 ^fg()${addr wlan0} ^fg(\#329bcd)on ^fg()${wireless_essid wlan0} ^fg(\#329bcd)at ^fg()${wireless_link_qual_perc wlan0}% ^fg(\#329bcd)d ^fg()${downspeedf wlan0}KiB ^fg(\#329bcd)u ^fg()${upspeedf wlan0}KiB${endif} \
 ${if_up eth0}^fg(\#329bcd)eth0 ^fg()${addr eth0} ^fg(\#329bcd)d ^fg()${downspeedf eth0}KiB ^fg(\#329bcd)u ^fg()${upspeedf eth0}KiB${endif} \
 ^fg(\#9bcd32):: \
 ^fg(\#329bcd)cpu ^fg()${cpu}% \
 ^fg(\#329bcd)load ^fg()${loadavg 1} \
-^fg(\#329bcd)temp ^fg()${hwmon temp 2}°C \
+${if_match ${hwmon temp 2}>=80}^bg(\#ff4b4b)^fg(\#1a1a1a)temp ${hwmon temp 2}°C ^fg()^bg()${endif}\
+${if_match ${hwmon temp 2}<80}^fg(\#329bcd)temp ^fg()${hwmon temp 2}°C ${endif}\
+^fg(\#329bcd)freq ^fg()${freq_g}GHz \
 ^fg(\#9bcd32):: \
 ^fg(\#329bcd)mem ^fg()${memperc}% (${mem}) \
-^fg(\#329bcd)swap ^fg()${swapperc}% ($swap) \
 ^fg(\#9bcd32):: \
 ^fg(\#329bcd)root ^fg()${fs_used_perc /}% \
 ^fg(\#329bcd)/home ^fg()${fs_used_perc /home}% \
-^fg(\#9bcd32):: \
-^fg(\#329bcd)bat ${if_match ${battery_percent}<=20}^fg(\#1a1a1a)^bg(\#ff4b4b) ${battery}, ${format_time ${battery_time} "\hh \mm left"}^fg()^bg()${else}^fg()${battery}, ${format_time ${battery_time} "\hh \mm left"}${endif} \
-^fg(\#9bcd32):: \
-^fg(\#329bcd)vol ${if_mixer_mute}^fg(\#ff4b4b)mute${else}^fg()$mixer%${endif} \

@@ -7,5 +7,8 @@ total_run_times 0
 if_up_strictness link
 
 TEXT
+${if_mpd_playing}^fg(\#9bcd32):: ^fg(\#329bcd)${mpd_artist} ^fg()${mpd_title}${endif} \
+^fg(\#9bcd32):: \
+^fg(\#329bcd)vol ${if_mixer_mute}^fg(\#ff4b4b)mute${else}^fg()$mixer%${endif} \
 ^fg(\#9bcd32):: \
 ^fg(\#329bcd)${time %a %d %b %Y} ^fg(\#ffffff)${time %I:%M%P}^fg()
