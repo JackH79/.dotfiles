@@ -1,0 +1,42 @@
+daemon_name=fsniper
+
+. /etc/rc.conf
+. /etc/rc.d/functions
+
+USERS=( 'jack' )
+
+for USER in ${USERS[@]}
+do
+	PID=$(pidof -o %PPID /usr/bin/fsniper)
+
+	case "$1" in
+	  start)
+		  stat_busy "Starting $daemon_name"
+		  [ -z "$PID" ] && su -c "/usr/bin/fsniper --daemon" $USER
+		  if [ $? -gt 0 ]; then
+			  stat_fail
+		  else
+			  add_daemon fsniper
+			  stat_done
+		  fi
+		  ;;
+	  stop)
+		  stat_busy "Stopping $daemon_name"
+		  [ ! -z "$PID" ] && kill $PID > /dev/null
+		  if [ $? -gt 0 ]; then
+			  stat_fail
+		  else
+			  rm_daemon fsniper
+			  stat_done
+		  fi
+		  ;;
+	  restart)
+		  $0 stop
+		  sleep 1
+		  $0 start
+		  ;;
+	  *)
+  echo "usage: $0 {start|stop|restart}"
+esac
+done
+exit 0
