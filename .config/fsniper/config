@@ -1,0 +1,31 @@
+watch {
+    # watch the ~/drop directory for new files
+    ~/Downloads {
+        # matches any mimetype beginning with image/
+        image/* {
+            # %% is replaced with the filename of the new file
+            handler = mv %% /home/jack/Downloads/pic/
+        }
+        audio/* {
+            handler = mv %% /home/jack/Downloads/audio/
+        }
+        video/* {
+            handler = mv %% /home/jack/Downloads/vid/
+        }
+        text/* {
+            handler = mv %% /home/jack/Downloads/doc/
+        }
+        application/msword {
+            handler = mv %% /home/jack/Downloads/doc/
+        }
+        application/vnd.* {
+            handler = mv %% /home/jack/Downloads/doc/
+        }
+        /\.(pdf|ps)$/ {
+            handler = mv %% /home/jack/Downloads/pdf/
+        }
+        /\.(gz|bz2|lz|xz|zip|rar)$/ {
+            handler = mv %% /home/jack/Downloads/tar/
+        }
+    }
+}
