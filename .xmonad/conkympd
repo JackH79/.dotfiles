@@ -1,0 +1,10 @@
+out_to_x no
+out_to_ncurses no
+out_to_console yes
+background yes
+update_interval 3
+times_in_seconds
+if_up_strictness link
+
+TEXT
+${if_mpd_playing}^fg(\#329bcd)^i(/home/jack/.xmonad/icons/note3.xbm) ${mpd_artist} ^fg()${mpd_title}${endif}                 \

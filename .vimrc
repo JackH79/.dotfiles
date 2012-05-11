@@ -41,14 +41,14 @@ set backspace=indent,eol,start
 if has("vms")
   set nobackup		" do not keep a backup file, use versions instead
 else
-  set backup	" keep a backup file
+  set backup		" keep a backup file
   set backupdir=/home/jack/.vim/bak,/tmp
 endif
 set history=50		" keep 50 lines of command line history
-set ruler		" show the cursor position all the time
-set showcmd		" display incomplete commands
+set ruler			" show the cursor position all the time
+set showcmd			" display incomplete commands
 set incsearch		" do incremental searching
-"set spell		" Check spelling
+"set spell			" Check spelling
 "setlocal spell spelllang=en_au
 set number
 set lbr
@@ -57,6 +57,12 @@ set shiftwidth=4
 "set noerrorbells
 set background=dark
 set pdev=bjork
+
+" settings for vim-powerline
+set laststatus=2
+"let g:Powerline_symbols = 'fancy'
+"set runtimepath=~/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,~/.vim/after
+set t_Co=256
 
 " For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
 " let &guioptions = substitute(&guioptions, "t", "", "g")
@@ -81,6 +87,8 @@ if &t_Co > 2 || has("gui_running")
 endif
 
 colorscheme jack
+set cursorline
+hi CursorLine cterm=NONE ctermbg=darkgray guibg=darkgray term=bold cterm=bold
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")

@@ -39,6 +39,8 @@ import qualified Data.Map        as M
 main = do
     status <- spawnPipe jackDzenStatus
     conky  <- spawnPipe jackDzenConky
+    conky  <- spawnPipe jackDzenTime
+    conky  <- spawnPipe jackDzenMpd
     xmonad $ defaultConfig
         { terminal           = "urxvtc"
         , modMask            = mod4Mask
@@ -60,7 +62,7 @@ jackFocusFollowsMouse :: Bool
 jackFocusFollowsMouse = False
 
 -- WORKSPACES
-jackWorkspaces = [ "1" , "n2t" , "3ff", "m4d" , "5ic" , "mi6c" ] -- ++ map show [ 6..9 :: Int ]
+jackWorkspaces = [ "1" , "2:net" , "3:off", "4:med" , "5:pic" ] ++ map show [ 6..9 :: Int ]
 
 -- LAYOUTS
 jackLayoutHook = smartBorders $ toggleLayouts Full $ ( tile ||| focus ||| grid ||| full )
@@ -80,41 +82,39 @@ jackManageHook = composeAll $ concat
     ]
 
 jackRules = composeAll
-    [ className =? "Firefox"       --> viewShift "n2t"
-    , className =? "Opera"         --> viewShift "n2t"
-    , className =? "libreoffice-startcenter" --> viewShift "3ff"
-    , className =? "libreoffice-writer"      --> viewShift "3ff"
-    , className =? "libreoffice-calc"        --> viewShift "3ff"
-    , className =? "libreoffice-impress"     --> viewShift "3ff"
-    , className =? "Zathura"       --> viewShift "3ff"
-    , className =? "Thunderbird"   --> viewShift "3ff"
-    , className =? "Calibre"       --> viewShift "3ff"
-    , className =? "mplayer2"      --> (doFloat <+> viewShift "m4d")
-    , className =? "Vlc"           --> viewShift "m4d"
-    , title     =? "ncmpcpp"       --> viewShift "m4d"
-    , className =? "sxiv"          --> viewShift "5ic"
-    , className =? "Geeqie"        --> viewShift "5ic"
-    , className =? "Gimp"          --> viewShift "5ic"
-    , title     =? "wicd-curses"   --> viewShift "mi6c"
-    , className =? "Deluge"        --> viewShift "mi6c"
+    [ className =? "MPlayer"       --> (doFloat <+> viewShift "4:med")
+    , className =? "mplayer2"      --> (doFloat <+> viewShift "4:med")
     , className =? "Galculator"    --> doFloat
     , className =? "Convertall.py" --> doFloat
+    , className =? "LibreOffice"   --> viewShift "3:off"
+    , className =? "Zathura"       --> viewShift "3:off"
+    , className =? "Vlc"           --> viewShift "4:med"
+    , className =? "sxiv"          --> viewShift "5:pic"
+    , className =? "Geeqie"        --> viewShift "5:pic"
+    , className =? "Firefox"       --> viewShift "2:net"
+    , className =? "Opera"         --> viewShift "2:net"
+    , className =? "Thunderbird"   --> viewShift "3:off"
+    , title     =? "ncmpcpp"       --> viewShift "4:med"
+    , title     =? "wicd-curses"   --> viewShift "9"
+    , className =? "Gimp"          --> viewShift "5:pic"
+    , className =? "Deluge"        --> viewShift "8"
     , className =? "Xfce4-notifyd" --> doIgnore
     , className =? "dzen"          --> doIgnore
-    , title     =? "Msgcompose"    --> doFloat
     ]
     where viewShift = doF . liftM2 (.) W.greedyView W.shift
 
 -- DZEN2
 jackLogHook h  = dynamicLogWithPP $ jackDzenPP { ppOutput = hPutStrLn h }
 jackDzenStyle  = " -fg '#b2b2b2' -bg '#1a1a1a' -fn '-*-termsyn-medium-*-*-*-10-*-*-*-*-*-*-*'"
-jackDzenStatus = "dzen2 -w '400' -ta 'l'" ++ jackDzenStyle
-jackDzenConky  = "conky -c /home/jack/.xmonad/conkyfull | dzen2 -x '400' -w '880' -ta 'r'" ++ jackDzenStyle
+jackDzenStatus = "dzen2 -w '700' -ta 'l'" ++ jackDzenStyle
+jackDzenConky  = "conky -c /home/jack/.xmonad/conkyrc   | dzen2 -x '500' -y '788' -w '780' -ta 'r'" ++ jackDzenStyle
+jackDzenTime   = "conky -c /home/jack/.xmonad/conkytime | dzen2 -x '700'          -w '580' -ta 'r'" ++ jackDzenStyle
+jackDzenMpd    = "conky -c /home/jack/.xmonad/conkympd  | dzen2          -y '788' -w '500' -ta 'l'" ++ jackDzenStyle
 jackDzenPP     :: PP
 jackDzenPP     = dzenPP
     { ppCurrent         = dzenColor "#1a1a1a" "#329bcd" . pad
     , ppHidden          = dzenColor "#b2b2b2" ""        . pad
-    , ppHiddenNoWindows = dzenColor "#444444" ""        . pad
+    , ppHiddenNoWindows = dzenColor "#1a1a1a" ""        . pad
     , ppUrgent          = dzenColor "#ffffff" "#ee0000" . pad
 --    , ppLayout          = dzenColor "#9bcd32" ""        . pad
     , ppLayout          = dzenColor "#9bcd32" ""        . 

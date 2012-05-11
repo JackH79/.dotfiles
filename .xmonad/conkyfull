@@ -7,7 +7,7 @@ times_in_seconds
 if_up_strictness link
 
 TEXT
-${if_up wlan0}^fg(\#329bcd)^i(/home/jack/.xmonad/icons/wireless1.xbm) ^fg()${addr wlan0} ^fg(\#329bcd)on ^fg()${wireless_essid wlan0} ^fg(\#329bcd)at ^fg()${wireless_link_qual_perc wlan0}% ^fg(\#329bcd)^i(/home/jack/.xmonad/icons/downleft1.xbm) ^fg()${downspeedf wlan0}KiB ^fg(\#329bcd)^i(/home/jack/.xmonad/icons/upright1.xbm) ^fg()${upspeedf wlan0}KiB${endif} \
+${if_up wlan0}^fg(\#329bcd)^i(/home/jack/.xmonad/icons/wireless1.xbm) ^fg()${addr wlan0} ^fg(\#329bcd)on ^fg()${wireless_essid wlan0} ^fg(\#329bcd)at ^fg()${wireless_link_qual_perc wlan0}% ^fg(\#b23535)^i(/home/jack/.xmonad/icons/downleft1.xbm) ^fg()${downspeedf wlan0}KiB ^fg(\#60801f)^i(/home/jack/.xmonad/icons/upright1.xbm) ^fg()${upspeedf wlan0}KiB${endif} \
 ${if_up eth0}^fg(\#329bcd)eth0 ^fg()${addr eth0} ^fg(\#329bcd)^i(/home/jack/.xmonad/icons/downleft1.xbm) ^fg()${downspeedf eth0}KiB ^fg(\#329bcd)^i(/home/jack/.xmonad/icons/upright1.xbm) ^fg()${upspeedf eth0}KiB${endif}\
 ^fg(\#329bcd)^i(/home/jack/.xmonad/icons/cpu13.xbm) ^fg()${cpu}% \
 ${if_match ${hwmon temp 2}>=80}^bg(\#ff4b4b)^fg(\#1a1a1a)^i(/home/jack/.xmonad/icons/temp5.xbm) ${hwmon temp 2}°C ^fg()^bg()${endif}\
@@ -16,3 +16,4 @@ ${if_match ${hwmon temp 2}<80}^fg(\#329bcd)^i(/home/jack/.xmonad/icons/temp5.xbm
 ^fg(\#329bcd)/ ^fg()${fs_used_perc /}% \
 ^fg(\#329bcd)/home ^fg()${fs_used_perc /home}% \
 ^fg(\#329bcd)^i(/home/jack/.xmonad/icons/vol1.xbm) ${if_mixer_mute}^fg(\#ff4b4b)mute${else}^fg()$mixer%${endif} \
+^fg(\#329bcd)^i(/home/jack/.xmonad/icons/edit2.xbm) ${time %a %d %b %Y} ^fg(\#ffffff)^i(/home/jack/.xmonad/icons/clock2.xbm) ${time %I:%M%P}^fg(
