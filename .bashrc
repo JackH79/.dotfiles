@@ -1,3 +1,8 @@
+# ~/.bashrc
+#
+# JackH79
+# May 2012
+
 ### PROPMPT
 PS1='\[\e[1;32m\]\D{%I:%M%P}\[\e[1;34m\]>>\w\[\e[m\] '
 PS2='\[\e[1;33m\]contd.\[\e[1;34m\]>\[\e[m\] '
@@ -27,6 +32,7 @@ alias grep='grep --color=auto'
 alias sleep='sudo pm-suspend'
 alias dvd='mplayer -channels 6 -af hrtf /dev/sr0'
 alias copy='rsync -aP'
+#alias todo='remind /home/jack/.reminders'
 alias rem='remind /home/jack/.reminders'
 alias remc='remind -m -cuc+2 /home/jack/.reminders'
 alias awiki='wiki-search'

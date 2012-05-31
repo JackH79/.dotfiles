@@ -1,10 +1,13 @@
 " ~/.vimrc
+"
 " JackH79
-" 2012
+" May 2012
 
 " Use vim, not vi
 set nocompatible
 
+" Pathogen Runtime Manipulation
+call pathogen#infect()
 
 filetype plugin on		" allow plugins
 filetype indent on		" indent by filetype
@@ -34,11 +37,11 @@ set backupdir=/home/jack/.vim/bak,/tmp
 
 " Various settings
 set history=50		" keep 50 lines of command line history
-set ruler			" show the cursor position all the time
+"set ruler			" show the cursor position all the time
 set showcmd			" display incomplete commands
 set incsearch		" do incremental searching
 set number			" show line numbers
-set linebreak				" enable line wrapping
+set linebreak		" enable line wrapping
 set tabstop=4		" tabs have 4 spaces
 set shiftwidth=4
 set autoindent		" auto indent whilst typing
@@ -46,7 +49,14 @@ set noerrorbells	" don't beep
 set background=dark	" let vim know that the background is dark
 colorscheme jack	" use this colour profile
 set cursorline		" highlight the current line
+set noruler
+set statusline=%t\ %y\ format:\ %{&ff};\ [%c,%l]
+set laststatus=2	" always show the status line
 hi CursorLine ctermbg=darkgray term=bold cterm=bold
+
+" Powerline status bar
+set runtimepath=~/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,~/.vim/after
+let g:Powerline_symbols = 'fancy'
 
 " Printing
 set pdev=pdf		" set pdf as default

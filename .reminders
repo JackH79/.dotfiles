@@ -1,3 +1,8 @@
+# ~/.reminders
+#
+# JackH79
+# May 2012
+
 INCLUDE /home/jack/.config/remind/colours
 INCLUDE /home/jack/.config/remind/banner
 INCLUDE /home/jack/.config/remind/recurring

@@ -2,6 +2,9 @@
 #
 # ~/.xinitrc
 #
+# JackH79
+# May 2012
+
 ### ADDITIONAL FONT PATHS
 xset +fp /usr/share/fonts/local
 xset fp rehash
@@ -29,22 +32,26 @@ xrdb -merge ~/.Xresources
 urxvtd -q -o -f &
 
 ### AUTOCUTSEL
-autocutsel -fork &
-autocutsel -selection PRIMARY -fork &
+#autocutsel -fork &
+#autocutsel -selection PRIMARY -fork &
+
+### WALLPAPER
+imlibsetroot -s /home/jack/.backgrounds/convent.jpg &
+
+### XCOMPMGR
+xcompmgr -cCfFD 3 &
+
+### REDSHIFT
+# redshift -l -19.25:146.81 -t 6500:5000 -b 1.0:0.6 &
+redshift -l 51.19:6.60 -t 6500:5000 -b 1.0:0.6 &
+
+#### REMOVE CAPS LOCK
+(sleep 3 && xmodmap -e "remove Lock = Caps_Lock" && xmodmap -e "keysym Caps_Lock = Shift_L") &
 
 ### FOR JERRY
 xsetroot -cursor_name left_ptr
 unclutter -root -idle 3 &
 keynav &
-
-### WALLPAPER
-imlibsetroot -s /home/jack/.backgrounds/wanaka.jpg &
-
-### XCOMPMGR
-xcompmgr -cCfFD 3 &
-
-#### REMOVE CAPS LOCK
-(sleep 3 && xmodmap -e "remove Lock = Caps_Lock" && xmodmap -e "keysym Caps_Lock = Shift_L") &
 
 ### EXECUTE WM and POWERMANAGER
 #exec ck-launch-session bash -c "xfce4-power-manager & xmonad"

@@ -3,7 +3,7 @@
 --
 -- Jack Holborn (https://github.com/JackH79)
 --
--- This Version: Apr 2012
+-- This Version: May 2012
 --------------------------------------------
 
 -- IMPORTS
@@ -39,6 +39,8 @@ import qualified Data.Map        as M
 main = do
     status <- spawnPipe jackDzenStatus
     conky  <- spawnPipe jackDzenConky
+    conky  <- spawnPipe jackDzenTime
+    conky  <- spawnPipe jackDzenMpd
     xmonad $ defaultConfig
         { terminal           = "urxvtc"
         , modMask            = mod4Mask
@@ -108,8 +110,10 @@ jackRules = composeAll
 -- DZEN2
 jackLogHook h  = dynamicLogWithPP $ jackDzenPP { ppOutput = hPutStrLn h }
 jackDzenStyle  = " -fg '#b2b2b2' -bg '#1a1a1a' -fn '-*-termsyn-medium-*-*-*-10-*-*-*-*-*-*-*'"
-jackDzenStatus = "dzen2 -w '400' -ta 'l'" ++ jackDzenStyle
-jackDzenConky  = "conky -c /home/jack/.xmonad/conkyfull | dzen2 -x '400' -w '880' -ta 'r'" ++ jackDzenStyle
+jackDzenStatus = "dzen2 -w '700' -ta 'l'" ++ jackDzenStyle
+jackDzenConky  = "conky -c /home/jack/.xmonad/conkyrc   | dzen2 -x '500' -y '788' -w '780' -ta 'r'" ++ jackDzenStyle
+jackDzenTime   = "conky -c /home/jack/.xmonad/conkytime | dzen2 -x '700'          -w '580' -ta 'r'" ++ jackDzenStyle
+jackDzenMpd    = "conky -c /home/jack/.xmonad/conkympd  | dzen2          -y '788' -w '500' -ta 'l'" ++ jackDzenStyle
 jackDzenPP     :: PP
 jackDzenPP     = dzenPP
     { ppCurrent         = dzenColor "#1a1a1a" "#329bcd" . pad
@@ -140,7 +144,7 @@ jackKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,                 xK_grave        ), spawn "urxvtc -e htop")
     , ((modm,                 xK_c            ), spawn "urxvtc -e calc")
     , ((modm,                 xK_t            ), spawn "thunderbird")
-    , ((modm .|. shiftMask,   xK_t            ), spawn "remind_call")
+    , ((modm .|. controlMask, xK_t            ), spawn "remind_call")
     , ((modm,                 xK_o            ), spawn "opera")
     , ((modm,                 xK_f            ), spawn "firefox")
     , ((modm,                 xK_d            ), spawn "dwb")
